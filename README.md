@@ -167,6 +167,16 @@ Open the dashboard in your browser:
 http://localhost:8080
 ```
 
+### Deploy on Vercel
+
+The repository includes a root `index.html` and `vercel.json` so Vercel can serve the static dashboard from the production domain without a build step. After deploying, open the production domain and it will forward to:
+
+```text
+/dashboard/
+```
+
+If a generated Vercel deployment URL shows **Authentication Required**, update the project's Deployment Protection settings in Vercel. Standard Protection protects generated deployment URLs while production domains remain publicly accessible.
+
 ---
 
 ## Quick Start Example
