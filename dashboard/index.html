@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ProbGuardX Outputs</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <img class="brand-mark" src="assets/probability-logo.svg" alt="ProbGuardX logo">
+          <div>
+            <p class="eyebrow editable-text" data-editable-text data-storage-key="probguardx.brandName" data-default-value="ProbGuardX" aria-label="Edit dashboard name">ProbGuardX</p>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Output views">
+          <button class="nav-item is-active" type="button" data-view="python" aria-pressed="true">
+            <span class="nav-icon">PY</span>
+            <span>Python</span>
+          </button>
+          <button class="nav-item" type="button" data-view="r" aria-pressed="false">
+            <span class="nav-icon">R</span>
+            <span>R</span>
+          </button>
+          <button class="nav-item" type="button" data-view="sql" aria-pressed="false">
+            <span class="nav-icon">SQL</span>
+            <span>SQL</span>
+          </button>
+          <button class="nav-item" type="button" data-view="sas" aria-pressed="false">
+            <span class="nav-icon">SAS</span>
+            <span>SAS</span>
+          </button>
+          <button class="nav-item" type="button" data-view="mapreduce" aria-pressed="false">
+            <span class="nav-icon">MR</span>
+            <span>MapReduce</span>
+          </button>
+          <button class="nav-item" type="button" data-view="sas-logistic" aria-pressed="false">
+            <span class="nav-icon">LG</span>
+            <span>SAS Logistic</span>
+          </button>
+          <button class="nav-item" type="button" data-view="sas-freq" aria-pressed="false">
+            <span class="nav-icon">FQ</span>
+            <span>SAS Freq</span>
+          </button>
+        </nav>
+
+        <div class="profile-card">
+          <span class="profile-mark">AP</span>
+          <div>
+            <strong class="editable-text" data-editable-text data-storage-key="probguardx.profileName" data-default-value="Alok Priyadarshi" aria-label="Edit profile name">Alok Priyadarshi</strong>
+            <p class="editable-text" data-editable-text data-storage-key="probguardx.profileHandle" data-default-value="alokpriyadarshii" aria-label="Edit profile handle">alokpriyadarshii</p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="workspace-header">
+          <div>
+            <p class="eyebrow" id="viewEyebrow">Python</p>
+            <h2 id="viewTitle">Dataset Output</h2>
+          </div>
+        </header>
+
+        <section class="metric-grid" id="metricGrid" aria-label="Selected output metrics"></section>
+
+        <section class="view-panel is-active" data-panel="python">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Python</p>
+                <h3>Dataset Output</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table id="pythonTable">
+                <thead>
+                  <tr>
+                    <th>Region</th>
+                    <th>Channel</th>
+                    <th>Customers</th>
+                    <th>Total Spend</th>
+                    <th>Avg Sessions</th>
+                    <th>Churn Rate</th>
+                    <th>Offer Click Rate</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="view-panel" data-panel="r" hidden>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">R</p>
+                <h3>Dataset Output</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table id="rTable">
+                <thead>
+                  <tr>
+                    <th>Region</th>
+                    <th>Channel</th>
+                    <th>Customers</th>
+                    <th>Total Spend</th>
+                    <th>Avg Sessions</th>
+                    <th>Churn Rate</th>
+                    <th>Offer Click Rate</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="view-panel" data-panel="sql" hidden>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">SQL</p>
+                <h3>Dataset Output</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table id="sqlTable">
+                <thead>
+                  <tr>
+                    <th>Region</th>
+                    <th>Channel</th>
+                    <th>Customers</th>
+                    <th>Total Spend</th>
+                    <th>Avg Sessions</th>
+                    <th>Churn Rate</th>
+                    <th>Offer Click Rate</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="view-panel" data-panel="sas" hidden>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">SAS</p>
+                <h3>Dataset Output</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table id="sasTable">
+                <thead>
+                  <tr>
+                    <th>Region</th>
+                    <th>Channel</th>
+                    <th>Customers</th>
+                    <th>Total Spend</th>
+                    <th>Avg Sessions</th>
+                    <th>Churn Rate</th>
+                    <th>Offer Click Rate</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="view-panel" data-panel="mapreduce" hidden>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">MapReduce</p>
+                <h3>Region Aggregate Output</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table id="mapreduceTable">
+                <thead>
+                  <tr>
+                    <th>Region</th>
+                    <th>Customers</th>
+                    <th>Total Spend</th>
+                    <th>Avg Sessions</th>
+                    <th>Churn Rate</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="view-panel" data-panel="sas-logistic" hidden>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">SAS PROC LOGISTIC</p>
+                <h3>Churn Score Output</h3>
+              </div>
+            </div>
+            <div class="risk-list" id="riskList"></div>
+          </article>
+        </section>
+
+        <section class="view-panel" data-panel="sas-freq" hidden>
+          <div class="stacked-panels">
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">SAS PROC FREQ</p>
+                  <h3>Region by Churn</h3>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table id="regionFreqTable">
+                  <thead>
+                    <tr>
+                      <th>Region</th>
+                      <th>Churn 0</th>
+                      <th>Churn 1</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">SAS PROC FREQ</p>
+                  <h3>Risk Segment by Churn</h3>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table id="riskFreqTable">
+                  <thead>
+                    <tr>
+                      <th>Risk Segment</th>
+                      <th>Churn 0</th>
+                      <th>Churn 1</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

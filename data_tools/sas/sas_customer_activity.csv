@@ -1,0 +1,13 @@
+customer_id,region,channel,signup_date,event_date,spend,sessions,support_tickets,clicked_offer,churned
+S001,Northwest,portal,2025-01-02,2026-01-04,305.20,21,1,1,0
+S002,Northwest,field,2025-02-18,2026-01-29,176.40,13,2,1,0
+S003,Southeast,portal,2025-03-07,2026-02-14,88.70,6,4,0,1
+S004,Southeast,field,2025-04-13,2026-03-02,112.15,7,3,0,1
+S005,Mountain,portal,2025-05-01,2026-03-30,257.90,18,1,1,0
+S006,Mountain,phone,2025-05-25,2026-04-16,134.60,9,2,0,1
+S007,Northwest,phone,2025-06-11,2026-05-05,198.75,14,1,1,0
+S008,Southeast,phone,2025-07-09,2026-05-18,74.25,5,4,0,1
+S009,Mountain,field,2025-08-22,2026-06-01,221.30,16,0,1,0
+S010,Northwest,portal,2025-09-15,2026-06-08,159.85,12,2,1,0
+S011,Southeast,field,2025-10-10,2026-06-17,93.45,7,3,0,1
+S012,Mountain,phone,2025-11-05,2026-06-21,168.95,11,2,1,0

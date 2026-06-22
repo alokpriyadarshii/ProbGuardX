@@ -1,0 +1,13 @@
+customer_id,region,channel,signup_date,event_date,spend,sessions,support_tickets,clicked_offer,churned
+R001,Central,branch,2025-01-08,2026-01-14,212.00,15,1,1,0
+R002,Central,digital,2025-02-15,2026-01-27,128.50,9,2,1,0
+R003,Coastal,branch,2025-03-11,2026-02-08,77.25,5,3,0,1
+R004,Coastal,digital,2025-04-02,2026-02-24,154.80,11,1,1,0
+R005,Metro,partner,2025-04-30,2026-03-19,63.90,4,4,0,1
+R006,Metro,digital,2025-05-16,2026-04-03,198.45,14,0,1,0
+R007,Central,partner,2025-06-07,2026-04-21,91.60,6,2,0,1
+R008,Coastal,partner,2025-07-23,2026-05-07,110.35,8,2,0,1
+R009,Metro,branch,2025-08-19,2026-05-26,236.70,17,1,1,0
+R010,Central,digital,2025-09-28,2026-06-03,119.95,10,1,1,0
+R011,Coastal,digital,2025-10-12,2026-06-13,82.40,6,3,0,1
+R012,Metro,partner,2025-11-02,2026-06-20,144.10,9,2,1,0
