@@ -169,7 +169,7 @@ http://localhost:8080
 
 ### Deploy on Vercel
 
-The repository includes a root `index.html` and `vercel.json` so Vercel can serve the static dashboard from the production domain without a build step. After deploying, open the production domain and it will forward to:
+The repository includes a root `index.html` and `vercel.json` so Vercel can serve the dashboard as a static site from the production domain. The Vercel config skips dependency installation and copies the dashboard into `public/` during deployment. After deploying, open the production domain and it will forward to:
 
 ```text
 /dashboard/
