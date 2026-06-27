@@ -1,0 +1,33 @@
+An error occurred while executing the following cell:
+------------------
+tau = 1
+rng_key = jax.random.PRNGKey(10)
+x_samples_1 = metropolis_sample_jax(x0, tau, probs, mu, scale, n_iterations, rng_key)
+plot_trace_outer_fun(tau, x_samples_1)
+------------------
+
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[8], line 4
+      2 rng_key = jax.random.PRNGKey(10)
+      3 x_samples_1 = metropolis_sample_jax(x0, tau, probs, mu, scale, n_iterations, rng_key)
+----> 4 plot_trace_outer_fun(tau, x_samples_1)
+
+Cell In[7], line 11, in plot_trace_outer_fun(tau, x_samples)
+      6 axs = plt.axes(projection="3d")
+      7 plot_gmm_3d_trace(
+      8     x_samples, probs, mu, scale, "MH with $\mathcal{N}" + f"(0,{int(tau)}^2)$ proposal", xmin, xmax, axs
+      9 )
+---> 11 pml.style3d(axs, 1.5, 1, 0.8)
+     12 plt.subplots_adjust(left=0.001, bottom=0.208)
+     13 pml.savefig(f"mh_trace_{tau}tau.pdf", pad_inches=0, tight_bbox=True)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/pyprobml_utils.py:174, in style3d(ax, x_scale, y_scale, z_scale, factor)
+    172 def style3d(ax, x_scale, y_scale, z_scale, factor=0.62):
+    173     plt.gca().patch.set_facecolor("white")
+--> 174     ax.w_xaxis.set_pane_color((0, 0, 0, 0))
+    175     ax.w_yaxis.set_pane_color((0, 0, 0, 0))
+    176     ax.w_zaxis.set_pane_color((0, 0, 0, 0))
+
+AttributeError: 'Axes3D' object has no attribute 'w_xaxis'

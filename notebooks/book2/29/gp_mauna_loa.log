@@ -1,0 +1,50 @@
+An error occurred while executing the following cell:
+------------------
+try:
+    import tinygp
+except ImportError:
+    %pip install -q tinygp
+    import tinygp
+
+try:
+    from statsmodels.datasets import co2
+except ModuleNotFoundError:
+    %pip install -qq statsmodels
+    from statsmodels.datasets import co2
+
+
+import jax
+import jax.numpy as jnp
+from tinygp import kernels, transforms, GaussianProcess
+from jax.config import config
+from scipy.optimize import minimize
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+try:
+    from probml_utils import latexify, savefig, is_latexify_enabled
+except ModuleNotFoundError:
+    %pip install git+https://github.com/probml/probml-utils.git
+    from probml_utils import latexify, savefig, is_latexify_enabled
+
+
+latexify(width_scale_factor=2, fig_height=2)
+config.update("jax_enable_x64", True)
+
+marksize = 6 if is_latexify_enabled() else 50
+------------------
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 17
+     15 import jax.numpy as jnp
+     16 from tinygp import kernels, transforms, GaussianProcess
+---> 17 from jax.config import config
+     18 from scipy.optimize import minimize
+     19 import matplotlib.pyplot as plt
+
+ModuleNotFoundError: No module named 'jax.config'
