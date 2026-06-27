@@ -1,0 +1,90 @@
+An error occurred while executing the following cell:
+------------------
+# We illustrate effect of prior on parameters for logistic regression
+# Based on fig 11.3 of
+# [Statistical Rethinking ed 2](https://xcelab.net/rm/statistical-rethinking/).
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+import numpy as np
+
+np.set_printoptions(precision=3)
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+import seaborn as sns
+from scipy import stats
+
+try:
+    import arviz as az
+except ModuleNotFoundError:
+    %pip install -qq arviz
+    import arviz as az
+from scipy.special import expit
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 20
+     17 from scipy import stats
+     19 try:
+---> 20     import arviz as az
+     21 except ModuleNotFoundError:
+     22     get_ipython().run_line_magic('pip', 'install -qq arviz')
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:34
+     30 _log = Logger("arviz")
+     33 from .data import *
+---> 34 from .plots import *
+     35 from .plots.backends import *
+     36 from .stats import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/__init__.py:2
+      1 """Plotting functions."""
+----> 2 from .autocorrplot import plot_autocorr
+      3 from .bpvplot import plot_bpv
+      4 from .bfplot import plot_bf
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/autocorrplot.py:7
+      5 from ..rcparams import rcParams
+      6 from ..utils import _var_names
+----> 7 from .plot_utils import default_grid, filter_plotters_list, get_plotting_function
+     10 def plot_autocorr(
+     11     data,
+     12     var_names=None,
+   (...)
+     24     show=None,
+     25 ):
+     26     r"""Bar plot of the autocorrelation function (ACF) for a sequence of data.
+     27 
+     28     The ACF plots are helpful as a convergence diagnostic for posteriors from MCMC
+   (...)
+    117         >>> az.plot_autocorr(data, var_names=['mu', 'tau'], max_lag=200, combined=True)
+    118     """
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/plot_utils.py:15
+     11 from scipy.interpolate import CubicSpline
+     14 from ..rcparams import rcParams
+---> 15 from ..stats.density_utils import kde
+     16 from ..stats import hdi
+     18 KwargSpec = Dict[str, Any]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/stats/__init__.py:3
+      1 # pylint: disable=wildcard-import
+      2 """Statistical tests and diagnostics for ArviZ."""
+----> 3 from .density_utils import *
+      4 from .diagnostics import *
+      5 from .stats import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/stats/density_utils.py:8
+      6 from scipy.fftpack import fft
+      7 from scipy.optimize import brentq
+----> 8 from scipy.signal import convolve, convolve2d, gaussian  # pylint: disable=no-name-in-module
+      9 from scipy.sparse import coo_matrix
+     10 from scipy.special import ive  # pylint: disable=no-name-in-module
+
+ImportError: cannot import name 'gaussian' from 'scipy.signal' (/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/signal/__init__.py)
