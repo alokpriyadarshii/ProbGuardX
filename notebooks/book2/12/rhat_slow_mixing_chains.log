@@ -1,0 +1,88 @@
+An error occurred while executing the following cell:
+------------------
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+import arviz as az
+import seaborn as sns
+import numpy as np
+
+try:
+    from probml_utils import latexify, savefig
+except ModuleNotFoundError:
+    %pip install git+https://github.com/probml/probml-utils.git
+    from probml_utils import latexify, savefig
+
+from probml_utils.blackjax_utils import inference_loop_multiple_chains, arviz_trace_from_states
+
+try:
+    import tensorflow_probability.substrates.jax as tfp
+except ModuleNotFoundError:
+    %pip -qq install tensorflow_probability
+    import tensorflow_probability.substrates.jax as tfp
+
+try:
+    import blackjax
+except ModuleNotFoundError:
+    %pip install -qq blackjax
+    import blackjax
+
+tfd = tfp.distributions
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 1
+----> 1 import jax
+      2 import jax.numpy as jnp
+      3 import matplotlib.pyplot as plt
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:25
+     22 from jax.version import __version_info__ as __version_info__
+     24 # Set Cloud TPU env vars if necessary before transitively loading C++ backend
+---> 25 from jax._src.cloud_tpu_init import cloud_tpu_init as _cloud_tpu_init
+     26 try:
+     27   _cloud_tpu_init()
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/cloud_tpu_init.py:20
+     18 import warnings
+     19 from jax import version
+---> 20 from jax._src import config
+     21 from jax._src import hardware_utils
+     23 running_in_cloud_tpu_vm: bool = False
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:27
+     24 import sys
+     25 from typing import Any, Generic, NoReturn, Optional, Protocol, TypeVar, cast
+---> 27 from jax._src.lib import guard_lib
+     28 from jax._src.lib import jax_jit
+     29 from jax._src.lib import xla_client
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:86
+     83 import jaxlib.cpu_feature_guard as cpu_feature_guard
+     84 cpu_feature_guard.check_cpu_features()
+---> 86 import jaxlib.lapack as lapack  # noqa: F401
+     87 import jaxlib.utils as utils  # noqa: F401
+     88 import jaxlib._jax as _jax  # noqa: F401
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jaxlib/lapack.py:17
+      1 # Copyright 2018 The JAX Authors.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     12 # See the License for the specific language governing permissions and
+     13 # limitations under the License.
+     15 from typing import Any
+---> 17 import numpy as np
+     19 from .cpu import _lapack
+     20 from .cpu._lapack import eig
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py:144
+    141 # Allow distributors to run custom init code
+    142 from . import _distributor_init
+--> 144 from . import core
+    145 from .core import *
+    146 from . import compat
+
+ImportError: cannot import name 'core' from partially initialized module 'numpy' (most likely due to a circular import) (/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py)
