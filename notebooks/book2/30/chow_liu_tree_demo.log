@@ -157,6 +157,9 @@ view_pydot(p)
 p.write_png("../figures/tree_structure.png")
 ------------------
 
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_validation.py:14: UserWarning: A NumPy version >=1.23.5 and <2.5.0 is required for this version of SciPy (detected version 1.22.4)
+  from scipy.sparse import csr_matrix, issparse
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ----- stdout -----
