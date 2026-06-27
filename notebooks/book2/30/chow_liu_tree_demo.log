@@ -160,12 +160,6 @@ p.write_png("../figures/tree_structure.png")
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ----- stdout -----
-ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-arviz 0.23.4 requires xarray>=2023.7.0, which is not installed.
-matplotlib 3.10.9 requires contourpy>=1.0.1, which is not installed.
-xarray-einstats 0.8.0 requires xarray>=2022.09.0, which is not installed.
-
------ stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ------------------
 
