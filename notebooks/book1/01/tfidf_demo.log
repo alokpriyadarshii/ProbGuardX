@@ -155,17 +155,97 @@ print(np.round(Btest.todense(), 3))
 
 
 ---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 6
-      1 # https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html
-      2 # http://www.pitt.edu/~naraehan/presentation/Movie+Reviews+sentiment+analysis+with+Scikit-Learn.html
-      3 # https://medium.com/@cristhianboujon/how-to-list-the-most-common-words-from-text-corpus-using-scikit-learn-dad4d0cab41d
-----> 6 import numpy as np
+AttributeError                            Traceback (most recent call last)
+Cell In[1], line 16
       7 from numpy.testing import assert_allclose
       9 corpus = [
      10     "This is the first example.",
      11     "This example is the second example",
      12     "Do you want to see more examples, or is three examples enough?",
      13 ]
+---> 16 from sklearn.feature_extraction.text import CountVectorizer
+     18 # default tokenizer drops important words, NLTK tokenzier keeps everything,
+     19 try:
 
-ModuleNotFoundError: No module named 'numpy'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/__init__.py:73
+     62 # `_distributor_init` allows distributors to run custom init code.
+     63 # For instance, for the Windows wheel, this is used to pre-load the
+     64 # vcomp shared library runtime for OpenMP embedded in the sklearn/.libs
+   (...)
+     67 # later is linked to the OpenMP runtime to make it possible to introspect
+     68 # it and importing it first would fail if the OpenMP dll cannot be found.
+     69 from . import (  # noqa: F401 E402
+     70     __check_build,
+     71     _distributor_init,
+     72 )
+---> 73 from .base import clone  # noqa: E402
+     74 from .utils._show_versions import show_versions  # noqa: E402
+     76 _submodules = [
+     77     "calibration",
+     78     "cluster",
+   (...)
+    114     "compose",
+    115 ]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/base.py:19
+     17 from ._config import config_context, get_config
+     18 from .exceptions import InconsistentVersionWarning
+---> 19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled
+     20 from .utils._missing import is_scalar_nan
+     21 from .utils._param_validation import validate_parameter_constraints
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/__init__.py:9
+      7 from . import metadata_routing
+      8 from ._bunch import Bunch
+----> 9 from ._chunking import gen_batches, gen_even_slices
+     11 # Make _safe_indexing importable from here for backward compat as this particular
+     12 # helper is considered semi-private and typically very useful for third-party
+     13 # libraries that want to comply with scikit-learn's estimator API. In particular,
+     14 # _safe_indexing was included in our public API documentation despite the leading
+     15 # `_` in its name.
+     16 from ._indexing import (
+     17     _safe_indexing,  # noqa: F401
+     18     resample,
+     19     shuffle,
+     20 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_chunking.py:11
+      8 import numpy as np
+     10 from .._config import get_config
+---> 11 from ._param_validation import Interval, validate_params
+     14 def chunk_generator(gen, chunksize):
+     15     """Chunk generator, ``gen`` into lists of length ``chunksize``. The last
+     16     chunk may have a length less than ``chunksize``."""
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_validation.py:17
+     14 from scipy.sparse import csr_matrix, issparse
+     16 from .._config import config_context, get_config
+---> 17 from .validation import _is_arraylike_not_scalar
+     20 class InvalidParameterError(ValueError, TypeError):
+     21     """Custom exception to be raised when the parameter of a class/method/function
+     22     does not have a valid type or value.
+     23     """
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/validation.py:21
+     19 from .. import get_config as _get_config
+     20 from ..exceptions import DataConversionWarning, NotFittedError, PositiveSpectrumWarning
+---> 21 from ..utils._array_api import _asarray_with_order, _is_numpy_namespace, get_namespace
+     22 from ..utils.deprecation import _deprecate_force_all_finite
+     23 from ..utils.fixes import ComplexWarning, _preserve_dia_indices_dtype
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_array_api.py:20
+     18 from ..externals import array_api_extra as xpx
+     19 from ..externals.array_api_compat import numpy as np_compat
+---> 20 from .fixes import parse_version
+     22 # TODO: complete __all__
+     23 __all__ = ["xpx"]  # we import xpx here just to re-export it, need this to appease ruff
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/fixes.py:37
+     33 sp_base_version = parse_version(sp_version.base_version)
+     35 # TODO: We can consider removing the containers and importing
+     36 # directly from SciPy when sparse matrices will be deprecated.
+---> 37 CSR_CONTAINERS = [scipy.sparse.csr_matrix, scipy.sparse.csr_array]
+     38 CSC_CONTAINERS = [scipy.sparse.csc_matrix, scipy.sparse.csc_array]
+     39 COO_CONTAINERS = [scipy.sparse.coo_matrix, scipy.sparse.coo_array]
+
+AttributeError: module 'scipy.sparse' has no attribute 'csr_array'

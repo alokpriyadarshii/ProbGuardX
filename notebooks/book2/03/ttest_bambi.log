@@ -30,8 +30,8 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 Note: you may need to restart the kernel to use updated packages.
 ----- stdout -----
 Collecting git+https://github.com/bambinos/bambi.git
-  Cloning https://github.com/bambinos/bambi.git to /tmp/pip-req-build-cd2dzqtz
-  Running command git clone --filter=blob:none --quiet https://github.com/bambinos/bambi.git /tmp/pip-req-build-cd2dzqtz
+  Cloning https://github.com/bambinos/bambi.git to /tmp/pip-req-build-1zzsedrn
+  Running command git clone --filter=blob:none --quiet https://github.com/bambinos/bambi.git /tmp/pip-req-build-1zzsedrn
 ----- stdout -----
   Resolved https://github.com/bambinos/bambi.git to commit de5cde3bcad1e1fb5db86e7737e1fca2c220203d
 ----- stdout -----
@@ -39,7 +39,9 @@ Collecting git+https://github.com/bambinos/bambi.git
 ----- stdout -----
  \
 ----- stdout -----
- | done
+ |
+----- stdout -----
+ done
 ----- stdout -----
   Getting requirements to build wheel ... -
 ----- stdout -----
