@@ -40,7 +40,7 @@ except ModuleNotFoundError:
 
 
 ---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
+TypeError                                 Traceback (most recent call last)
 Cell In[1], line 1
 ----> 1 import jax
       2 import jax.numpy as jnp
@@ -138,27 +138,94 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/core.py:38
      39 from jax._src import config
      40 from jax._src import effects
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/dtypes.py:518
-    511 # We add the StringDType only to `_jax_dtype_set` but not to `_jax_types` and
-    512 # `_dtype_kinds`. This is because, in spite of a very similar sounding name,
-    513 # `_jax_types` is only meant for the promotion related logic, and StringDType
-    514 # does not participate in promotions at the moment. Similarly, `_dtype_kinds` is
-    515 # only meant for the `jnp.isdtype` and we want to be conservative and not allow
-    516 # StringDType to be used in there.
-    517 _string_types: list[JAXType] = []
---> 518 if hasattr(np.dtypes, 'StringDType'):
-    519   _string_types: list[JAXType] = [np.dtypes.StringDType()]  # type: ignore
-    521 _jax_dtype_set = {
-    522     float0,
-    523     *_bool_types,
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/dtypes.py:32
+     29 from typing import cast, overload, Any, Literal, Union
+     30 import warnings
+---> 32 import ml_dtypes
+     33 import numpy as np
+     35 from jax._src import config
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/__init__.py:40
+     16 __all__ = [
+     17     "__version__",
+     18     "bfloat16",
    (...)
-    527     *_string_types,
-    528 }
+     35     "uint4",
+     36 ]
+     38 from typing import Type
+---> 40 from ml_dtypes._finfo import finfo
+     41 from ml_dtypes._iinfo import iinfo
+     42 from ml_dtypes._ml_dtypes_ext import bfloat16
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py:315, in __getattr__(attr)
-    312     from .testing import Tester
-    313     return Tester
---> 315 raise AttributeError("module {!r} has no attribute "
-    316                      "{!r}".format(__name__, attr))
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:153
+    149     smallest_subnormal = float.fromhex("0x1p-127")
+    150     self.smallest_subnormal = float8_e8m0fnu(smallest_subnormal)
+--> 153 class finfo(np.finfo):  # pylint: disable=invalid-name,missing-class-docstring
+    154   __doc__ = np.finfo.__doc__
+    156   @staticmethod
+    157   def _bfloat16_finfo():
 
-AttributeError: module 'numpy' has no attribute 'dtypes'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:699, in finfo()
+    684 _finfo_type_map = {
+    685     _bfloat16_dtype: _bfloat16_finfo,
+    686     _float4_e2m1fn_dtype: _float4_e2m1fn_finfo,
+   (...)
+    696     _float8_e8m0fnu_dtype: _float8_e8m0fnu_finfo,
+    697 }
+    698 _finfo_name_map = {t.name: t for t in _finfo_type_map}
+--> 699 _finfo_cache = {
+    700     t: init_fn.__func__()  # pytype: disable=attribute-error
+    701     for t, init_fn in _finfo_type_map.items()
+    702 }
+    704 def __new__(cls, dtype):
+    705   if isinstance(dtype, str):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:700, in <dictcomp>(.0)
+    684 _finfo_type_map = {
+    685     _bfloat16_dtype: _bfloat16_finfo,
+    686     _float4_e2m1fn_dtype: _float4_e2m1fn_finfo,
+   (...)
+    696     _float8_e8m0fnu_dtype: _float8_e8m0fnu_finfo,
+    697 }
+    698 _finfo_name_map = {t.name: t for t in _finfo_type_map}
+    699 _finfo_cache = {
+--> 700     t: init_fn.__func__()  # pytype: disable=attribute-error
+    701     for t, init_fn in _finfo_type_map.items()
+    702 }
+    704 def __new__(cls, dtype):
+    705   if isinstance(dtype, str):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:668, in finfo._float8_e8m0fnu_finfo()
+    666 # pylint: disable=protected-access
+    667 obj._machar = _Float8E8m0fnuMachArLike()
+--> 668 if not hasattr(obj, "tiny"):
+    669   obj.tiny = float8_e8m0fnu(tiny)
+    670 if not hasattr(obj, "smallest_normal"):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:627, in finfo.tiny(self)
+    612 @property
+    613 def tiny(self):
+    614     """Return the value for tiny, alias of smallest_normal.
+    615 
+    616     Returns
+   (...)
+    625         double-double.
+    626     """
+--> 627     return self.smallest_normal
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:606, in finfo.smallest_normal(self)
+    591 """Return the value for the smallest normal.
+    592 
+    593 Returns
+   (...)
+    602     double-double.
+    603 """
+    604 # This check is necessary because the value for smallest_normal is
+    605 # platform dependent for longdouble types.
+--> 606 if isnan(self._machar.smallest_normal.flat[0]):
+    607     warnings.warn(
+    608         'The value of smallest normal is undefined for double double',
+    609         UserWarning, stacklevel=2)
+    610 return self._machar.smallest_normal.flat[0]
+
+TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''

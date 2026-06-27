@@ -26,11 +26,6 @@ print(tf.__version__, tfp.__version__)
 ------------------
 
 ----- stdout -----
-ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-optax 0.2.8 requires jax>=0.5.3, which is not installed.
-optax 0.2.8 requires jaxlib>=0.5.3, which is not installed.
-
------ stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ------------------
 
@@ -186,28 +181,110 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:66
     669   obj.tiny = float8_e8m0fnu(tiny)
     670 if not hasattr(obj, "smallest_normal"):
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:577, in tiny(self)
-    566 def __str__(self):
-    567     fmt = (
-    568         'Machine parameters for %(dtype)s\n'
-    569         '---------------------------------------------------------------\n'
-    570         'precision = %(precision)3s   resolution = %(_str_resolution)s\n'
-    571         'machep = %(machep)6s   eps =        %(_str_eps)s\n'
-    572         'negep =  %(negep)6s   epsneg =     %(_str_epsneg)s\n'
-    573         'minexp = %(minexp)6s   tiny =       %(_str_tiny)s\n'
-    574         'maxexp = %(maxexp)6s   max =        %(_str_max)s\n'
-    575         'nexp =   %(nexp)6s   min =        -max\n'
-    576         'smallest_normal = %(_str_smallest_normal)s   '
---> 577         'smallest_subnormal = %(_str_smallest_subnormal)s\n'
-    578         '---------------------------------------------------------------\n'
-    579         )
-    580     return fmt % self.__dict__
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:627, in tiny(self)
+    594 @set_module('numpy')
+    595 class iinfo:
+    596     """
+    597     iinfo(type)
+    598 
+    599     Machine limits for integer types.
+    600 
+    601     Attributes
+    602     ----------
+    603     bits : int
+    604         The number of bits occupied by the type.
+    605     min : int
+    606         The smallest integer expressible by the type.
+    607     max : int
+    608         The largest integer expressible by the type.
+    609 
+    610     Parameters
+    611     ----------
+    612     int_type : integer type, dtype, or instance
+    613         The kind of integer data type to get information about.
+    614 
+    615     See Also
+    616     --------
+    617     finfo : The equivalent for floating point data types.
+    618 
+    619     Examples
+    620     --------
+    621     With types:
+    622 
+    623     >>> ii16 = np.iinfo(np.int16)
+    624     >>> ii16.min
+    625     -32768
+    626     >>> ii16.max
+--> 627     32767
+    628     >>> ii32 = np.iinfo(np.int32)
+    629     >>> ii32.min
+    630     -2147483648
+    631     >>> ii32.max
+    632     2147483647
+    633 
+    634     With instances:
+    635 
+    636     >>> ii32 = np.iinfo(np.int32(10))
+    637     >>> ii32.min
+    638     -2147483648
+    639     >>> ii32.max
+    640     2147483647
+    641 
+    642     """
+    644     _min_vals = {}
+    645     _max_vals = {}
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:556, in smallest_normal(self)
-    554 self.nexp = machar.iexp
-    555 self.nmant = machar.it
---> 556 self._machar = machar
-    557 self._str_tiny = machar._str_xmin.strip()
-    558 self._str_max = machar._str_xmax.strip()
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:606, in smallest_normal(self)
+    594 @set_module('numpy')
+    595 class iinfo:
+    596     """
+    597     iinfo(type)
+    598 
+    599     Machine limits for integer types.
+    600 
+    601     Attributes
+    602     ----------
+    603     bits : int
+    604         The number of bits occupied by the type.
+    605     min : int
+--> 606         The smallest integer expressible by the type.
+    607     max : int
+    608         The largest integer expressible by the type.
+    609 
+    610     Parameters
+    611     ----------
+    612     int_type : integer type, dtype, or instance
+    613         The kind of integer data type to get information about.
+    614 
+    615     See Also
+    616     --------
+    617     finfo : The equivalent for floating point data types.
+    618 
+    619     Examples
+    620     --------
+    621     With types:
+    622 
+    623     >>> ii16 = np.iinfo(np.int16)
+    624     >>> ii16.min
+    625     -32768
+    626     >>> ii16.max
+    627     32767
+    628     >>> ii32 = np.iinfo(np.int32)
+    629     >>> ii32.min
+    630     -2147483648
+    631     >>> ii32.max
+    632     2147483647
+    633 
+    634     With instances:
+    635 
+    636     >>> ii32 = np.iinfo(np.int32(10))
+    637     >>> ii32.min
+    638     -2147483648
+    639     >>> ii32.max
+    640     2147483647
+    641 
+    642     """
+    644     _min_vals = {}
+    645     _max_vals = {}
 
 TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
