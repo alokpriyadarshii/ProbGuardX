@@ -1,0 +1,30 @@
+An error occurred while executing the following cell:
+------------------
+@flax.struct.dataclass
+class Store:
+    """A simple dataclass to hold our optimization data."""
+
+    params: chex.Array
+    state: Any
+    rng: Any
+    step: int = 0
+------------------
+
+
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[9], line 2
+      1 @flax.struct.dataclass
+----> 2 class Store:
+      3     """A simple dataclass to hold our optimization data."""
+      5     params: chex.Array
+
+Cell In[9], line 5, in Store()
+      1 @flax.struct.dataclass
+      2 class Store:
+      3     """A simple dataclass to hold our optimization data."""
+----> 5     params: chex.Array
+      6     state: Any
+      7     rng: Any
+
+NameError: name 'chex' is not defined

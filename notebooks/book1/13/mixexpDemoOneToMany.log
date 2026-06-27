@@ -1,0 +1,244 @@
+An error occurred while executing the following cell:
+------------------
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+import matplotlib.pyplot as plt
+import numpy as np
+try:
+    import pandas as pd
+except ModuleNotFoundError:
+    %pip install -qq pandas
+    import pandas as pd
+from scipy.special import logsumexp
+try:
+    from sklearn.linear_model import LinearRegression
+except ModuleNotFoundError:
+    %pip install -qq scikit-learn
+    from sklearn.linear_model import LinearRegression
+from scipy.stats import multivariate_normal
+import probml_utils as pml
+
+n = 200
+np.random.seed(1)
+y = np.random.rand(n, 1)
+eta = np.random.randn(n,1)*0.05
+x = y + 0.3*np.sin(2*3.1415*y) + eta
+data = np.concatenate((x, y), axis=1)
+K = 3
+
+X = x.reshape(-1, 1)
+y = y.reshape(-1, 1)
+xtest = (x)
+ytest = (y)
+
+plt.figure()
+plt.scatter(x, y, edgecolors='blue', color="none")
+plt.title('Inverse problem')
+pml.savefig('mixexp_inverse.pdf')
+plt.show()
+
+def normalizelogspace(x):
+  L = logsumexp(x, axis=1).reshape(-1, 1)
+  Lnew = np.repeat(L, 3, axis=1)
+  y = x - Lnew
+  return y, Lnew
+
+def is_pos_def(x):
+    return np.all(np.linalg.eigvals(x) > 0)
+
+K = 3 #nmix
+D = np.size(X, axis=1)
+N = np.size(X, axis=0)
+norm = 50
+max_iter = 39
+iteration = 0
+r = np.zeros((N, K))
+while iteration < max_iter:
+
+      #E-step :
+      np.random.seed(iteration)
+      Wy = 0.1*np.random.randn(D, K)
+      bias = 0.3*np.random.randn(D, K)
+      mixweights = np.random.rand(1, K)
+      normmw =  np.linalg.norm(mixweights)
+      mixweights = mixweights/normmw
+      sigma2 = 0.1*np.random.randn(1, K)
+      q = np.log(mixweights)
+      logprior = np.repeat(q, N, axis=0)
+      loglik = np.zeros((N, K))
+      for k in range(K):
+        vecM = X*Wy[:, k] + bias[:, k]
+        vecM = vecM.reshape(200, )
+        cov = sigma2[0, k]
+        cov = np.abs(cov)
+        vecX = y
+        x = multivariate_normal.logpdf(vecX, mean=vecM, cov=cov)
+        x = x /norm
+        loglik[:, k] = x
+      logpost = loglik + logprior
+      logpost, logZ = normalizelogspace(logpost)
+      ll = np.sum(logZ)
+      post = np.exp(logpost)
+
+      #M-step:
+      r = post
+      mixweights = np.sum(r, axis=0)/N
+      mixweights = mixweights.reshape(1, -1)
+
+      for k in range(K):
+        reg = LinearRegression()
+        model = reg.fit(X, y, r[:, k])
+        Wy[:, k] = model.coef_
+        bias[:, k] = model.intercept_
+        yhat_ = np.multiply(X, Wy[:, k]) + bias[:, k]
+        sigma2[:, k] = np.sum(np.multiply(r[:, k], np.square(y-yhat_))) / sum(r[:, k])
+
+      iteration = iteration + 1
+
+N = np.size(X, axis=0)
+D = np.size(X, axis=1)
+K = 3
+weights = np.repeat(mixweights, N, axis=0)
+muk = np.zeros((N, K))
+vk = np.zeros((N, K))
+mu = np.zeros((N, ))
+v = np.zeros((N, 1))
+b = 0.3*np.random.randn(D, K)
+for k in range(K):
+    w = X*Wy[:, k] + bias[:, k]
+    w = w.reshape(-1, )
+    muk[:, k] = w
+    q = np.multiply(weights[:, k], muk[:, k])
+    mu = mu + q
+    vk[:, k] = sigma2[:, k]
+    v = v + np.multiply(weights[:, k], (vk[:, k] + np.square(muk[:, k]))).reshape(-1, 1)
+
+v = v - np.square(mu).reshape(-1, 1)
+
+plt.figure()
+plt.scatter(xtest, y, edgecolors='blue', color="none")
+plt.plot(xtest, muk[:, 0])
+plt.plot(xtest, muk[:, 1])
+plt.plot(xtest, muk[:, 2])
+plt.title('Expert-predictions')
+pml.savefig('mixexp_expert_predictions.pdf')
+plt.show()
+
+plt.figure()
+for i in range(K):
+  plt.scatter(y, post[:, i])
+plt.title('Gating functions')
+pml.savefig('mixexp_gating_functions.pdf')
+plt.show()
+
+map = np.empty((K, 1))
+map = np.argmax(post, axis=1)
+map = map.reshape(-1, 1)
+yhat = np.empty((N, 1))
+for i in range(N):
+  yhat[i, 0] = muk[i, map[i, 0]]
+
+plt.figure()
+plt.scatter(xtest, yhat, marker=6, color='black')
+plt.scatter(xtest, mu, marker='X', color='red')
+plt.scatter(xtest, y, edgecolors='blue', color="none")
+plt.title('prediction')
+plt.legend(['mode', 'mean'])
+pml.savefig('mixexp_predictions.pdf')
+plt.show()
+
+------------------
+
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[1], line 9
+      7 import numpy as np
+      8 try:
+----> 9     import pandas as pd
+     10 except ModuleNotFoundError:
+     11     get_ipython().run_line_magic('pip', 'install -qq pandas')
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/__init__.py:22
+     19 del _hard_dependencies, _dependency, _missing_dependencies
+     21 # numpy compat
+---> 22 from pandas.compat import is_numpy_dev as _is_numpy_dev  # pyright: ignore # noqa:F401
+     24 try:
+     25     from pandas._libs import hashtable as _hashtable, lib as _lib, tslib as _tslib
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/__init__.py:25
+     17 from pandas.compat._constants import (
+     18     IS64,
+     19     PY39,
+   (...)
+     22     PYPY,
+     23 )
+     24 import pandas.compat.compressors
+---> 25 from pandas.compat.numpy import (
+     26     is_numpy_dev,
+     27     np_version_under1p21,
+     28 )
+     29 from pandas.compat.pyarrow import (
+     30     pa_version_under7p0,
+     31     pa_version_under8p0,
+     32     pa_version_under9p0,
+     33     pa_version_under11p0,
+     34 )
+     37 def set_function_name(f: F, name: str, cls) -> F:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/numpy/__init__.py:4
+      1 """ support numpy compatibility across versions """
+      2 import numpy as np
+----> 4 from pandas.util.version import Version
+      6 # numpy versioning
+      7 _np_version = np.__version__
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/__init__.py:2
+      1 # pyright: reportUnusedImport = false
+----> 2 from pandas.util._decorators import (  # noqa:F401
+      3     Appender,
+      4     Substitution,
+      5     cache_readonly,
+      6 )
+      8 from pandas.core.util.hashing import (  # noqa:F401
+      9     hash_array,
+     10     hash_pandas_object,
+     11 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/_decorators.py:14
+      6 from typing import (
+      7     Any,
+      8     Callable,
+      9     Mapping,
+     10     cast,
+     11 )
+     12 import warnings
+---> 14 from pandas._libs.properties import cache_readonly
+     15 from pandas._typing import (
+     16     F,
+     17     T,
+     18 )
+     19 from pandas.util._exceptions import find_stack_level
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/__init__.py:13
+      1 __all__ = [
+      2     "NaT",
+      3     "NaTType",
+   (...)
+      9     "Interval",
+     10 ]
+---> 13 from pandas._libs.interval import Interval
+     14 from pandas._libs.tslibs import (
+     15     NaT,
+     16     NaTType,
+   (...)
+     21     iNaT,
+     22 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/interval.pyx:1, in init pandas._libs.interval()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject

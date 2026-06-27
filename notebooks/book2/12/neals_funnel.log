@@ -1,0 +1,193 @@
+An error occurred while executing the following cell:
+------------------
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+from probml_utils import blackjax_utils
+
+try:
+    import blackjax
+except:
+    %pip install blackjax
+    import blackjax
+
+
+import arviz as az
+import matplotlib.pyplot as plt
+import jax
+from jax import random
+import jax.numpy as jnp
+
+try:
+    import tensorflow_probability.substrates.jax as tfp
+except:
+    %pip install tensorflow_probability
+    import tensorflow_probability.substrates.jax as tfp
+
+tfd = tfp.distributions
+
+import os
+import seaborn as sns
+------------------
+
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/data/base.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+------------------
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[1], line 7
+      4     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
+      5     import probml_utils as pml
+----> 7 from probml_utils import blackjax_utils
+      9 try:
+     10     import blackjax
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/blackjax_utils.py:1
+----> 1 import arviz as az
+      2 import jax.numpy as jnp
+      3 import jax
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:32
+     26         super()._log(level, msg, *args, **kwargs)
+     29 _log = Logger("arviz")
+---> 32 from .data import *
+     33 from .plots import *
+     34 from .plots.backends import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/data/__init__.py:2
+      1 """Code for loading and manipulating data structures."""
+----> 2 from .base import CoordSpec, DimSpec, dict_to_dataset, numpy_to_data_array
+      3 from .converters import convert_to_dataset, convert_to_inference_data
+      4 from .datasets import clear_data_home, list_datasets, load_arviz_data
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/data/base.py:11
+      9 import numpy as np
+     10 import pkg_resources
+---> 11 import xarray as xr
+     13 try:
+     14     import ujson as json
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/__init__.py:3
+      1 from importlib.metadata import version as _version
+----> 3 from xarray import testing, tutorial
+      4 from xarray.backends.api import (
+      5     load_dataarray,
+      6     load_dataset,
+   (...)
+     10     save_mfdataset,
+     11 )
+     12 from xarray.backends.zarr import open_zarr
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/testing/__init__.py:1
+----> 1 from xarray.testing.assertions import (  # noqa: F401
+      2     _assert_dataarray_invariants,
+      3     _assert_dataset_invariants,
+      4     _assert_indexes_invariants_checks,
+      5     _assert_internal_invariants,
+      6     _assert_variable_invariants,
+      7     _data_allclose_or_equiv,
+      8     assert_allclose,
+      9     assert_chunks_equal,
+     10     assert_duckarray_allclose,
+     11     assert_duckarray_equal,
+     12     assert_equal,
+     13     assert_identical,
+     14 )
+     16 __all__ = [
+     17     "assert_allclose",
+     18     "assert_chunks_equal",
+   (...)
+     22     "assert_identical",
+     23 ]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/testing/assertions.py:8
+      5 from typing import Union
+      7 import numpy as np
+----> 8 import pandas as pd
+     10 from xarray.core import duck_array_ops, formatting, utils
+     11 from xarray.core.coordinates import Coordinates
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/__init__.py:22
+     19 del _hard_dependencies, _dependency, _missing_dependencies
+     21 # numpy compat
+---> 22 from pandas.compat import is_numpy_dev as _is_numpy_dev  # pyright: ignore # noqa:F401
+     24 try:
+     25     from pandas._libs import hashtable as _hashtable, lib as _lib, tslib as _tslib
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/__init__.py:25
+     17 from pandas.compat._constants import (
+     18     IS64,
+     19     PY39,
+   (...)
+     22     PYPY,
+     23 )
+     24 import pandas.compat.compressors
+---> 25 from pandas.compat.numpy import (
+     26     is_numpy_dev,
+     27     np_version_under1p21,
+     28 )
+     29 from pandas.compat.pyarrow import (
+     30     pa_version_under7p0,
+     31     pa_version_under8p0,
+     32     pa_version_under9p0,
+     33     pa_version_under11p0,
+     34 )
+     37 def set_function_name(f: F, name: str, cls) -> F:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/numpy/__init__.py:4
+      1 """ support numpy compatibility across versions """
+      2 import numpy as np
+----> 4 from pandas.util.version import Version
+      6 # numpy versioning
+      7 _np_version = np.__version__
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/__init__.py:2
+      1 # pyright: reportUnusedImport = false
+----> 2 from pandas.util._decorators import (  # noqa:F401
+      3     Appender,
+      4     Substitution,
+      5     cache_readonly,
+      6 )
+      8 from pandas.core.util.hashing import (  # noqa:F401
+      9     hash_array,
+     10     hash_pandas_object,
+     11 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/_decorators.py:14
+      6 from typing import (
+      7     Any,
+      8     Callable,
+      9     Mapping,
+     10     cast,
+     11 )
+     12 import warnings
+---> 14 from pandas._libs.properties import cache_readonly
+     15 from pandas._typing import (
+     16     F,
+     17     T,
+     18 )
+     19 from pandas.util._exceptions import find_stack_level
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/__init__.py:13
+      1 __all__ = [
+      2     "NaT",
+      3     "NaTType",
+   (...)
+      9     "Interval",
+     10 ]
+---> 13 from pandas._libs.interval import Interval
+     14 from pandas._libs.tslibs import (
+     15     NaT,
+     16     NaTType,
+   (...)
+     21     iNaT,
+     22 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/interval.pyx:1, in init pandas._libs.interval()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject

@@ -1,0 +1,37 @@
+An error occurred while executing the following cell:
+------------------
+import jax
+import jax.numpy as jnp
+import jax.scipy
+from jax.config import config
+from jax.scipy.stats import multivariate_normal
+from matplotlib import colors
+from matplotlib.colors import LightSource
+from mpl_toolkits.mplot3d import axes3d
+import numpy as np
+import seaborn as sns
+import os
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+config.update("jax_enable_x64", True)
+
+
+try:
+    from probml_utils import savefig, latexify
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    from probml_utils import savefig, latexify
+------------------
+
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 4
+      2 import jax.numpy as jnp
+      3 import jax.scipy
+----> 4 from jax.config import config
+      5 from jax.scipy.stats import multivariate_normal
+      6 from matplotlib import colors
+
+ModuleNotFoundError: No module named 'jax.config'

@@ -1,0 +1,254 @@
+An error occurred while executing the following cell:
+------------------
+import jax
+import os
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+from jax.scipy.stats import multivariate_normal
+import seaborn as sns
+
+jax.config.update("jax_platform_name", "cpu")
+
+try:
+    import blackjax
+except ModuleNotFoundError:
+    %pip install -qq jaxopt blackjax
+    import blackjax
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+from probml_utils.blackjax_utils import inference_loop
+import blackjax.smc.resampling as resampling
+------------------
+
+----- stdout -----
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
+pymc3 3.11.6 requires numpy<1.22.2,>=1.15.0, but you have numpy 2.2.6 which is incompatible.
+pymc3 3.11.6 requires scipy<1.8.0,>=1.7.3, but you have scipy 1.15.3 which is incompatible.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 11
+     10 try:
+---> 11     import blackjax
+     12 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'blackjax'
+
+During handling of the above exception, another exception occurred:
+
+TypeError                                 Traceback (most recent call last)
+Cell In[1], line 14
+     12 except ModuleNotFoundError:
+     13     get_ipython().run_line_magic('pip', 'install -qq jaxopt blackjax')
+---> 14     import blackjax
+     16 try:
+     17     import probml_utils as pml
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/blackjax/__init__.py:6
+      2 from typing import Callable
+      4 from blackjax._version import __version__
+----> 6 from .adaptation.adjusted_mclmc_adaptation import adjusted_mclmc_find_L_and_step_size
+      7 from .adaptation.chees_adaptation import chees_adaptation
+      8 from .adaptation.mclmc_adaptation import mclmc_find_L_and_step_size
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/blackjax/adaptation/__init__.py:1
+----> 1 from . import (
+      2     chees_adaptation,
+      3     mclmc_adaptation,
+      4     meads_adaptation,
+      5     pathfinder_adaptation,
+      6     window_adaptation,
+      7 )
+      9 __all__ = [
+     10     "chees_adaptation",
+     11     "meads_adaptation",
+   (...)
+     14     "mclmc_adaptation",
+     15 ]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/blackjax/adaptation/mclmc_adaptation.py:22
+     19 import jax.numpy as jnp
+     20 from jax.flatten_util import ravel_pytree
+---> 22 from blackjax.diagnostics import effective_sample_size
+     23 from blackjax.util import generate_unit_vector, incremental_value_update, pytree_size
+     26 class MCLMCAdaptationState(NamedTuple):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/blackjax/diagnostics.py:18
+     16 import jax.numpy as jnp
+     17 import numpy as np
+---> 18 from scipy.fftpack import next_fast_len  # type: ignore
+     20 from blackjax.types import Array, ArrayLike
+     22 __all__ = ["potential_scale_reduction", "effective_sample_size"]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fftpack/__init__.py:93
+      1 """
+      2 =========================================================
+      3 Legacy discrete Fourier transforms (:mod:`scipy.fftpack`)
+   (...)
+     77 
+     78 """
+     81 __all__ = ['fft','ifft','fftn','ifftn','rfft','irfft',
+     82            'fft2','ifft2',
+     83            'diff',
+   (...)
+     90            'dct', 'idct', 'dst', 'idst', 'dctn', 'idctn', 'dstn', 'idstn'
+     91            ]
+---> 93 from ._basic import *
+     94 from ._pseudo_diffs import *
+     95 from ._helper import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fftpack/_basic.py:8
+      4 # Created by Pearu Peterson, August,September 2002
+      5 __all__ = ['fft','ifft','fftn','ifftn','rfft','irfft',
+      6            'fft2','ifft2']
+----> 8 from scipy.fft import _pocketfft
+      9 from ._helper import _good_shape
+     12 def fft(x, n=None, axis=-1, overwrite_x=False):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fft/__init__.py:91
+     86 from ._basic import (
+     87     fft, ifft, fft2, ifft2, fftn, ifftn,
+     88     rfft, irfft, rfft2, irfft2, rfftn, irfftn,
+     89     hfft, ihfft, hfft2, ihfft2, hfftn, ihfftn)
+     90 from ._realtransforms import dct, idct, dst, idst, dctn, idctn, dstn, idstn
+---> 91 from ._fftlog import fht, ifht, fhtoffset
+     92 from ._helper import (
+     93     next_fast_len, prev_fast_len, fftfreq,
+     94     rfftfreq, fftshift, ifftshift)
+     95 from ._backend import (set_backend, skip_backend, set_global_backend,
+     96                        register_backend)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fft/_fftlog.py:10
+      8 from ._basic import _dispatch
+      9 from scipy._lib.uarray import Dispatchable
+---> 10 from ._fftlog_backend import fhtoffset
+     11 import numpy as np
+     13 __all__ = ['fht', 'ifht', 'fhtoffset']
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fft/_fftlog_backend.py:6
+      3 from ._basic import rfft, irfft
+      4 from ..special import loggamma, poch
+----> 6 from scipy._lib._array_api import array_namespace
+      8 __all__ = ['fht', 'ifht', 'fhtoffset']
+     10 # constants
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/_lib/_array_api.py:15
+     12 from typing import Any, Literal, TypeAlias
+     14 import numpy as np
+---> 15 import numpy.typing as npt
+     17 from scipy._lib import array_api_compat
+     18 from scipy._lib.array_api_compat import (
+     19     is_array_api_obj,
+     20     size as xp_size,
+   (...)
+     27     is_array_api_strict_namespace as is_array_api_strict
+     28 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/typing/__init__.py:158
+      1 """
+      2 ============================
+      3 Typing (:mod:`numpy.typing`)
+   (...)
+    153 
+    154 """
+    155 # NOTE: The API section will be appended with additional entries
+    156 # further down in this file
+--> 158 from numpy._typing import (
+    159     ArrayLike,
+    160     DTypeLike,
+    161     NBitBase,
+    162     NDArray,
+    163 )
+    165 __all__ = ["ArrayLike", "DTypeLike", "NBitBase", "NDArray"]
+    167 if __doc__ is not None:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/__init__.py:102
+     86 from ._scalars import (
+     87     _CharLike_co as _CharLike_co,
+     88     _BoolLike_co as _BoolLike_co,
+   (...)
+     96     _VoidLike_co as _VoidLike_co,
+     97 )
+     98 from ._shape import (
+     99     _Shape as _Shape,
+    100     _ShapeLike as _ShapeLike,
+    101 )
+--> 102 from ._dtype_like import (
+    103     DTypeLike as DTypeLike,
+    104     _DTypeLike as _DTypeLike,
+    105     _SupportsDType as _SupportsDType,
+    106     _VoidDTypeLike as _VoidDTypeLike,
+    107     _DTypeLikeBool as _DTypeLikeBool,
+    108     _DTypeLikeUInt as _DTypeLikeUInt,
+    109     _DTypeLikeInt as _DTypeLikeInt,
+    110     _DTypeLikeFloat as _DTypeLikeFloat,
+    111     _DTypeLikeComplex as _DTypeLikeComplex,
+    112     _DTypeLikeTD64 as _DTypeLikeTD64,
+    113     _DTypeLikeDT64 as _DTypeLikeDT64,
+    114     _DTypeLikeObject as _DTypeLikeObject,
+    115     _DTypeLikeVoid as _DTypeLikeVoid,
+    116     _DTypeLikeStr as _DTypeLikeStr,
+    117     _DTypeLikeBytes as _DTypeLikeBytes,
+    118     _DTypeLikeComplex_co as _DTypeLikeComplex_co,
+    119 )
+    120 from ._array_like import (
+    121     NDArray as NDArray,
+    122     ArrayLike as ArrayLike,
+   (...)
+    145     _UnknownType as _UnknownType,
+    146 )
+    148 from ._ufunc import (
+    149     _UFunc_Nin1_Nout1 as _UFunc_Nin1_Nout1,
+    150     _UFunc_Nin2_Nout1 as _UFunc_Nin2_Nout1,
+   (...)
+    153     _GUFunc_Nin2_Nout1 as _GUFunc_Nin2_Nout1,
+    154 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/_dtype_like.py:194
+    162 _DTypeLikeInt: TypeAlias = (
+    163     type[int]
+    164     | type[np.signedinteger[Any]]
+   (...)
+    177     | _IntCodes
+    178 )
+    179 _DTypeLikeFloat: TypeAlias = (
+    180     type[float]
+    181     | type[np.floating[Any]]
+   (...)
+    190     | _LongDoubleCodes
+    191 )
+    192 _DTypeLikeComplex: TypeAlias = (
+    193     type[complex]
+--> 194     | type[np.complexfloating[Any]]
+    195     | np.dtype[np.complexfloating[Any]]
+    196     | _SupportsDType[np.dtype[np.complexfloating[Any]]]
+    197     | _Complex64Codes
+    198     | _Complex128Codes
+    199     | _CSingleCodes
+    200     | _CDoubleCodes
+    201     | _CLongDoubleCodes
+    202 )
+    203 _DTypeLikeDT64: TypeAlias = (
+    204     type[np.timedelta64]
+    205     | np.dtype[np.timedelta64]
+    206     | _SupportsDType[np.dtype[np.timedelta64]]
+    207     | _TD64Codes
+    208 )
+    209 _DTypeLikeTD64: TypeAlias = (
+    210     type[np.datetime64]
+    211     | np.dtype[np.datetime64]
+    212     | _SupportsDType[np.dtype[np.datetime64]]
+    213     | _DT64Codes
+    214 )
+
+TypeError: Too few arguments for numpy.complexfloating

@@ -1,0 +1,89 @@
+An error occurred while executing the following cell:
+------------------
+
+import numpy as np
+try:
+    import pandas as pd
+except ModuleNotFoundError:
+    %pip install -qq pandas
+    import pandas as pd
+import matplotlib.pyplot as plt
+try:
+    from sklearn.decomposition import PCA
+except ModuleNotFoundError:
+    %pip install -qq scikit-learn
+    from sklearn.decomposition import PCA
+from pathlib import Path
+
+import os
+import scipy.io
+
+# Get Data
+data_dir = Path('.').absolute().parent / 'data' / 'heightWeight'
+data = scipy.io.loadmat(data_dir / "heightWeight.mat")['heightWeightData']
+data = pd.DataFrame(data).rename(columns = {0:'gender', 1: 'height', 2: 'weight'})
+
+# Function for plotting categorical scatter plot with 1D PCA line
+def make_pca_plot(data):
+
+    pca = PCA(1)
+    X_reconstr = pca.inverse_transform(pca.fit_transform(data[['height','weight']].values))
+    X_reconstr = np.sort(X_reconstr,axis=0)
+    
+    fig, ax = plt.subplots(figsize=(6, 6))
+
+    for i, (name, group) in enumerate(data.groupby('gender')):
+        color = 'red' if i==1 else 'blue'
+        marker = 'o' if i==1 else 'x'
+        fc = 'none' if i==1 else 'blue'
+        ax.scatter(x=group['height'], y=group['weight'], color=color, marker=marker, facecolor=fc, s=100)
+        ax.set_ylabel('weight')
+        ax.set_xlabel('height')
+        ax.plot(X_reconstr[:,0], X_reconstr[:,1], color='black',linewidth=2)
+        
+    return fig, ax
+
+# Save figure function
+figdir = "figures"
+def savefig(fname): 
+    plt.savefig(os.path.join(figdir, fname))
+    
+# Create and save figures
+fig, ax = make_pca_plot(data)
+ax.set_title('heightWeightPCA')
+savefig('heightWeightPCA.pdf')
+
+data_std = (data - data.mean())/data.std()
+fig, ax = make_pca_plot(data_std)
+ax.set_title('heightWeightPCAstnd')
+savefig('heightWeightPCAstnd.pdf')
+
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 7
+      5     get_ipython().run_line_magic('pip', 'install -qq pandas')
+      6     import pandas as pd
+----> 7 import matplotlib.pyplot as plt
+      8 try:
+      9     from sklearn.decomposition import PCA
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
+
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4

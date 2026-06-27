@@ -1,0 +1,115 @@
+An error occurred while executing the following cell:
+------------------
+try:
+    import deepgp
+except ModuleNotFoundError:
+    %pip install git+https://github.com/SheffieldML/PyDeepGP.git
+    import deepgp
+
+try:
+    import GPy
+except ModuleNotFoundError:
+    %pip install -qq GPy
+    import GPy
+
+try:
+    from probml_utils import latexify, savefig, is_latexify_enabled
+except ModuleNotFoundError:
+    %pip install git+https://github.com/probml/probml-utils.git
+    from probml_utils import latexify, savefig, is_latexify_enabled
+
+try:
+    import tinygp
+except ModuleNotFoundError:
+    %pip install -q tinygp
+    import tinygp
+
+# import display
+import seaborn as sns
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+from tinygp import kernels, GaussianProcess
+
+# from jax.config import config
+
+import numpy as np
+
+try:
+    import jaxopt
+except ModuleNotFoundError:
+    %pip install jaxopt
+    import jaxopt
+# config.update("jax_enable_x64", True)
+
+latexify(width_scale_factor=2, fig_height=1.75)
+marksize = 3 if is_latexify_enabled() else 4
+------------------
+
+----- stdout -----
+Collecting git+https://github.com/SheffieldML/PyDeepGP.git
+  Cloning https://github.com/SheffieldML/PyDeepGP.git to /tmp/pip-req-build-pjgot_m4
+  Running command git clone --filter=blob:none --quiet https://github.com/SheffieldML/PyDeepGP.git /tmp/pip-req-build-pjgot_m4
+----- stdout -----
+  Resolved https://github.com/SheffieldML/PyDeepGP.git to commit f2a1f568a7462633a58ed433520dcf7f0c98515c
+----- stdout -----
+  Installing build dependencies ... -
+----- stdout -----
+ \
+----- stdout -----
+ | done
+----- stdout -----
+  Getting requirements to build wheel ... - error
+  error: subprocess-exited-with-error
+  
+  × Getting requirements to build wheel did not run successfully.
+  │ exit code: 1
+  ╰─> [17 lines of output]
+      Traceback (most recent call last):
+        File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 389, in <module>
+          main()
+        File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 373, in main
+          json_out["return_val"] = hook(**hook_input["kwargs"])
+        File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 143, in get_requires_for_build_wheel
+          return hook(config_settings)
+        File "/tmp/pip-build-env-3tojqm8x/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 333, in get_requires_for_build_wheel
+          return self._get_build_requires(config_settings, requirements=[])
+        File "/tmp/pip-build-env-3tojqm8x/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 301, in _get_build_requires
+          self.run_setup()
+        File "/tmp/pip-build-env-3tojqm8x/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 520, in run_setup
+          super().run_setup(setup_script=setup_script)
+        File "/tmp/pip-build-env-3tojqm8x/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 317, in run_setup
+          exec(code, locals())
+        File "<string>", line 6, in <module>
+      ModuleNotFoundError: No module named 'numpy'
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+ERROR: Failed to build 'git+https://github.com/SheffieldML/PyDeepGP.git' when getting requirements to build wheel
+
+----- stdout -----
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 2
+      1 try:
+----> 2     import deepgp
+      3 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'deepgp'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 5
+      3 except ModuleNotFoundError:
+      4     get_ipython().run_line_magic('pip', 'install git+https://github.com/SheffieldML/PyDeepGP.git')
+----> 5     import deepgp
+      7 try:
+      8     import GPy
+
+ModuleNotFoundError: No module named 'deepgp'

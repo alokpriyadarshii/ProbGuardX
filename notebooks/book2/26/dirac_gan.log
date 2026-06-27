@@ -1,0 +1,24 @@
+An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pylab as plt
+from scipy.integrate import odeint
+from scipy.integrate import solve_ivp
+from scipy.misc import derivative
+import seaborn as sns
+------------------
+
+----- stderr -----
+/tmp/ipykernel_2210/1118808398.py:5: DeprecationWarning: scipy.misc is deprecated and will be removed in 2.0.0
+  from scipy.misc import derivative
+------------------
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 5
+      3 from scipy.integrate import odeint
+      4 from scipy.integrate import solve_ivp
+----> 5 from scipy.misc import derivative
+      6 import seaborn as sns
+
+ImportError: cannot import name 'derivative' from 'scipy.misc' (/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/misc/__init__.py)

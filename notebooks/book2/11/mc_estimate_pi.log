@@ -1,0 +1,97 @@
+An error occurred while executing the following cell:
+------------------
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+try:
+    import distrax
+except ModuleNotFoundError:
+    %pip install -qq distrax
+    import distrax
+import ipywidgets as widget
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+import warnings
+
+warnings.filterwarnings("ignore")
+jax.config.update("jax_platform_name", "cpu")
+key = jax.random.PRNGKey(0)
+------------------
+
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[1], line 6
+      3 import matplotlib.pyplot as plt
+      5 try:
+----> 6     import distrax
+      7 except ModuleNotFoundError:
+      8     get_ipython().run_line_magic('pip', 'install -qq distrax')
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/__init__.py:20
+     18 from distrax._src.bijectors.bijector import Bijector
+     19 from distrax._src.bijectors.bijector import BijectorLike
+---> 20 from distrax._src.bijectors.block import Block
+     21 from distrax._src.bijectors.chain import Chain
+     22 from distrax._src.bijectors.diag_linear import DiagLinear
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/bijectors/block.py:20
+     17 from typing import Tuple
+     19 from distrax._src.bijectors import bijector as base
+---> 20 from distrax._src.utils import conversion
+     21 from distrax._src.utils import math
+     23 Array = base.Array
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/utils/conversion.py:19
+     15 """Utility functions for conversion between different types."""
+     17 from typing import Optional, Union
+---> 19 import chex
+     20 from distrax._src.bijectors import bijector
+     21 from distrax._src.bijectors import bijector_from_tfp
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/__init__.py:17
+      1 # Copyright 2020 DeepMind Technologies Limited. All Rights Reserved.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     13 # limitations under the License.
+     14 # ==============================================================================
+     15 """Chex: Testing made fun, in JAX!"""
+---> 17 from chex._src.asserts import assert_axis_dimension
+     18 from chex._src.asserts import assert_axis_dimension_comparator
+     19 from chex._src.asserts import assert_axis_dimension_gt
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/asserts.py:26
+     23 import unittest
+     24 from unittest import mock
+---> 26 from chex._src import asserts_internal as _ai
+     27 from chex._src import pytypes
+     28 import jax
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/asserts_internal.py:34
+     31 from typing import Any, Sequence, Union, Callable, List, Optional, Set, Tuple, Type
+     33 from absl import logging
+---> 34 from chex._src import pytypes
+     35 import jax
+     36 from jax.experimental import checkify
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/pytypes.py:53
+     51 Scalar = Union[float, int]
+     52 Numeric = Union[Array, Scalar]
+---> 53 Shape = jax.core.Shape
+     54 PRNGKey = jax.random.KeyArray
+     55 PyTreeDef = jax.tree_util.PyTreeDef
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/deprecations.py:52, in deprecation_getattr.<locals>.getattr(name)
+     50 message, fn = deprecations[name]
+     51 if fn is None:  # Is the deprecation accelerated?
+---> 52   raise AttributeError(message)
+     53 warnings.warn(message, DeprecationWarning, stacklevel=2)
+     54 return fn
+
+AttributeError: jax.core.Shape is deprecated. Use Shape = Sequence[int | Any].

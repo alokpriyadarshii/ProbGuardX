@@ -1,0 +1,48 @@
+An error occurred while executing the following cell:
+------------------
+# Plot saddle point in 2d
+# https://nbviewer.jupyter.org/github/entiretydotai/Meetup-Content/blob/master/Neural_Network/7_Optimizers.ipynb
+
+
+import numpy as np
+import scipy.sparse
+import matplotlib.pyplot as plt
+import os
+from matplotlib import colors as mcolors
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+fig = plt.figure(figsize=(8, 8))
+ax = fig.gca(projection="3d")
+X = np.arange(-5, 5, 0.25)
+Y = np.arange(-5, 5, 0.25)
+X, Y = np.meshgrid(X, Y)
+Z = X**2 - Y**2
+
+ax.text2D(
+    0, 0, "*", fontdict={"ha": "center", "va": "center", "family": "sans-serif", "fontweight": "bold", "fontsize": 20}
+)
+ax.text2D(0, 0.01, "Saddle Point", fontdict={"family": "sans-serif", "fontweight": "bold"})
+ax.set_xlabel("$X$")
+ax.set_ylabel("$Y$")
+ax.set_zlabel(r"$Z$")
+ax.plot_surface(X, Y, Z)  # color="red");
+pml.savefig("saddle.pdf")
+plt.show()
+------------------
+
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[1], line 18
+     15     import probml_utils as pml
+     17 fig = plt.figure(figsize=(8, 8))
+---> 18 ax = fig.gca(projection="3d")
+     19 X = np.arange(-5, 5, 0.25)
+     20 Y = np.arange(-5, 5, 0.25)
+
+TypeError: FigureBase.gca() got an unexpected keyword argument 'projection'

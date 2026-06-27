@@ -1,0 +1,61 @@
+An error occurred while executing the following cell:
+------------------
+# SVI for a mixture of 3 Gaussians in 2d
+# https://github.com/brendanhasz/svi-gaussian-mixture-model/blob/master/BayesianGaussianMixtureModel.ipynb
+
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+try:
+    import tensorflow as tf
+except ModuleNotFoundError:
+    %pip install -qq tensorflow
+    import tensorflow as tf
+try:
+    import tensorflow_probability as tfp
+except ModuleNotFoundError:
+    %pip install -qq tensorflow-probability
+    import tensorflow_probability as tfp
+tfd = tfp.distributions
+
+try:
+    import probml_utils.svi_gmm_model_tfp as GMM
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils.svi_gmm_model_tfp as GMM
+
+from probml_utils import savefig, latexify
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 5
+      1 # SVI for a mixture of 3 Gaussians in 2d
+      2 # https://github.com/brendanhasz/svi-gaussian-mixture-model/blob/master/BayesianGaussianMixtureModel.ipynb
+      4 import numpy as np
+----> 5 import matplotlib.pyplot as plt
+      6 import seaborn as sns
+      8 try:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
+
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4

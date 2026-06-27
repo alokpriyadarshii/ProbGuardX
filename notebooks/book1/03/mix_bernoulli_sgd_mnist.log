@@ -1,0 +1,112 @@
+An error occurred while executing the following cell:
+------------------
+"""
+Fits Bernoulli mixture model for mnist digits using Gradient Descent
+Author: alokpriyadarshii(@alokpriyadarshii)
+"""
+
+
+import jax.numpy as jnp
+
+try:
+    from probml_utils.mix_bernoulli_lib import BMM
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    from probml_utils.mix_bernoulli_lib import BMM
+
+from probml_utils.mix_bernoulli_em_mnist import mnist_data
+
+
+def main():
+    n_obs = 1000
+    observations = mnist_data(n_obs)  # subsample the MNIST dataset
+    n_vars = len(observations[0])
+    K, num_epochs = 12, 500
+    bmm = BMM(K, n_vars)
+    _ = bmm.fit_sgd(jnp.array(observations), n_obs, num_epochs=num_epochs)
+
+    n_row, n_col = 3, 4
+    bmm.plot(n_row, n_col, "bmm_sgd_mnist")
+
+
+if __name__ == "__main__":
+    main()
+------------------
+
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[1], line 10
+      7 import jax.numpy as jnp
+      9 try:
+---> 10     from probml_utils.mix_bernoulli_lib import BMM
+     11 except ModuleNotFoundError:
+     12     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/mix_bernoulli_lib.py:12
+      9 from jax.nn import softmax
+     10 from jax.example_libraries import optimizers
+---> 12 import distrax
+     13 from distrax._src.utils import jittable
+     15 from .mixture_lib import MixtureSameFamily
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/__init__.py:20
+     18 from distrax._src.bijectors.bijector import Bijector
+     19 from distrax._src.bijectors.bijector import BijectorLike
+---> 20 from distrax._src.bijectors.block import Block
+     21 from distrax._src.bijectors.chain import Chain
+     22 from distrax._src.bijectors.diag_linear import DiagLinear
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/bijectors/block.py:20
+     17 from typing import Tuple
+     19 from distrax._src.bijectors import bijector as base
+---> 20 from distrax._src.utils import conversion
+     21 from distrax._src.utils import math
+     23 Array = base.Array
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/utils/conversion.py:19
+     15 """Utility functions for conversion between different types."""
+     17 from typing import Optional, Union
+---> 19 import chex
+     20 from distrax._src.bijectors import bijector
+     21 from distrax._src.bijectors import bijector_from_tfp
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/__init__.py:17
+      1 # Copyright 2020 DeepMind Technologies Limited. All Rights Reserved.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     13 # limitations under the License.
+     14 # ==============================================================================
+     15 """Chex: Testing made fun, in JAX!"""
+---> 17 from chex._src.asserts import assert_axis_dimension
+     18 from chex._src.asserts import assert_axis_dimension_comparator
+     19 from chex._src.asserts import assert_axis_dimension_gt
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/asserts.py:26
+     23 import unittest
+     24 from unittest import mock
+---> 26 from chex._src import asserts_internal as _ai
+     27 from chex._src import pytypes
+     28 import jax
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/asserts_internal.py:34
+     31 from typing import Any, Sequence, Union, Callable, List, Optional, Set, Tuple, Type
+     33 from absl import logging
+---> 34 from chex._src import pytypes
+     35 import jax
+     36 from jax.experimental import checkify
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/pytypes.py:53
+     51 Scalar = Union[float, int]
+     52 Numeric = Union[Array, Scalar]
+---> 53 Shape = jax.core.Shape
+     54 PRNGKey = jax.random.KeyArray
+     55 PyTreeDef = jax.tree_util.PyTreeDef
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/deprecations.py:57, in deprecation_getattr.<locals>.getattr(name)
+     55   warnings.warn(message, DeprecationWarning, stacklevel=2)
+     56   return fn
+---> 57 raise AttributeError(f"module {module!r} has no attribute {name!r}")
+
+AttributeError: module 'jax.core' has no attribute 'Shape'

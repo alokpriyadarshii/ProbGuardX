@@ -1,0 +1,69 @@
+An error occurred while executing the following cell:
+------------------
+%cd -q /ProbGuardX/scripts
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+import numpy as np
+import matplotlib.pyplot as plt
+------------------
+
+----- stdout -----
+[Errno 2] No such file or directory: '/ProbGuardX/scripts'
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/magics/osm.py:393: UserWarning: This is now an optional IPython functionality, using bookmarks requires you to install the `pickleshare` library.
+  bkms = self.shell.db.get('bookmarks', {})
+------------------
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 3
+      1 get_ipython().run_line_magic('cd', '-q /ProbGuardX/scripts')
+      2 try:
+----> 3     import probml_utils as pml
+      4 except ModuleNotFoundError:
+      5     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/__init__.py:2
+      1 #from ._version import version as __version__
+----> 2 from .plotting import savefig, latexify, _get_fig_name, is_latexify_enabled
+      3 from .pyprobml_utils import (
+      4     hinton_diagram,
+      5     plot_ellipse,
+   (...)
+      9     style3d,
+     10 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:2
+      1 import os
+----> 2 import matplotlib.pyplot as plt
+      3 import warnings
+      5 DEFAULT_WIDTH = 6.0
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:259
+    254         if parse_version(module.__version__) < parse_version(minver):
+    255             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    256                               f"you have {module.__version__}")
+--> 259 _check_versions()
+    262 # The decorator ensures this always returns the same handler (and it is only
+    263 # attached once).
+    264 @functools.cache
+    265 def _ensure_handler():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:244, in _check_versions()
+    240 def _check_versions():
+    241 
+    242     # Quickfix to ensure Microsoft Visual C++ redistributable
+    243     # DLLs are loaded before importing kiwisolver
+--> 244     from . import ft2font
+    246     for modname, minver in [
+    247             ("cycler", "0.10"),
+    248             ("dateutil", "2.7"),
+   (...)
+    251             ("pyparsing", "2.3.1"),
+    252     ]:
+    253         module = importlib.import_module(modname)
+
+ImportError: numpy._core.multiarray failed to import

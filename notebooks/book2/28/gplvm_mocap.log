@@ -1,0 +1,50 @@
+An error occurred while executing the following cell:
+------------------
+import matplotlib.pyplot as plt
+
+plt.style.use("seaborn-pastel")
+------------------
+
+
+---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/style/core.py:137, in use(style)
+    136 try:
+--> 137     style = _rc_params_in_file(style)
+    138 except OSError as err:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:866, in _rc_params_in_file(fname, transform, fail_on_error)
+    865 rc_temp = {}
+--> 866 with _open_file_or_url(fname) as fd:
+    867     try:
+
+File ~/miniconda3/envs/py310/lib/python3.10/contextlib.py:135, in _GeneratorContextManager.__enter__(self)
+    134 try:
+--> 135     return next(self.gen)
+    136 except StopIteration:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:843, in _open_file_or_url(fname)
+    842 fname = os.path.expanduser(fname)
+--> 843 with open(fname, encoding='utf-8') as f:
+    844     yield f
+
+FileNotFoundError: [Errno 2] No such file or directory: 'seaborn-pastel'
+
+The above exception was the direct cause of the following exception:
+
+OSError                                   Traceback (most recent call last)
+Cell In[1], line 3
+      1 import matplotlib.pyplot as plt
+----> 3 plt.style.use("seaborn-pastel")
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/style/core.py:139, in use(style)
+    137         style = _rc_params_in_file(style)
+    138     except OSError as err:
+--> 139         raise OSError(
+    140             f"{style!r} is not a valid package style, path of style "
+    141             f"file, URL of style file, or library style name (library "
+    142             f"styles are listed in `style.available`)") from err
+    143 filtered = {}
+    144 for k in style:  # don't trigger RcParams.__getitem__('backend')
+
+OSError: 'seaborn-pastel' is not a valid package style, path of style file, URL of style file, or library style name (library styles are listed in `style.available`)

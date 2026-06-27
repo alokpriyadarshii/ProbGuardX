@@ -1,0 +1,27 @@
+An error occurred while executing the following cell:
+------------------
+import jax
+import optax
+import numpy as np
+import jax.numpy as jnp
+import flax.linen as nn
+import matplotlib.pyplot as plt
+import urllib.request
+import matplotlib.image as mpimg
+
+from tqdm import tqdm
+from numba import njit
+from typing import Callable
+from flax.training.train_state import TrainState
+------------------
+
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 2
+      1 import jax
+----> 2 import optax
+      3 import numpy as np
+      4 import jax.numpy as jnp
+
+ModuleNotFoundError: No module named 'optax'

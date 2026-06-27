@@ -1,0 +1,38 @@
+An error occurred while executing the following cell:
+------------------
+try:
+    from ssm_jax.plotting import plot_ellipse
+except ModuleNotFoundError:
+    print("installing ssm_jax")
+    %pip install -qq git+https://github.com/probml/ssm-jax.git
+    from ssm_jax.plotting import plot_ellipse
+------------------
+
+----- stdout -----
+installing ssm_jax
+----- stdout -----
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 1.26.4 which is incompatible.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[3], line 2
+      1 try:
+----> 2     from ssm_jax.plotting import plot_ellipse
+      3 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'ssm_jax'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[3], line 6
+      4 print("installing ssm_jax")
+      5 get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/ssm-jax.git')
+----> 6 from ssm_jax.plotting import plot_ellipse
+
+ModuleNotFoundError: No module named 'ssm_jax'

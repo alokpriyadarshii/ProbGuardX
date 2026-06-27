@@ -1,0 +1,48 @@
+An error occurred while executing the following cell:
+------------------
+# Based on https://github.com/probml/pmtk3/blob/master/demos/NIXdemo2.m
+# Converted by alokpriyadarshii - alokpriyadarshi618@gmail.com
+# Compare some Normal Inverse Chi Squared Distributions
+
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+from scipy.stats import invgamma
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 7
+      5 import os
+      6 import numpy as np
+----> 7 import matplotlib.pyplot as plt
+      8 from scipy.stats import norm
+      9 from scipy.stats import invgamma
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
+
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4

@@ -1,0 +1,243 @@
+An error occurred while executing the following cell:
+------------------
+for type in algo_list:
+    if type == "bald":
+        print("******************************************BALD Implementation******************************************")
+    else:
+        print(
+            "******************************************BatchBALD Implementation******************************************"
+        )
+
+    for acquisition_batch_size in batch_list:  # Batch size per iteration
+        print(
+            "******************************************Batch Size: "
+            + str(acquisition_batch_size)
+            + "******************************************"
+        )
+
+        seed_value = 0
+
+        torch.manual_seed(seed_value)
+        torch.cuda.manual_seed(seed_value)
+        torch.backends.cudnn.deterministic = True
+        torch.cuda.manual_seed_all(seed_value)
+        random.seed(seed_value)
+        np.random.seed(seed_value)
+        os.environ["PYTHONHASHSEED"] = str(seed_value)
+
+        num_initial_samples = 20  # Number of initial samples required
+        num_classes = 10  # Total classes in MNIST dataset
+
+        train_dataset, test_dataset = repeated_mnist.create_repeated_MNIST_dataset(num_repetitions=1, add_noise=False)
+
+        # Generates 20 samples (2 from each class) and returns their indices
+        initial_samples = active_learning.get_balanced_sample_indices(
+            repeated_mnist.get_targets(train_dataset),
+            num_classes=num_classes,
+            n_per_digit=num_initial_samples / num_classes,
+        )
+
+        test_accs = []
+        test_loss = []
+        added_indices = []
+
+        active_learning_data = active_learning.ActiveLearningData(
+            train_dataset
+        )  # Splits the dataset into training dataset and pool dataset
+
+        active_learning_data.acquire(
+            initial_samples
+        )  # Seperates the initial indices from the pool and fixes it as initial train dataset
+        active_learning_data.extract_dataset_from_pool(
+            40000
+        )  # Extracts 40000 samples from pool and makes it as validation dataset
+
+        train_loader = torch.utils.data.DataLoader(
+            active_learning_data.training_dataset,
+            sampler=active_learning.RandomFixedLengthSampler(
+                active_learning_data.training_dataset, training_iterations
+            ),
+            batch_size=batch_size,
+            **kwargs,
+        )
+
+        pool_loader = torch.utils.data.DataLoader(
+            active_learning_data.pool_dataset,
+            batch_size=scoring_batch_size,
+            shuffle=False,
+            **kwargs,
+        )
+
+        test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False, **kwargs)
+
+        pbar = tqdm(
+            initial=len(active_learning_data.training_dataset),
+            total=max_training_samples,
+            desc="Training Set Size",
+        )
+
+        while True:
+            model = BayesianCNN(num_classes).to(device=device)  # initialise model
+            optimizer = torch.optim.Adam(model.parameters())
+
+            model.train()
+
+            # Train
+            for data, target in tqdm(train_loader, desc="Training", leave=False):
+                data = data.to(device=device)
+                target = target.to(device=device)
+
+                optimizer.zero_grad()
+
+                prediction = model(data, 1).squeeze(1)
+                loss = F.nll_loss(prediction, target)
+
+                loss.backward()
+                optimizer.step()
+
+            # Test
+            loss = 0
+            correct = 0
+            with torch.no_grad():
+                for data, target in tqdm(test_loader, desc="Testing", leave=False):
+                    data = data.to(device=device)
+                    target = target.to(device=device)
+
+                    prediction = torch.logsumexp(model(data, num_test_inference_samples), dim=1) - math.log(
+                        num_test_inference_samples
+                    )
+                    loss += F.nll_loss(prediction, target, reduction="sum")
+
+                    prediction = prediction.max(1)[1]
+                    correct += prediction.eq(target.view_as(prediction)).sum().item()
+
+            loss /= len(test_loader.dataset)
+            test_loss.append(loss)
+
+            percentage_correct = 100.0 * correct / len(test_loader.dataset)
+            test_accs.append(percentage_correct)
+
+            print("Test set: Average loss: {:.4f}, Accuracy: ({:.2f}%)".format(loss, percentage_correct))
+
+            if len(active_learning_data.training_dataset) >= max_training_samples:
+                break
+
+            # Acquire pool predictions
+            N = len(active_learning_data.pool_dataset)
+            logits_N_K_C = torch.empty(
+                (N, num_inference_samples, num_classes),
+                dtype=torch.double,
+                pin_memory=use_cuda,
+            )
+
+            with torch.no_grad():
+                model.eval()
+
+                for i, (data, _) in enumerate(tqdm(pool_loader, desc="Evaluating Acquisition Set", leave=False)):
+                    data = data.to(device=device)
+
+                    lower = i * pool_loader.batch_size
+                    upper = min(lower + pool_loader.batch_size, N)
+                    logits_N_K_C[lower:upper].copy_(model(data, num_inference_samples).double(), non_blocking=True)
+
+            with torch.no_grad():
+                if type == "batchbald":
+                    candidate_batch = batchbald.get_batchbald_batch(
+                        logits_N_K_C,
+                        acquisition_batch_size,
+                        num_samples,
+                        dtype=torch.double,
+                        device=device,  # Returns the indices and scores(Mutual Information) for the batch selected by Batchbald/BALD Strategy.
+                    )
+
+                elif type == "bald":
+                    candidate_batch = batchbald.get_bald_batch(
+                        logits_N_K_C,
+                        acquisition_batch_size,
+                        dtype=torch.double,
+                        device=device,
+                    )
+
+            targets = repeated_mnist.get_targets(active_learning_data.pool_dataset)  # Returns the target labels
+            dataset_indices = active_learning_data.get_dataset_indices(
+                candidate_batch.indices
+            )  # Returns indices for candidate batch
+
+            print("Dataset indices: ", dataset_indices)
+            # print("Scores: ", candidate_batch.scores)
+            print("Labels: ", targets[candidate_batch.indices])
+
+            active_learning_data.acquire(candidate_batch.indices)  # add the new indices to training dataset
+            added_indices.append(dataset_indices)
+            pbar.update(len(dataset_indices))
+        final_test_accs.append(test_accs)
+        final_indices.append(added_indices)
+------------------
+
+----- stdout -----
+******************************************BALD Implementation******************************************
+******************************************Batch Size: 4******************************************
+----- stderr -----
+  0%|          | 0.00/9.91M [00:00<?, ?B/s]
+----- stderr -----
+  5%|▌         | 524k/9.91M [00:00<00:01, 4.94MB/s]
+----- stderr -----
+ 35%|███▌      | 3.51M/9.91M [00:00<00:00, 18.6MB/s]
+----- stderr -----
+100%|██████████| 9.91M/9.91M [00:00<00:00, 38.9MB/s]
+----- stderr -----
+
+----- stderr -----
+  0%|          | 0.00/28.9k [00:00<?, ?B/s]
+----- stderr -----
+100%|██████████| 28.9k/28.9k [00:00<00:00, 1.76MB/s]
+----- stderr -----
+
+----- stderr -----
+  0%|          | 0.00/1.65M [00:00<?, ?B/s]
+----- stderr -----
+ 32%|███▏      | 524k/1.65M [00:00<00:00, 4.77MB/s]
+----- stderr -----
+100%|██████████| 1.65M/1.65M [00:00<00:00, 10.7MB/s]
+----- stderr -----
+
+----- stderr -----
+  0%|          | 0.00/4.54k [00:00<?, ?B/s]
+----- stderr -----
+100%|██████████| 4.54k/4.54k [00:00<00:00, 6.67MB/s]
+----- stderr -----
+
+------------------
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[6], line 55
+     46 active_learning_data.acquire(
+     47     initial_samples
+     48 )  # Seperates the initial indices from the pool and fixes it as initial train dataset
+     49 active_learning_data.extract_dataset_from_pool(
+     50     40000
+     51 )  # Extracts 40000 samples from pool and makes it as validation dataset
+     53 train_loader = torch.utils.data.DataLoader(
+     54     active_learning_data.training_dataset,
+---> 55     sampler=active_learning.RandomFixedLengthSampler(
+     56         active_learning_data.training_dataset, training_iterations
+     57     ),
+     58     batch_size=batch_size,
+     59     **kwargs,
+     60 )
+     62 pool_loader = torch.utils.data.DataLoader(
+     63     active_learning_data.pool_dataset,
+     64     batch_size=scoring_batch_size,
+     65     shuffle=False,
+     66     **kwargs,
+     67 )
+     69 test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False, **kwargs)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/batchbald_redux/active_learning.py:133, in RandomFixedLengthSampler.__init__(self, dataset, target_length)
+    132 def __init__(self, dataset: data.Dataset, target_length: int):
+--> 133     super().__init__(dataset)
+    134     self.dataset = dataset
+    135     self.target_length = target_length
+
+TypeError: object.__init__() takes exactly one argument (the instance to initialize)

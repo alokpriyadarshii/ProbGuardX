@@ -1,0 +1,30 @@
+An error occurred while executing the following cell:
+------------------
+import jax.numpy as jnp
+import jax.numpy.linalg as JLA
+from scipy.linalg import block_diag
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
+import seaborn as sns
+
+try:
+    from probml_utils import ProbGuardX_utils as pml
+except ModuleNotFoundError:
+    %pip install git+https://github.com/probml/probml-utils.git
+    from probml_utils import ProbGuardX_utils as pml
+
+from probml_utils import savefig, latexify, is_latexify_enabled
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 10
+      7 import seaborn as sns
+      9 try:
+---> 10     from probml_utils import ProbGuardX_utils as pml
+     11 except ModuleNotFoundError:
+     12     get_ipython().run_line_magic('pip', 'install git+https://github.com/probml/probml-utils.git')
+
+ImportError: cannot import name 'ProbGuardX_utils' from 'probml_utils' (/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/__init__.py)

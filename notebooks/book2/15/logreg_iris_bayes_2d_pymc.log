@@ -1,0 +1,296 @@
+An error occurred while executing the following cell:
+------------------
+# Bayesian Binary logistic regression in 2d for iris flwoers
+
+# Code is based on
+# https://github.com/aloctavodia/BAP/blob/master/code/Chp4/04_Generalizing_linear_models.ipynb
+
+%env MKL_THREADING_LAYER=GNU
+
+try:
+    import pymc as pm
+except ModuleNotFoundError:
+    %pip install mkl-service
+    %pip install -qq pymc
+    import pymc as pm
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+try:
+    import arviz as az
+except ModuleNotFoundError:
+    %pip install -qq arviz
+    import arviz as az
+from sklearn.datasets import load_iris
+
+try:
+    from probml_utils import savefig, latexify, is_latexify_enabled
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    from probml_utils import savefig, latexify, is_latexify_enabled
+------------------
+
+----- stdout -----
+env: MKL_THREADING_LAYER=GNU
+----- stdout -----
+Collecting mkl-service
+----- stdout -----
+  Downloading mkl_service-2.7.2-0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Collecting mkl<2027.0a0,>=2026.0.0 (from mkl-service)
+  Downloading mkl-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.7 kB)
+----- stdout -----
+Collecting onemkl-license==2026.0.0 (from mkl<2027.0a0,>=2026.0.0->mkl-service)
+  Downloading onemkl_license-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.6 kB)
+----- stdout -----
+Collecting intel-openmp<2027,>=2025 (from mkl<2027.0a0,>=2026.0.0->mkl-service)
+  Downloading intel_openmp-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.2 kB)
+Collecting tbb==2023.* (from mkl<2027.0a0,>=2026.0.0->mkl-service)
+----- stdout -----
+  Downloading tbb-2023.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.0 kB)
+Collecting intel-cmplr-lib-ur==2026.0.0 (from intel-openmp<2027,>=2025->mkl<2027.0a0,>=2026.0.0->mkl-service)
+  Downloading intel_cmplr_lib_ur-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.2 kB)
+----- stdout -----
+Collecting umf==1.1.* (from intel-cmplr-lib-ur==2026.0.0->intel-openmp<2027,>=2025->mkl<2027.0a0,>=2026.0.0->mkl-service)
+  Downloading umf-1.1.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.0 kB)
+Collecting tcmlib==1.* (from tbb==2023.*->mkl<2027.0a0,>=2026.0.0->mkl-service)
+  Downloading tcmlib-1.5.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (962 bytes)
+----- stdout -----
+Downloading mkl_service-2.7.2-0-cp310-cp310-manylinux_2_28_x86_64.whl (77 kB)
+----- stdout -----
+Downloading mkl-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (224.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/224.0 MB ? eta -:--:--
+----- stdout -----
+   ━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.0/224.0 MB 228.8 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 65.0/224.0 MB 169.5 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━ 90.2/224.0 MB 154.7 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 108.0/224.0 MB 136.6 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━ 137.1/224.0 MB 137.3 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 178.3/224.0 MB 148.5 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━ 202.4/224.0 MB 144.4 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.0/224.0 MB 91.7 MB/s  0:00:02
+Downloading onemkl_license-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (58 kB)
+Downloading intel_openmp-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (57.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/57.3 MB ? eta -:--:--
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 46.1/57.3 MB 231.1 MB/s eta 0:00:01
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.3/57.3 MB 185.9 MB/s  0:00:00
+Downloading intel_cmplr_lib_ur-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (31.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/31.6 MB ? eta -:--:--
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 31.6/31.6 MB 194.6 MB/s  0:00:00
+Downloading tbb-2023.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (6.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/6.8 MB ? eta -:--:--
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.8/6.8 MB 220.2 MB/s  0:00:00
+Downloading tcmlib-1.5.0-py2.py3-none-manylinux_2_28_x86_64.whl (2.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/2.8 MB ? eta -:--:--   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.8/2.8 MB 255.9 MB/s  0:00:00
+Downloading umf-1.1.0-py2.py3-none-manylinux_2_28_x86_64.whl (424 kB)
+----- stdout -----
+Installing collected packages: tcmlib, onemkl-license, umf, tbb, intel-cmplr-lib-ur, intel-openmp, mkl, mkl-service
+
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━ 4/8 [intel-cmplr-lib-ur]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━ 4/8 [intel-cmplr-lib-ur]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━ 4/8 [intel-cmplr-lib-ur]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 5/8 [intel-openmp]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 5/8 [intel-openmp]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 5/8 [intel-openmp]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 5/8 [intel-openmp]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8/8 [mkl-service]
+
+----- stdout -----
+Successfully installed intel-cmplr-lib-ur-2026.0.0 intel-openmp-2026.0.0 mkl-2026.0.0 mkl-service-2.7.2 onemkl-license-2026.0.0 tbb-2023.0.0 tcmlib-1.5.0 umf-1.1.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 1.26.4 which is incompatible.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 9
+      8 try:
+----> 9     import pymc as pm
+     10 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'pymc'
+
+During handling of the above exception, another exception occurred:
+
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 13
+     11     get_ipython().run_line_magic('pip', 'install mkl-service')
+     12     get_ipython().run_line_magic('pip', 'install -qq pymc')
+---> 13     import pymc as pm
+     14 import numpy as np
+     15 import pandas as pd
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pymc/__init__.py:50
+     45     pytensor.config.gcc__cxxflags = augmented
+     48 __set_compiler_flags()
+---> 50 from pymc import _version, gp, ode, sampling
+     51 from pymc.backends import *
+     52 from pymc.blocking import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pymc/gp/__init__.py:17
+      1 #   Copyright 2024 - present The PyMC Developers
+      2 #
+      3 #   Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     12 #   See the License for the specific language governing permissions and
+     13 #   limitations under the License.
+     15 """Gaussian Processes."""
+---> 17 from pymc.gp import cov, mean, util
+     18 from pymc.gp.gp import (
+     19     TP,
+     20     Latent,
+   (...)
+     25     MarginalSparse,
+     26 )
+     27 from pymc.gp.hsgp_approx import HSGP, HSGPPeriodic
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pymc/gp/cov.py:52
+     29 from pytensor.tensor.variable import TensorConstant, TensorVariable
+     31 __all__ = [
+     32     "Constant",
+     33     "Coregion",
+   (...)
+     49     "WrappedPeriodic",
+     50 ]
+---> 52 from pymc.pytensorf import constant_fold
+     54 TensorLike = np.ndarray | TensorVariable
+     55 IntSequence = np.ndarray | Sequence[int]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pymc/pytensorf.py:54
+     51 from pytensor.tensor.variable import TensorVariable
+     53 from pymc.exceptions import NotConstantValueError
+---> 54 from pymc.util import makeiter
+     55 from pymc.vartypes import continuous_types, isgenerator, typefilter
+     57 PotentialShapeType = int | np.ndarray | Sequence[int | Variable] | TensorVariable
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pymc/util.py:23
+     20 from copy import deepcopy
+     21 from typing import NewType, cast
+---> 23 import arviz
+     24 import cloudpickle
+     25 import numpy as np
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:34
+     30 _log = Logger("arviz")
+     33 from .data import *
+---> 34 from .plots import *
+     35 from .plots.backends import *
+     36 from .stats import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/__init__.py:2
+      1 """Plotting functions."""
+----> 2 from .autocorrplot import plot_autocorr
+      3 from .bpvplot import plot_bpv
+      4 from .bfplot import plot_bf
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/autocorrplot.py:7
+      5 from ..rcparams import rcParams
+      6 from ..utils import _var_names
+----> 7 from .plot_utils import default_grid, filter_plotters_list, get_plotting_function
+     10 def plot_autocorr(
+     11     data,
+     12     var_names=None,
+   (...)
+     24     show=None,
+     25 ):
+     26     r"""Bar plot of the autocorrelation function (ACF) for a sequence of data.
+     27 
+     28     The ACF plots are helpful as a convergence diagnostic for posteriors from MCMC
+   (...)
+    117         >>> az.plot_autocorr(data, var_names=['mu', 'tau'], max_lag=200, combined=True)
+    118     """
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/plot_utils.py:15
+     11 from scipy.interpolate import CubicSpline
+     14 from ..rcparams import rcParams
+---> 15 from ..stats.density_utils import kde
+     16 from ..stats import hdi
+     18 KwargSpec = Dict[str, Any]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/stats/__init__.py:3
+      1 # pylint: disable=wildcard-import
+      2 """Statistical tests and diagnostics for ArviZ."""
+----> 3 from .density_utils import *
+      4 from .diagnostics import *
+      5 from .stats import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/stats/density_utils.py:8
+      6 from scipy.fftpack import fft
+      7 from scipy.optimize import brentq
+----> 8 from scipy.signal import convolve, convolve2d, gaussian  # pylint: disable=no-name-in-module
+      9 from scipy.sparse import coo_matrix
+     10 from scipy.special import ive  # pylint: disable=no-name-in-module
+
+ImportError: cannot import name 'gaussian' from 'scipy.signal' (/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/signal/__init__.py)

@@ -1,0 +1,29 @@
+An error occurred while executing the following cell:
+------------------
+# read data
+N_BINS = 20
+url = "http://www.stat.columbia.edu/~gelman/book/data/light.asc"
+s = requests.get(url).content.decode("utf-8").strip().split("\n")[-7:]
+D = np.array(" ".join(s).split(" ")).astype(int)
+
+n, S = D.size, 1000
+mu, sigma = np.mean(D), np.std(D)
+
+plt.figure()
+plt.hist(D, N_BINS, edgecolor="black", linewidth=0.5)
+plt.title("Newcombs Speed of Light Data")
+sns.despine()
+pml.savefig("newcomb-truth2.pdf")
+------------------
+
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[5], line 5
+      3 url = "http://www.stat.columbia.edu/~gelman/book/data/light.asc"
+      4 s = requests.get(url).content.decode("utf-8").strip().split("\n")[-7:]
+----> 5 D = np.array(" ".join(s).split(" ")).astype(int)
+      7 n, S = D.size, 1000
+      8 mu, sigma = np.mean(D), np.std(D)
+
+ValueError: invalid literal for int() with base 10: '<!DOCTYPE'

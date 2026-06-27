@@ -1,0 +1,79 @@
+An error occurred while executing the following cell:
+------------------
+
+try:
+    import bambi
+except ModuleNotFoundError:
+    %pip uninstall -y numba numpy resampy librosa kapre # hack for public colab (h/t Ravin Kumar)
+    %pip install git+https://github.com/bambinos/bambi.git
+    #%pip install bambi
+    import bambi
+------------------
+
+----- stdout -----
+Found existing installation: numba 0.65.1
+----- stdout -----
+Uninstalling numba-0.65.1:
+  Successfully uninstalled numba-0.65.1
+----- stdout -----
+Found existing installation: numpy 2.2.6
+----- stdout -----
+Uninstalling numpy-2.2.6:
+  Successfully uninstalled numpy-2.2.6
+----- stdout -----
+WARNING: Skipping resampy as it is not installed.
+WARNING: Skipping librosa as it is not installed.
+
+----- stdout -----
+WARNING: Skipping kapre as it is not installed.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+Collecting git+https://github.com/bambinos/bambi.git
+  Cloning https://github.com/bambinos/bambi.git to /tmp/pip-req-build-g4tp0fa6
+  Running command git clone --filter=blob:none --quiet https://github.com/bambinos/bambi.git /tmp/pip-req-build-g4tp0fa6
+----- stdout -----
+  Resolved https://github.com/bambinos/bambi.git to commit de5cde3bcad1e1fb5db86e7737e1fca2c220203d
+----- stdout -----
+  Installing build dependencies ... -
+----- stdout -----
+ \
+----- stdout -----
+ |
+----- stdout -----
+ done
+----- stdout -----
+  Getting requirements to build wheel ... -
+----- stdout -----
+ done
+----- stdout -----
+  Preparing metadata (pyproject.toml) ... -
+----- stdout -----
+ done
+INFO: pip is looking at multiple versions of bambi to determine which version is compatible with other requirements. This could take a while.
+ERROR: Package 'bambi' requires a different Python: 3.10.12 not in '>=3.12'
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[3], line 2
+      1 try:
+----> 2     import bambi
+      3 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'bambi'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[3], line 7
+      5 get_ipython().run_line_magic('pip', 'install git+https://github.com/bambinos/bambi.git')
+      6 #%pip install bambi
+----> 7 import bambi
+
+ModuleNotFoundError: No module named 'bambi'

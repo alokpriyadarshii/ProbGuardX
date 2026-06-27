@@ -1,0 +1,38 @@
+An error occurred while executing the following cell:
+------------------
+def generate_x_true(rng_key: jnp.DeviceArray, max_iter: int, x0_rvs: Callable, v_rvs: Callable, f: Callable):
+    def get_next_x_true(x_prev, k, v):
+        x_true = f(x_prev, v[k - 1], k=k - 1)
+        return x_true, x_true
+
+    rng_keys = random.split(rng_key, num=2)
+    x0 = x0_rvs(rng_keys[0], shape=())
+    v = v_rvs(rng_keys[1], shape=(max_iter + 1,))
+
+    get_next_x_true_func = functools.partial(get_next_x_true, v=v)
+    _, x_true = lax.scan(get_next_x_true_func, init=x0, xs=jnp.arange(1, max_iter + 1))
+    return jnp.array([x0, *x_true])
+
+
+def generate_y(rng_key: jnp.DeviceArray, x_true: jnp.DeviceArray, e_rvs: Callable, h: Callable):
+    shape = x_true.shape
+    e = e_rvs(rng_key, shape=shape)
+    y = h(x_true, e)
+    # y = y.at[0].set(jnp.inf)
+    return y
+------------------
+
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[4], line 1
+----> 1 def generate_x_true(rng_key: jnp.DeviceArray, max_iter: int, x0_rvs: Callable, v_rvs: Callable, f: Callable):
+      2     def get_next_x_true(x_prev, k, v):
+      3         x_true = f(x_prev, v[k - 1], k=k - 1)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/deprecations.py:55, in deprecation_getattr.<locals>.getattr(name)
+     53   warnings.warn(message, DeprecationWarning, stacklevel=2)
+     54   return fn
+---> 55 raise AttributeError(f"module {module!r} has no attribute {name!r}")
+
+AttributeError: module 'jax.numpy' has no attribute 'DeviceArray'

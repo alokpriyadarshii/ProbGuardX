@@ -1,0 +1,85 @@
+An error occurred while executing the following cell:
+------------------
+import os
+import numpy as np
+import jax
+from jax import numpy as jnp
+from jax import grad, jit, vmap, random
+
+try:
+    import optax
+except ModuleNotFoundError:
+    %pip install -qq optax
+    import optax
+try:
+    import tensorflow_datasets as tfds
+except ModuleNotFoundError:
+    %pip install -qq tensorflow tensorflow_datasets
+    import tensorflow_datasets as tfds
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+from sklearn.linear_model import LogisticRegression
+from matplotlib import pyplot as plt
+import matplotlib.gridspec as gridspec
+------------------
+
+
+---------------------------------------------------------------------------
+RuntimeError                              Traceback (most recent call last)
+Cell In[1], line 3
+      1 import os
+      2 import numpy as np
+----> 3 import jax
+      4 from jax import numpy as jnp
+      5 from jax import grad, jit, vmap, random
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:25
+     22 from jax.version import __version_info__ as __version_info__
+     24 # Set Cloud TPU env vars if necessary before transitively loading C++ backend
+---> 25 from jax._src.cloud_tpu_init import cloud_tpu_init as _cloud_tpu_init
+     26 try:
+     27   _cloud_tpu_init()
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/cloud_tpu_init.py:20
+     18 import warnings
+     19 from jax import version
+---> 20 from jax._src import config
+     21 from jax._src import hardware_utils
+     23 running_in_cloud_tpu_vm: bool = False
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:27
+     24 import sys
+     25 from typing import Any, Generic, NoReturn, Optional, Protocol, TypeVar, cast
+---> 27 from jax._src.lib import guard_lib
+     28 from jax._src.lib import jax_jit
+     29 from jax._src.lib import xla_client
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:75
+     71   return _jaxlib_version
+     74 version_str = jaxlib.version.__version__
+---> 75 version = check_jaxlib_version(
+     76   jax_version=jax.version.__version__,
+     77   jaxlib_version=jaxlib.version.__version__,
+     78   minimum_jaxlib_version=jax.version._minimum_jaxlib_version)
+     80 # Before importing any C compiled modules, first import the CPU
+     81 # feature guard module to verify that jaxlib was compiled in a way that only
+     82 # uses instructions that are present on this machine.
+     83 import jaxlib.cpu_feature_guard as cpu_feature_guard
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:64, in check_jaxlib_version(jax_version, jaxlib_version, minimum_jaxlib_version)
+     61 if _jaxlib_version < _minimum_jaxlib_version:
+     62   msg = (f'jaxlib is version {jaxlib_version}, but this version '
+     63          f'of jax requires version >= {minimum_jaxlib_version}.')
+---> 64   raise RuntimeError(msg)
+     66 if _jaxlib_version > _jax_version:
+     67   raise RuntimeError(
+     68       f'jaxlib version {jaxlib_version} is newer than and '
+     69       f'incompatible with jax version {jax_version}. Please '
+     70       'update your jax and/or jaxlib packages.')
+
+RuntimeError: jaxlib is version 0.4.30, but this version of jax requires version >= 0.6.2.

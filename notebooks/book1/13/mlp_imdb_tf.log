@@ -1,0 +1,44 @@
+An error occurred while executing the following cell:
+------------------
+# Now turn on early stopping
+# https://chrisalbon.com/deep_learning/keras/neural_network_early_stopping/
+
+
+class PrintDot(keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs):
+        if epoch % 100 == 0:
+            print("")
+        print(".", end="")
+
+
+callbacks = [
+    PrintDot(),
+    keras.callbacks.EarlyStopping(monitor="val_acc", patience=2),
+    keras.callbacks.ModelCheckpoint(filepath="imdb_keras_best_model.ckpt", monitor="val_acc", save_best_only=True),
+]
+------------------
+
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[10], line 15
+      8             print("")
+      9         print(".", end="")
+     12 callbacks = [
+     13     PrintDot(),
+     14     keras.callbacks.EarlyStopping(monitor="val_acc", patience=2),
+---> 15     keras.callbacks.ModelCheckpoint(filepath="imdb_keras_best_model.ckpt", monitor="val_acc", save_best_only=True),
+     16 ]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/keras/src/callbacks/model_checkpoint.py:165, in ModelCheckpoint.__init__(self, filepath, monitor, verbose, save_best_only, save_weights_only, mode, save_freq, initial_value_threshold)
+    161 else:
+    162     if not any(
+    163         self.filepath.endswith(ext) for ext in (".keras", ".h5")
+    164     ):
+--> 165         raise ValueError(
+    166             "The filepath provided must end in `.keras` "
+    167             "(Keras model format). Received: "
+    168             f"filepath={self.filepath}"
+    169         )
+
+ValueError: The filepath provided must end in `.keras` (Keras model format). Received: filepath=imdb_keras_best_model.ckpt

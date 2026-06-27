@@ -1,0 +1,39 @@
+An error occurred while executing the following cell:
+------------------
+# Download Cifar-10 dataset
+
+try:
+    import tensorflow_datasets as tfds
+except ModuleNotFoundError:
+    %pip install -qq tensorflow tensorflow_datasets
+    import tensorflow_datasets as tfds
+dataset = tfds.load("cifar10", download=True)
+------------------
+
+----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/numpy-2.2.6.dist-info/METADATA'
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[2], line 4
+      3 try:
+----> 4     import tensorflow_datasets as tfds
+      5 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'tensorflow_datasets'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[2], line 7
+      5 except ModuleNotFoundError:
+      6     get_ipython().run_line_magic('pip', 'install -qq tensorflow tensorflow_datasets')
+----> 7     import tensorflow_datasets as tfds
+      8 dataset = tfds.load("cifar10", download=True)
+
+ModuleNotFoundError: No module named 'tensorflow_datasets'

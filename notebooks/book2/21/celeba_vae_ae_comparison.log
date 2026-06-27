@@ -1,0 +1,79 @@
+An error occurred while executing the following cell:
+------------------
+from typing import Sequence
+from itertools import islice
+import subprocess
+
+import jax
+import jax.numpy as jnp
+import numpy as np
+
+try:
+    import tensorflow as tf
+except ModuleNotFoundError:
+    # flax.training.checkpoints depends on tensorflow,
+    # which is only installed by default on Colab
+    %pip install -qq tensorflow-cpu
+    import tensorflow as tf
+
+tf.config.set_visible_devices([], "GPU")  # prevent TensorFlow from using the GPU
+
+try:
+    import flax
+except ModuleNotFoundError:
+    %pip install -qq flax
+    import flax
+from flax.training import checkpoints
+
+try:
+    import optax
+except ModuleNotFoundError:
+    os.system("pip install -qq optax")
+
+try:
+    import torchvision.transforms as T
+except ModuleNotFoundError:
+    %pip install -qq torchvision
+    import torchvision.transforms as T
+from torchvision.datasets import CelebA
+
+try:
+    import torch
+except ModuleNotFoundError:
+    %pip install -qq torch
+    import torch
+from torch.utils.data import DataLoader
+
+import matplotlib.pyplot as plt
+------------------
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy-1.15.3.dist-info/METADATA'
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 20
+     19 try:
+---> 20     import flax
+     21 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'flax'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 23
+     21 except ModuleNotFoundError:
+     22     get_ipython().run_line_magic('pip', 'install -qq flax')
+---> 23     import flax
+     24 from flax.training import checkpoints
+     26 try:
+
+ModuleNotFoundError: No module named 'flax'

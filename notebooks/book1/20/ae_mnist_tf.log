@@ -1,0 +1,67 @@
+An error occurred while executing the following cell:
+------------------
+# Standard Python libraries
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import os
+import time
+import numpy as np
+import glob
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import PIL
+
+try:
+    import imageio
+except ModuleNotFoundError:
+    %pip install -qq imageio
+    import imageio
+
+from IPython import display
+
+import sklearn
+
+import seaborn as sns
+
+sns.set(style="ticks", color_codes=True)
+
+import pandas as pd
+
+pd.set_option("precision", 2)  # 2 decimal places
+pd.set_option("display.max_rows", 20)
+pd.set_option("display.max_columns", 30)
+pd.set_option("display.width", 100)  # wide windows
+------------------
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+OptionError                               Traceback (most recent call last)
+Cell In[2], line 28
+     24 sns.set(style="ticks", color_codes=True)
+     26 import pandas as pd
+---> 28 pd.set_option("precision", 2)  # 2 decimal places
+     29 pd.set_option("display.max_rows", 20)
+     30 pd.set_option("display.max_columns", 30)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_config/config.py:274, in CallableDynamicDoc.__call__(self, *args, **kwds)
+    273 def __call__(self, *args, **kwds) -> T:
+--> 274     return self.__func__(*args, **kwds)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_config/config.py:167, in _set_option(*args, **kwargs)
+    164     raise TypeError(f'_set_option() got an unexpected keyword argument "{kwarg}"')
+    166 for k, v in zip(args[::2], args[1::2]):
+--> 167     key = _get_single_key(k, silent)
+    169     o = _get_registered_option(key)
+    170     if o and o.validator:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_config/config.py:134, in _get_single_key(pat, silent)
+    132     raise OptionError(f"No such keys(s): {repr(pat)}")
+    133 if len(keys) > 1:
+--> 134     raise OptionError("Pattern matched multiple keys")
+    135 key = keys[0]
+    137 if not silent:
+
+OptionError: Pattern matched multiple keys

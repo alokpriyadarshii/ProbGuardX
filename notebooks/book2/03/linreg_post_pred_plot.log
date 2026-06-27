@@ -1,0 +1,42 @@
+An error occurred while executing the following cell:
+------------------
+# plot a
+noisevec = jnp.array([jnp.sqrt(noise_mle)] * ypred_mle.shape[0])
+make_plot(ypred_mle, "linregPostPredPlugin", "Plugin approximation", noisevec, noisevec)
+
+# plot b
+postnoise = jnp.array([jnp.sqrt(sigma2 + xtestp[i, :].T.dot(wcov.dot(xtestp[i, :]))) for i in range(xtestp.shape[0])])
+make_plot(ypred_mle, "linregPostPredBayes", "Posterior predictive", postnoise, postnoise)
+
+# plot c
+make_plot(ypred_mle, "linregPostPredSamplesPlugin", "functions sampled from plugin approximation to posterior")
+
+# plot d
+make_plot(prediction_samples, "linregPostPredSamples", "functions sampled from posterior")
+plt.show()
+------------------
+
+
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+Cell In[7], line 3
+      1 # plot a
+      2 noisevec = jnp.array([jnp.sqrt(noise_mle)] * ypred_mle.shape[0])
+----> 3 make_plot(ypred_mle, "linregPostPredPlugin", "Plugin approximation", noisevec, noisevec)
+      5 # plot b
+      6 postnoise = jnp.array([jnp.sqrt(sigma2 + xtestp[i, :].T.dot(wcov.dot(xtestp[i, :]))) for i in range(xtestp.shape[0])])
+
+Cell In[6], line 18, in make_plot(ypreds, save_name, title, lowerb, upperb)
+     14     errspacing_reshaped = jnp.reshape(jnp.array(errspacing), (1, len(errspacing)))
+     15     yerr = [list(lowerb[jnp.array(errspacing)]), list(upperb[jnp.array(errspacing)])]
+     16     ax.errorbar(
+     17         xtest[errspacing_reshaped][0, :, :],
+---> 18         ypreds[jnp.array(errspacing), 0],
+     19         yerr=yerr,
+     20         linewidth=0.5,
+     21         label="prediction",
+     22     )
+     23     ax.fill_between(xtest[:, 0], ypreds[:, 0] + lowerb, ypreds[:, 0] - upperb, alpha=0.3)
+     24 else:
+
+IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed

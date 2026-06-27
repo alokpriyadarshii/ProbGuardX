@@ -1,0 +1,67 @@
+An error occurred while executing the following cell:
+------------------
+# Example of a variational mixture of Gaussians.
+# For a matlab version, see  https://github.com/probml/pmtk3/blob/master/demos/mixGaussVbDemoFaithful.m
+# To run in colab, consider the following two lines
+# > pip uninstall tensorflow -y -q
+# > pip install -qq -Uq tfp-nightly[jax] > /dev/null
+# Author: Gerardo Duran-Martin (@alokpriyadarshii)
+
+import os
+import numpy as np
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+import probml_utils.variational_mixture_gaussians as vmg
+from probml_utils import savefig, latexify
+
+from scipy import stats as scistats
+from jax import random
+import requests
+from io import BytesIO
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 9
+      1 # Example of a variational mixture of Gaussians.
+      2 # For a matlab version, see  https://github.com/probml/pmtk3/blob/master/demos/mixGaussVbDemoFaithful.m
+      3 # To run in colab, consider the following two lines
+      4 # > pip uninstall tensorflow -y -q
+      5 # > pip install -qq -Uq tfp-nightly[jax] > /dev/null
+      6 # Author: Gerardo Duran-Martin (@alokpriyadarshii)
+      8 import os
+----> 9 import numpy as np
+     10 import jax.numpy as jnp
+     11 import matplotlib.pyplot as plt
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py:147
+    145 from .core import *
+    146 from . import compat
+--> 147 from . import lib
+    148 # NOTE: to be revisited following future namespace cleanup.
+    149 # See gh-14454 and gh-15672 for discussion.
+    150 from .lib import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/lib/__init__.py:20
+     16 from numpy.version import version as __version__
+     18 # Public submodules
+     19 # Note: recfunctions and (maybe) format are public too, but not imported
+---> 20 from . import mixins
+     21 from . import scimath as emath
+     23 # Private submodules
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/lib/mixins.py:2
+      1 """Mixin classes for custom array types that don't inherit from ndarray."""
+----> 2 from numpy.core import umath as um
+      5 __all__ = ['NDArrayOperatorsMixin']
+      8 def _disables_array_ufunc(obj):
+
+ImportError: cannot import name 'umath' from 'numpy.core' (unknown location)

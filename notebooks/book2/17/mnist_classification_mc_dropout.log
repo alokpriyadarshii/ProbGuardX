@@ -1,0 +1,65 @@
+An error occurred while executing the following cell:
+------------------
+try:
+    import flax.linen as nn
+except ModuleNotFoundError:
+    %pip install -qq flax
+    import flax.linen as nn
+
+from flax.core import unfreeze
+
+from flax.training import train_state
+
+import jax
+import jax.numpy as jnp
+from jax.config import config
+
+try:
+    import optax
+except ModuleNotFoundError:
+    %pip install -qq optax
+    import optax
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+
+try:
+    from probml_utils import latexify, savefig, is_latexify_enabled
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    from probml_utils import latexify, savefig, is_latexify_enabled
+
+from scipy.ndimage import rotate
+
+try:
+    import tensorflow.keras.datasets as tfds
+except ModuleNotFoundError:
+    %pip install -qq tensorflow
+    import tensorflow.keras.datasets as tfds
+
+from functools import partial
+
+try:
+    from tqdm import tqdm
+except ModuleNotFoundError:
+    %pip install tqdm
+    from tqdm import tqdm
+
+import pandas as pd
+------------------
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 13
+     11 import jax
+     12 import jax.numpy as jnp
+---> 13 from jax.config import config
+     15 try:
+     16     import optax
+
+ModuleNotFoundError: No module named 'jax.config'

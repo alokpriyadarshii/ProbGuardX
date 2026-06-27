@@ -1,0 +1,99 @@
+An error occurred while executing the following cell:
+------------------
+# sklearn Models
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+
+# sklearn Utils
+from sklearn.base import BaseEstimator
+from sklearn.base import clone
+from sklearn.model_selection import train_test_split
+
+import numpy as np
+from numpy.random import default_rng
+import random
+
+np.random.seed(42)
+
+from matplotlib.colors import ListedColormap
+from matplotlib.legend_handler import HandlerTuple
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+try:
+    from celluloid import Camera
+except ModuleNotFoundError:
+    %pip install -qq celluloid
+    from celluloid import Camera
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+from probml_utils import active_learn_utils as alu
+
+try:
+    import modAL
+except ModuleNotFoundError:
+    %pip install -qq modAL
+    import modAL
+
+
+from modAL.uncertainty import uncertainty_sampling
+from modAL.uncertainty import entropy_sampling
+from modAL.uncertainty import margin_sampling
+from modAL.disagreement import max_std_sampling
+
+
+from modAL.models import ActiveLearner
+from modAL.utils.data import modALinput
+from modAL.models import Committee
+
+
+from typing import Callable
+from typing import Tuple
+from typing import Optional
+import warnings
+from typing import List
+
+from IPython.display import HTML
+from functools import reduce
+import operator
+------------------
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/active_learn_utils.py:20
+     19 try:
+---> 20     import modAL
+     21 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'modAL'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 34
+     31     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
+     32     import probml_utils as pml
+---> 34 from probml_utils import active_learn_utils as alu
+     36 try:
+     37     import modAL
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/active_learn_utils.py:23
+     21 except ModuleNotFoundError:
+     22     subprocess.check_call([sys.executable, "-m", "pip", "install", "modAL"])
+---> 23     import modAL
+     25 from modAL.models import ActiveLearner
+     26 from modAL.models import Committee
+
+ModuleNotFoundError: No module named 'modAL'

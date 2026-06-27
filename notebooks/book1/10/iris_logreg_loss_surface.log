@@ -1,0 +1,47 @@
+An error occurred while executing the following cell:
+------------------
+# Plot 2d NLL loss surface for  binary logistic regression with 1 feature
+# Loosely based on
+# https://peterroelants.github.io/posts/neural-network-implementation-part02/
+
+import jax
+import jax.numpy as jnp
+from jax.config import config
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+import os
+
+os.environ["FIG_DIR"] = "/Users/alokpriyadarshii/github/bookv2/figures"
+
+from probml_utils import LogisticRegression as lr
+
+from mpl_toolkits.mplot3d import axes3d, Axes3D
+
+try:
+    import sklearn
+except ModuleNotFoundError:
+    %pip install -qq scikit-learn
+    import sklearn
+from sklearn.linear_model import LogisticRegression
+from sklearn import datasets
+------------------
+
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 7
+      5 import jax
+      6 import jax.numpy as jnp
+----> 7 from jax.config import config
+      9 import matplotlib.pyplot as plt
+     10 import seaborn as sns
+
+ModuleNotFoundError: No module named 'jax.config'

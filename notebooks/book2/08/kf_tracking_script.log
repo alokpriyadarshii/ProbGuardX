@@ -1,0 +1,40 @@
+An error occurred while executing the following cell:
+------------------
+
+
+try:
+    import dynamax
+except ModuleNotFoundError:
+    print('installing dynamax')
+    %pip install -qq git+https://github.com/probml/dynamax.git
+    import dynamax
+------------------
+
+----- stdout -----
+installing dynamax
+----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy-1.13.1.dist-info/METADATA'
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 2
+      1 try:
+----> 2     import dynamax
+      3 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'dynamax'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 6
+      4 print('installing dynamax')
+      5 get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/dynamax.git')
+----> 6 import dynamax
+
+ModuleNotFoundError: No module named 'dynamax'
