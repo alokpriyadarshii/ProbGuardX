@@ -1,0 +1,50 @@
+An error occurred while executing the following cell:
+------------------
+# Demonstrate a non-parametric (parzen) density estimator in 1D
+
+# Author: alokpriyadarshii
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+from scipy.linalg import norm
+
+plt.rcParams["axes.spines.right"] = False
+plt.rcParams["axes.spines.top"] = False
+
+
+try:
+    from probml_utils import savefig, latexify
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    from probml_utils import savefig, latexify
+------------------
+
+----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/bin/f2py'
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 17
+     16 try:
+---> 17     from probml_utils import savefig, latexify
+     18 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'probml_utils'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 20
+     18 except ModuleNotFoundError:
+     19     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
+---> 20     from probml_utils import savefig, latexify
+
+ModuleNotFoundError: No module named 'probml_utils'

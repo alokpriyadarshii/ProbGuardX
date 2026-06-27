@@ -1,0 +1,107 @@
+An error occurred while executing the following cell:
+------------------
+
+%matplotlib inline
+
+from functools import partial
+
+import matplotlib.pyplot as plt
+
+
+try:
+    import optax
+except ModuleNotFoundError:
+    %pip install -qq optax
+    import optax
+import jax
+import jax.numpy as jnp
+from jax import jit
+from jax.nn.initializers import glorot_normal
+
+try:
+    import probml_utils as pml
+    from probml_utils import latexify, savefig, is_latexify_enabled
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+    from probml_utils import savefig, latexify, is_latexify_enabled
+
+
+try:
+    import flax
+except ModuleNotFoundError:
+    %pip install -qq flax
+    import flax
+import flax.linen as nn
+from flax.training import train_state
+
+try:
+    import seaborn as sns
+except:
+    %pip install seaborn
+    import seaborn as sns
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 1
+----> 1 get_ipython().run_line_magic('matplotlib', 'inline')
+      3 from functools import partial
+      5 import matplotlib.pyplot as plt
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py:2482, in InteractiveShell.run_line_magic(self, magic_name, line, _stack_depth)
+   2480     kwargs['local_ns'] = self.get_local_scope(stack_depth)
+   2481 with self.builtin_trap:
+-> 2482     result = fn(*args, **kwargs)
+   2484 # The code below prevents the output from being displayed
+   2485 # when using magics with decorator @output_can_be_silenced
+   2486 # when the last Python token in the expression is a ';'.
+   2487 if getattr(fn, magic.MAGIC_OUTPUT_CAN_BE_SILENCED, False):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/magics/pylab.py:103, in PylabMagics.matplotlib(self, line)
+     98     print(
+     99         "Available matplotlib backends: %s"
+    100         % _list_matplotlib_backends_and_gui_loops()
+    101     )
+    102 else:
+--> 103     gui, backend = self.shell.enable_matplotlib(args.gui)
+    104     self._show_matplotlib_backend(args.gui, backend)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py:3667, in InteractiveShell.enable_matplotlib(self, gui)
+   3664     import matplotlib_inline.backend_inline
+   3666 from IPython.core import pylabtools as pt
+-> 3667 gui, backend = pt.find_gui_and_backend(gui, self.pylab_gui_select)
+   3669 if gui != None:
+   3670     # If we have our first gui selection, store it
+   3671     if self.pylab_gui_select is None:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/pylabtools.py:338, in find_gui_and_backend(gui, gui_select)
+    321 def find_gui_and_backend(gui=None, gui_select=None):
+    322     """Given a gui string return the gui and mpl backend.
+    323 
+    324     Parameters
+   (...)
+    335     'WXAgg','Qt4Agg','module://matplotlib_inline.backend_inline','agg').
+    336     """
+--> 338     import matplotlib
+    340     if _matplotlib_manages_backends():
+    341         backend_registry = matplotlib.backends.registry.backend_registry
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
+
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4
