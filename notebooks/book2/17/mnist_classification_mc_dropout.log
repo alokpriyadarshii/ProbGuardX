@@ -50,30 +50,16 @@ import pandas as pd
 ------------------
 
 ----- stdout -----
-ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/numpy-2.2.6.dist-info/METADATA'
-
-
------ stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ------------------
 
 ---------------------------------------------------------------------------
 ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 2
-      1 try:
-----> 2     import flax.linen as nn
-      3 except ModuleNotFoundError:
+Cell In[1], line 13
+     11 import jax
+     12 import jax.numpy as jnp
+---> 13 from jax.config import config
+     15 try:
+     16     import optax
 
-ModuleNotFoundError: No module named 'flax'
-
-During handling of the above exception, another exception occurred:
-
-ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 5
-      3 except ModuleNotFoundError:
-      4     get_ipython().run_line_magic('pip', 'install -qq flax')
-----> 5     import flax.linen as nn
-      7 from flax.core import unfreeze
-      9 from flax.training import train_state
-
-ModuleNotFoundError: No module named 'flax'
+ModuleNotFoundError: No module named 'jax.config'
