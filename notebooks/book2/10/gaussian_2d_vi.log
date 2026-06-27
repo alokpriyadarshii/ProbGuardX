@@ -1,0 +1,16 @@
+An error occurred while executing the following cell:
+------------------
+prior_mean = jnp.array([1.0, 2.0])
+prior_covar = jnp.array([[2.0, 0.5], [0.5, 1.0]])
+prior = {"x": tfd.MultivariateNormalFullCovariance(loc=prior_mean, covariance_matrix=prior_covar)}
+------------------
+
+
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[3], line 1
+----> 1 prior_mean = jnp.array([1.0, 2.0])
+      2 prior_covar = jnp.array([[2.0, 0.5], [0.5, 1.0]])
+      3 prior = {"x": tfd.MultivariateNormalFullCovariance(loc=prior_mean, covariance_matrix=prior_covar)}
+
+NameError: name 'jnp' is not defined

@@ -1,0 +1,280 @@
+An error occurred while executing the following cell:
+------------------
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+import matplotlib.pyplot as plt 
+try:
+    from sklearn.linear_model import LinearRegression
+except ModuleNotFoundError:
+    %pip install -qq scikit-learn
+    from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import HuberRegressor
+import numpy as np
+try:
+    import pandas as pd
+except ModuleNotFoundError:
+    %pip install -qq pandas
+    import pandas as pd
+try:
+    from statsmodels.miscmodels.tmodel import TLinearModel
+except ModuleNotFoundError:
+    %pip install -qq statsmodels
+    from statsmodels.miscmodels.tmodel import TLinearModel
+from statsmodels.regression.quantile_regression import QuantReg
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+#!pip install -qq statsmodels
+
+"""Dataset according to the matlab code and book"""
+
+np.random.seed(1) #1
+x = np.random.uniform(low=0.3, high=1.1, size=(10,)) 
+x = x.flatten()
+x = np.sort(x)
+
+y = (np.random.rand(len(x))-0.5 + 1 + 2*x)
+y = y.flatten()
+y = np.sort(y)
+
+x = np.append(x, 0.1)
+x = np.append(x, 0.5)
+x = np.append(x, 0.9)
+x = x.reshape(-1, 1)
+
+y = np.append(y, -5)
+y = np.append(y, -5)
+y = np.append(y, -5)
+y = y.reshape(-1, 1)
+
+x_test = np.arange(0, 1.1, 0.1)
+x_test = x_test.reshape((len(x_test), 1))
+
+xmax = 1 #np.max(x)
+xmin = 0 #np.min(x)
+ymax = 4 #np.max(y) 
+ymin = -6 #np.min(y)
+
+"""L2"""
+
+reg1 = LinearRegression()
+
+model1 = reg1.fit(x, y)
+y_pred1 = model1.predict(x_test)
+
+"""Huber"""
+
+reg2 = HuberRegressor(epsilon = 1)
+
+model2 = reg2.fit(x, y)
+y_pred2 = model2.predict(x_test)
+
+"""L1"""
+
+dfx = pd.DataFrame(x, columns = ['x'])
+dfy = pd.DataFrame(y, columns = ['y'])
+exog = sm.add_constant(dfx['x'])
+endog = dfy['y']
+dft = pd.DataFrame(x_test, columns = ['test'])
+
+qrmodel = QuantReg(endog, exog)
+result = qrmodel.fit(q=0.5)
+
+ypred_qr = np.dot(dft, result.params[1]) + result.params[0] #results.predict(dft)
+
+"""Student-t"""
+
+tmodel = TLinearModel(endog, exog)
+results = tmodel.fit(df=0.6)
+
+ypred_t = np.dot(dft, results.params[1]) + results.params[0] #results.predict(dft)
+
+"""Plot"""
+
+plt.xlim(xmin, xmax)
+plt.ylim(ymin, ymax)
+plt.yticks(np.arange(ymin, ymax, 1.0))
+plt.scatter(x, y, color="none", edgecolor="black")
+plt.plot(x_test, y_pred1, '-.', color='black') #Least squares
+plt.plot(x_test, y_pred2, '--', color='green') #Huber
+plt.plot(x_test, ypred_t, color='red')         #student
+plt.plot(x_test, ypred_qr, '--', color='blue') 
+plt.legend(["Least squares", "Huber, \u0394 =1", "Student-t, \u03BD =0.6", "Laplace"])
+pml.savefig('Robust.pdf')
+plt.show()
+
+------------------
+
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[1], line 8
+      6 import matplotlib.pyplot as plt 
+      7 try:
+----> 8     from sklearn.linear_model import LinearRegression
+      9 except ModuleNotFoundError:
+     10     get_ipython().run_line_magic('pip', 'install -qq scikit-learn')
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/__init__.py:73
+     62 # `_distributor_init` allows distributors to run custom init code.
+     63 # For instance, for the Windows wheel, this is used to pre-load the
+     64 # vcomp shared library runtime for OpenMP embedded in the sklearn/.libs
+   (...)
+     67 # later is linked to the OpenMP runtime to make it possible to introspect
+     68 # it and importing it first would fail if the OpenMP dll cannot be found.
+     69 from . import (  # noqa: F401 E402
+     70     __check_build,
+     71     _distributor_init,
+     72 )
+---> 73 from .base import clone  # noqa: E402
+     74 from .utils._show_versions import show_versions  # noqa: E402
+     76 _submodules = [
+     77     "calibration",
+     78     "cluster",
+   (...)
+    114     "compose",
+    115 ]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/base.py:19
+     17 from ._config import config_context, get_config
+     18 from .exceptions import InconsistentVersionWarning
+---> 19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled
+     20 from .utils._missing import is_scalar_nan
+     21 from .utils._param_validation import validate_parameter_constraints
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/__init__.py:9
+      7 from . import metadata_routing
+      8 from ._bunch import Bunch
+----> 9 from ._chunking import gen_batches, gen_even_slices
+     11 # Make _safe_indexing importable from here for backward compat as this particular
+     12 # helper is considered semi-private and typically very useful for third-party
+     13 # libraries that want to comply with scikit-learn's estimator API. In particular,
+     14 # _safe_indexing was included in our public API documentation despite the leading
+     15 # `_` in its name.
+     16 from ._indexing import (
+     17     _safe_indexing,  # noqa: F401
+     18     resample,
+     19     shuffle,
+     20 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_chunking.py:11
+      8 import numpy as np
+     10 from .._config import get_config
+---> 11 from ._param_validation import Interval, validate_params
+     14 def chunk_generator(gen, chunksize):
+     15     """Chunk generator, ``gen`` into lists of length ``chunksize``. The last
+     16     chunk may have a length less than ``chunksize``."""
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_validation.py:17
+     14 from scipy.sparse import csr_matrix, issparse
+     16 from .._config import config_context, get_config
+---> 17 from .validation import _is_arraylike_not_scalar
+     20 class InvalidParameterError(ValueError, TypeError):
+     21     """Custom exception to be raised when the parameter of a class/method/function
+     22     does not have a valid type or value.
+     23     """
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/validation.py:21
+     19 from .. import get_config as _get_config
+     20 from ..exceptions import DataConversionWarning, NotFittedError, PositiveSpectrumWarning
+---> 21 from ..utils._array_api import _asarray_with_order, _is_numpy_namespace, get_namespace
+     22 from ..utils.deprecation import _deprecate_force_all_finite
+     23 from ..utils.fixes import ComplexWarning, _preserve_dia_indices_dtype
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_array_api.py:20
+     18 from ..externals import array_api_extra as xpx
+     19 from ..externals.array_api_compat import numpy as np_compat
+---> 20 from .fixes import parse_version
+     22 # TODO: complete __all__
+     23 __all__ = ["xpx"]  # we import xpx here just to re-export it, need this to appease ruff
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/fixes.py:20
+     17 from scipy import optimize
+     19 try:
+---> 20     import pandas as pd
+     21 except ImportError:
+     22     pd = None
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/__init__.py:22
+     19 del _hard_dependencies, _dependency, _missing_dependencies
+     21 # numpy compat
+---> 22 from pandas.compat import is_numpy_dev as _is_numpy_dev  # pyright: ignore # noqa:F401
+     24 try:
+     25     from pandas._libs import hashtable as _hashtable, lib as _lib, tslib as _tslib
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/__init__.py:25
+     17 from pandas.compat._constants import (
+     18     IS64,
+     19     PY39,
+   (...)
+     22     PYPY,
+     23 )
+     24 import pandas.compat.compressors
+---> 25 from pandas.compat.numpy import (
+     26     is_numpy_dev,
+     27     np_version_under1p21,
+     28 )
+     29 from pandas.compat.pyarrow import (
+     30     pa_version_under7p0,
+     31     pa_version_under8p0,
+     32     pa_version_under9p0,
+     33     pa_version_under11p0,
+     34 )
+     37 def set_function_name(f: F, name: str, cls) -> F:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/numpy/__init__.py:4
+      1 """ support numpy compatibility across versions """
+      2 import numpy as np
+----> 4 from pandas.util.version import Version
+      6 # numpy versioning
+      7 _np_version = np.__version__
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/__init__.py:2
+      1 # pyright: reportUnusedImport = false
+----> 2 from pandas.util._decorators import (  # noqa:F401
+      3     Appender,
+      4     Substitution,
+      5     cache_readonly,
+      6 )
+      8 from pandas.core.util.hashing import (  # noqa:F401
+      9     hash_array,
+     10     hash_pandas_object,
+     11 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/_decorators.py:14
+      6 from typing import (
+      7     Any,
+      8     Callable,
+      9     Mapping,
+     10     cast,
+     11 )
+     12 import warnings
+---> 14 from pandas._libs.properties import cache_readonly
+     15 from pandas._typing import (
+     16     F,
+     17     T,
+     18 )
+     19 from pandas.util._exceptions import find_stack_level
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/__init__.py:13
+      1 __all__ = [
+      2     "NaT",
+      3     "NaTType",
+   (...)
+      9     "Interval",
+     10 ]
+---> 13 from pandas._libs.interval import Interval
+     14 from pandas._libs.tslibs import (
+     15     NaT,
+     16     NaTType,
+   (...)
+     21     iNaT,
+     22 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/interval.pyx:1, in init pandas._libs.interval()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
