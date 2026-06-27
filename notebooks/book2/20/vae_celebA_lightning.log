@@ -52,63 +52,34 @@ except ModuleNotFoundError:
     from lvm_plots_utils import get_random_samples, get_grid_samples, plot_scatter_plot, get_imrange, make_imrange
 ------------------
 
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/lightning_fabric/__init__.py:29: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  __import__("pkg_resources").declare_namespace(__name__)
+----- stdout -----
+ERROR: Could not find a version that satisfies the requirement vae_celeba_lightning (from versions: none)
+ERROR: No matching distribution found for vae_celeba_lightning
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
 
 ---------------------------------------------------------------------------
-ImportError                               Traceback (most recent call last)
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/__init__.py:26
-     24 try:
-     25     # numpy compat
----> 26     from pandas.compat import (
-     27         is_numpy_dev as _is_numpy_dev,  # pyright: ignore[reportUnusedImport] # noqa: F401
-     28     )
-     29 except ImportError as _err:  # pragma: no cover
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[3], line 30
+     29 try:
+---> 30     from vae_celeba_lightning import VAE
+     31 except ModuleNotFoundError:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/__init__.py:28
-     27 import pandas.compat.compressors
----> 28 from pandas.compat.numpy import is_numpy_dev
-     29 from pandas.compat.pyarrow import (
-     30     HAS_PYARROW,
-     31     pa_version_under10p1,
-   (...)
-     41     pa_version_under21p0,
-     42 )
+ModuleNotFoundError: No module named 'vae_celeba_lightning'
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/numpy/__init__.py:21
-     20 if _nlv < Version(_min_numpy_ver):
----> 21     raise ImportError(
-     22         f"this version of pandas is incompatible with numpy < {_min_numpy_ver}\n"
-     23         f"your numpy version is {_np_version}.\n"
-     24         f"Please upgrade numpy to >= {_min_numpy_ver} to use this pandas version"
-     25     )
-     28 np_long: type
+During handling of the above exception, another exception occurred:
 
-ImportError: this version of pandas is incompatible with numpy < 1.22.4
-your numpy version is 1.22.1.
-Please upgrade numpy to >= 1.22.4 to use this pandas version
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[3], line 33
+     31 except ModuleNotFoundError:
+     32     get_ipython().run_line_magic('pip', 'install -qq vae_celeba_lightning')
+---> 33     from vae_celeba_lightning import VAE
+     34 try:
+     35     from einops import rearrange
 
-The above exception was the direct cause of the following exception:
-
-ImportError                               Traceback (most recent call last)
-Cell In[3], line 2
-      1 import os
-----> 2 import pandas as pd
-      3 from collections import OrderedDict
-      4 import matplotlib.pyplot as plt
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/__init__.py:31
-     29 except ImportError as _err:  # pragma: no cover
-     30     _module = _err.name
----> 31     raise ImportError(
-     32         f"C extension: {_module} not built. If you want to import "
-     33         "pandas from the source directory, you may need to run "
-     34         "'python setup.py build_ext' to build the C extensions first."
-     35     ) from _err
-     37 from pandas._config import (
-     38     get_option,
-     39     set_option,
-   (...)
-     43     options,
-     44 )
-     46 # let init-time option registration happen
-
-ImportError: C extension: None not built. If you want to import pandas from the source directory, you may need to run 'python setup.py build_ext' to build the C extensions first.
+ModuleNotFoundError: No module named 'vae_celeba_lightning'

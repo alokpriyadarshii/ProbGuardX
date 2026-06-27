@@ -33,109 +33,126 @@ pymc3 3.11.6 requires scipy<1.8.0,>=1.7.3, but you have scipy 1.15.3 which is in
 
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
------ stderr -----
-/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/data/base.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
-  import pkg_resources
 ------------------
 
 ---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 11
+     10 try:
+---> 11     import blackjax
+     12 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'blackjax'
+
+During handling of the above exception, another exception occurred:
+
 TypeError                                 Traceback (most recent call last)
-Cell In[1], line 22
-     19     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
-     20     import probml_utils as pml
----> 22 from probml_utils.blackjax_utils import inference_loop
-     23 import blackjax.smc.resampling as resampling
+Cell In[1], line 14
+     12 except ModuleNotFoundError:
+     13     get_ipython().run_line_magic('pip', 'install -qq jaxopt blackjax')
+---> 14     import blackjax
+     16 try:
+     17     import probml_utils as pml
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/blackjax_utils.py:1
-----> 1 import arviz as az
-      2 import jax.numpy as jnp
-      3 import jax
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/blackjax/__init__.py:6
+      2 from typing import Callable
+      4 from blackjax._version import __version__
+----> 6 from .adaptation.adjusted_mclmc_adaptation import adjusted_mclmc_find_L_and_step_size
+      7 from .adaptation.chees_adaptation import chees_adaptation
+      8 from .adaptation.mclmc_adaptation import mclmc_find_L_and_step_size
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:32
-     26         super()._log(level, msg, *args, **kwargs)
-     29 _log = Logger("arviz")
----> 32 from .data import *
-     33 from .plots import *
-     34 from .plots.backends import *
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/data/__init__.py:2
-      1 """Code for loading and manipulating data structures."""
-----> 2 from .base import CoordSpec, DimSpec, dict_to_dataset, numpy_to_data_array
-      3 from .converters import convert_to_dataset, convert_to_inference_data
-      4 from .datasets import clear_data_home, list_datasets, load_arviz_data
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/data/base.py:11
-      9 import numpy as np
-     10 import pkg_resources
----> 11 import xarray as xr
-     13 try:
-     14     import ujson as json
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/__init__.py:3
-      1 from importlib.metadata import version as _version
-----> 3 from xarray import testing, tutorial
-      4 from xarray.backends.api import (
-      5     load_dataarray,
-      6     load_dataset,
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/blackjax/adaptation/__init__.py:1
+----> 1 from . import (
+      2     chees_adaptation,
+      3     mclmc_adaptation,
+      4     meads_adaptation,
+      5     pathfinder_adaptation,
+      6     window_adaptation,
+      7 )
+      9 __all__ = [
+     10     "chees_adaptation",
+     11     "meads_adaptation",
    (...)
-     10     save_mfdataset,
-     11 )
-     12 from xarray.backends.zarr import open_zarr
+     14     "mclmc_adaptation",
+     15 ]
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/testing/__init__.py:1
-----> 1 from xarray.testing.assertions import (  # noqa: F401
-      2     _assert_dataarray_invariants,
-      3     _assert_dataset_invariants,
-      4     _assert_indexes_invariants_checks,
-      5     _assert_internal_invariants,
-      6     _assert_variable_invariants,
-      7     _data_allclose_or_equiv,
-      8     assert_allclose,
-      9     assert_chunks_equal,
-     10     assert_duckarray_allclose,
-     11     assert_duckarray_equal,
-     12     assert_equal,
-     13     assert_identical,
-     14 )
-     16 __all__ = [
-     17     "assert_allclose",
-     18     "assert_chunks_equal",
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/blackjax/adaptation/mclmc_adaptation.py:22
+     19 import jax.numpy as jnp
+     20 from jax.flatten_util import ravel_pytree
+---> 22 from blackjax.diagnostics import effective_sample_size
+     23 from blackjax.util import generate_unit_vector, incremental_value_update, pytree_size
+     26 class MCLMCAdaptationState(NamedTuple):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/blackjax/diagnostics.py:18
+     16 import jax.numpy as jnp
+     17 import numpy as np
+---> 18 from scipy.fftpack import next_fast_len  # type: ignore
+     20 from blackjax.types import Array, ArrayLike
+     22 __all__ = ["potential_scale_reduction", "effective_sample_size"]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fftpack/__init__.py:93
+      1 """
+      2 =========================================================
+      3 Legacy discrete Fourier transforms (:mod:`scipy.fftpack`)
    (...)
-     22     "assert_identical",
-     23 ]
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/testing/assertions.py:11
-      8 import pandas as pd
-     10 from xarray.core import duck_array_ops, formatting, utils
----> 11 from xarray.core.coordinates import Coordinates
-     12 from xarray.core.dataarray import DataArray
-     13 from xarray.core.dataset import Dataset
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/core/coordinates.py:16
-     13 import pandas as pd
-     15 from xarray.core import formatting
----> 16 from xarray.core.alignment import Aligner
-     17 from xarray.core.indexes import (
-     18     Index,
-     19     Indexes,
+     77 
+     78 """
+     81 __all__ = ['fft','ifft','fftn','ifftn','rfft','irfft',
+     82            'fft2','ifft2',
+     83            'diff',
    (...)
-     23     create_default_index_implicit,
-     24 )
-     25 from xarray.core.merge import merge_coordinates_without_align, merge_coords
+     90            'dct', 'idct', 'dst', 'idst', 'dctn', 'idctn', 'dstn', 'idstn'
+     91            ]
+---> 93 from ._basic import *
+     94 from ._pseudo_diffs import *
+     95 from ._helper import *
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/core/alignment.py:24
-     22 from xarray.core.types import T_Alignable
-     23 from xarray.core.utils import is_dict_like, is_full_slice
----> 24 from xarray.core.variable import Variable, as_compatible_data, calculate_dimensions
-     26 if TYPE_CHECKING:
-     27     from xarray.core.dataarray import DataArray
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fftpack/_basic.py:8
+      4 # Created by Pearu Peterson, August,September 2002
+      5 __all__ = ['fft','ifft','fftn','ifftn','rfft','irfft',
+      6            'fft2','ifft2']
+----> 8 from scipy.fft import _pocketfft
+      9 from ._helper import _good_shape
+     12 def fft(x, n=None, axis=-1, overwrite_x=False):
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/xarray/core/variable.py:15
-     13 import numpy as np
-     14 import pandas as pd
----> 15 from numpy.typing import ArrayLike
-     17 import xarray as xr  # only for Dataset and DataArray
-     18 from xarray.core import common, dtypes, duck_array_ops, indexing, nputils, ops, utils
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fft/__init__.py:91
+     86 from ._basic import (
+     87     fft, ifft, fft2, ifft2, fftn, ifftn,
+     88     rfft, irfft, rfft2, irfft2, rfftn, irfftn,
+     89     hfft, ihfft, hfft2, ihfft2, hfftn, ihfftn)
+     90 from ._realtransforms import dct, idct, dst, idst, dctn, idctn, dstn, idstn
+---> 91 from ._fftlog import fht, ifht, fhtoffset
+     92 from ._helper import (
+     93     next_fast_len, prev_fast_len, fftfreq,
+     94     rfftfreq, fftshift, ifftshift)
+     95 from ._backend import (set_backend, skip_backend, set_global_backend,
+     96                        register_backend)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fft/_fftlog.py:10
+      8 from ._basic import _dispatch
+      9 from scipy._lib.uarray import Dispatchable
+---> 10 from ._fftlog_backend import fhtoffset
+     11 import numpy as np
+     13 __all__ = ['fht', 'ifht', 'fhtoffset']
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/fft/_fftlog_backend.py:6
+      3 from ._basic import rfft, irfft
+      4 from ..special import loggamma, poch
+----> 6 from scipy._lib._array_api import array_namespace
+      8 __all__ = ['fht', 'ifht', 'fhtoffset']
+     10 # constants
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/_lib/_array_api.py:15
+     12 from typing import Any, Literal, TypeAlias
+     14 import numpy as np
+---> 15 import numpy.typing as npt
+     17 from scipy._lib import array_api_compat
+     18 from scipy._lib.array_api_compat import (
+     19     is_array_api_obj,
+     20     size as xp_size,
+   (...)
+     27     is_array_api_strict_namespace as is_array_api_strict
+     28 )
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/typing/__init__.py:158
       1 """
