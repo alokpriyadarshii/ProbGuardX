@@ -1,0 +1,41 @@
+An error occurred while executing the following cell:
+------------------
+try:
+    import particles
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/nchopin/particles.git
+    import particles
+import particles.state_space_models as ssm
+import particles.distributions as dists
+
+
+------------------
+
+----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy-1.15.3.dist-info/METADATA'
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 2
+      1 try:
+----> 2     import particles
+      3 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'particles'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 5
+      3 except ModuleNotFoundError:
+      4     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/nchopin/particles.git')
+----> 5     import particles
+      6 import particles.state_space_models as ssm
+      7 import particles.distributions as dists
+
+ModuleNotFoundError: No module named 'particles'
