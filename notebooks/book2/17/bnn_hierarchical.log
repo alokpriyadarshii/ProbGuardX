@@ -1,0 +1,323 @@
+An error occurred while executing the following cell:
+------------------
+from warnings import filterwarnings
+
+import jax
+from jax import vmap, jit
+import jax.numpy as jnp
+from jax.random import PRNGKey, split, normal
+import jax.random as random
+import numpy as np
+
+try:
+    import blackjax
+except ModuleNotFoundError:
+    %pip install -qq jaxopt
+    %pip install -qq blackjax
+    import blackjax
+
+try:
+    import distrax
+except ModuleNotFoundError:
+    %pip install -qq distrax
+    import distrax
+try:
+    import tensorflow_probability.substrates.jax.distributions as tfd
+except ModuleNotFoundError:
+    %pip install -qq tensorflow-probability
+    import tensorflow_probability.substrates.jax.distributions as tfd
+
+from sklearn.preprocessing import scale
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import make_moons
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+from functools import partial
+
+try:
+    from probml_utils import savefig, latexify, is_latexify_enabled
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    from probml_utils import savefig, latexify, is_latexify_enabled
+
+filterwarnings("ignore")
+sns.set_style("white")
+
+cmap = sns.diverging_palette(250, 12, s=85, l=25, as_cmap=True)
+cmap_uncertainty = sns.cubehelix_palette(light=1, as_cmap=True)
+------------------
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+arviz 0.17.1 requires numpy<2.0,>=1.22.0, but you have numpy 2.2.6 which is incompatible.
+distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
+flax 0.10.7 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
+orbax-checkpoint 0.11.39 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[1], line 28
+     25     get_ipython().run_line_magic('pip', 'install -qq tensorflow-probability')
+     26     import tensorflow_probability.substrates.jax.distributions as tfd
+---> 28 from sklearn.preprocessing import scale
+     29 from sklearn.model_selection import train_test_split
+     30 from sklearn.datasets import make_moons
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/__init__.py:73
+     62 # `_distributor_init` allows distributors to run custom init code.
+     63 # For instance, for the Windows wheel, this is used to pre-load the
+     64 # vcomp shared library runtime for OpenMP embedded in the sklearn/.libs
+   (...)
+     67 # later is linked to the OpenMP runtime to make it possible to introspect
+     68 # it and importing it first would fail if the OpenMP dll cannot be found.
+     69 from . import (  # noqa: F401 E402
+     70     __check_build,
+     71     _distributor_init,
+     72 )
+---> 73 from .base import clone  # noqa: E402
+     74 from .utils._show_versions import show_versions  # noqa: E402
+     76 _submodules = [
+     77     "calibration",
+     78     "cluster",
+   (...)
+    114     "compose",
+    115 ]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/base.py:19
+     17 from ._config import config_context, get_config
+     18 from .exceptions import InconsistentVersionWarning
+---> 19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled
+     20 from .utils._missing import is_scalar_nan
+     21 from .utils._param_validation import validate_parameter_constraints
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/__init__.py:9
+      7 from . import metadata_routing
+      8 from ._bunch import Bunch
+----> 9 from ._chunking import gen_batches, gen_even_slices
+     11 # Make _safe_indexing importable from here for backward compat as this particular
+     12 # helper is considered semi-private and typically very useful for third-party
+     13 # libraries that want to comply with scikit-learn's estimator API. In particular,
+     14 # _safe_indexing was included in our public API documentation despite the leading
+     15 # `_` in its name.
+     16 from ._indexing import (
+     17     _safe_indexing,  # noqa: F401
+     18     resample,
+     19     shuffle,
+     20 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_chunking.py:11
+      8 import numpy as np
+     10 from .._config import get_config
+---> 11 from ._param_validation import Interval, validate_params
+     14 def chunk_generator(gen, chunksize):
+     15     """Chunk generator, ``gen`` into lists of length ``chunksize``. The last
+     16     chunk may have a length less than ``chunksize``."""
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_validation.py:17
+     14 from scipy.sparse import csr_matrix, issparse
+     16 from .._config import config_context, get_config
+---> 17 from .validation import _is_arraylike_not_scalar
+     20 class InvalidParameterError(ValueError, TypeError):
+     21     """Custom exception to be raised when the parameter of a class/method/function
+     22     does not have a valid type or value.
+     23     """
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/validation.py:21
+     19 from .. import get_config as _get_config
+     20 from ..exceptions import DataConversionWarning, NotFittedError, PositiveSpectrumWarning
+---> 21 from ..utils._array_api import _asarray_with_order, _is_numpy_namespace, get_namespace
+     22 from ..utils.deprecation import _deprecate_force_all_finite
+     23 from ..utils.fixes import ComplexWarning, _preserve_dia_indices_dtype
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_array_api.py:20
+     18 from ..externals import array_api_extra as xpx
+     19 from ..externals.array_api_compat import numpy as np_compat
+---> 20 from .fixes import parse_version
+     22 # TODO: complete __all__
+     23 __all__ = ["xpx"]  # we import xpx here just to re-export it, need this to appease ruff
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/fixes.py:16
+     14 import scipy
+     15 import scipy.sparse.linalg
+---> 16 import scipy.stats
+     17 from scipy import optimize
+     19 try:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/__init__.py:606
+      1 """
+      2 .. _statsrefmanual:
+      3 
+   (...)
+    601 
+    602 """  # noqa: E501
+    604 from ._warnings_errors import (ConstantInputWarning, NearConstantInputWarning,
+    605                                DegenerateDataWarning, FitError)
+--> 606 from ._stats_py import *
+    607 from ._variation import variation
+    608 from .distributions import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/_stats_py.py:49
+     47 import scipy.special as special
+     48 from scipy import linalg
+---> 49 from . import distributions
+     50 from . import _mstats_basic as mstats_basic
+     51 from ._stats_mstats_common import (_find_repeats, linregress, theilslopes,
+     52                                    siegelslopes)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/distributions.py:8
+      1 #
+      2 # Author:  Travis Oliphant  2002-2011 with contributions from
+      3 #          SciPy Developers 2004-2011
+   (...)
+      6 #       instead of `git blame -Lxxx,+x`.
+      7 #
+----> 8 from ._distn_infrastructure import (rv_discrete, rv_continuous, rv_frozen)  # noqa: F401
+     10 from . import _continuous_distns
+     11 from . import _discrete_distns
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/_distn_infrastructure.py:26
+     23 from scipy import optimize
+     25 # for functions of continuous distributions (e.g. moments, entropy, cdf)
+---> 26 from scipy import integrate
+     28 # to approximate the pdf of a continuous distribution given its cdf
+     29 from scipy._lib._finite_differences import _derivative
+
+File <frozen importlib._bootstrap>:1075, in _handle_fromlist(module, fromlist, import_, recursive)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/__init__.py:134, in __getattr__(name)
+    132 def __getattr__(name):
+    133     if name in submodules:
+--> 134         return _importlib.import_module(f'scipy.{name}')
+    135     else:
+    136         try:
+
+File ~/miniconda3/envs/py310/lib/python3.10/importlib/__init__.py:126, in import_module(name, package)
+    124             break
+    125         level += 1
+--> 126 return _bootstrap._gcd_import(name[level:], package, level)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/integrate/__init__.py:94
+      1 """
+      2 =============================================
+      3 Integration and ODEs (:mod:`scipy.integrate`)
+   (...)
+     90    solve_bvp     -- Solve a boundary value problem for a system of ODEs.
+     91 """  # noqa: E501
+---> 94 from ._quadrature import *
+     95 from ._odepack_py import *
+     96 from ._quadpack_py import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/integrate/_quadrature.py:4
+      2 from typing import TYPE_CHECKING, Callable, Any, cast
+      3 import numpy as np
+----> 4 import numpy.typing as npt
+      5 import math
+      6 import warnings
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/typing/__init__.py:158
+      1 """
+      2 ============================
+      3 Typing (:mod:`numpy.typing`)
+   (...)
+    153 
+    154 """
+    155 # NOTE: The API section will be appended with additional entries
+    156 # further down in this file
+--> 158 from numpy._typing import (
+    159     ArrayLike,
+    160     DTypeLike,
+    161     NBitBase,
+    162     NDArray,
+    163 )
+    165 __all__ = ["ArrayLike", "DTypeLike", "NBitBase", "NDArray"]
+    167 if __doc__ is not None:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/__init__.py:102
+     86 from ._scalars import (
+     87     _CharLike_co as _CharLike_co,
+     88     _BoolLike_co as _BoolLike_co,
+   (...)
+     96     _VoidLike_co as _VoidLike_co,
+     97 )
+     98 from ._shape import (
+     99     _Shape as _Shape,
+    100     _ShapeLike as _ShapeLike,
+    101 )
+--> 102 from ._dtype_like import (
+    103     DTypeLike as DTypeLike,
+    104     _DTypeLike as _DTypeLike,
+    105     _SupportsDType as _SupportsDType,
+    106     _VoidDTypeLike as _VoidDTypeLike,
+    107     _DTypeLikeBool as _DTypeLikeBool,
+    108     _DTypeLikeUInt as _DTypeLikeUInt,
+    109     _DTypeLikeInt as _DTypeLikeInt,
+    110     _DTypeLikeFloat as _DTypeLikeFloat,
+    111     _DTypeLikeComplex as _DTypeLikeComplex,
+    112     _DTypeLikeTD64 as _DTypeLikeTD64,
+    113     _DTypeLikeDT64 as _DTypeLikeDT64,
+    114     _DTypeLikeObject as _DTypeLikeObject,
+    115     _DTypeLikeVoid as _DTypeLikeVoid,
+    116     _DTypeLikeStr as _DTypeLikeStr,
+    117     _DTypeLikeBytes as _DTypeLikeBytes,
+    118     _DTypeLikeComplex_co as _DTypeLikeComplex_co,
+    119 )
+    120 from ._array_like import (
+    121     NDArray as NDArray,
+    122     ArrayLike as ArrayLike,
+   (...)
+    145     _UnknownType as _UnknownType,
+    146 )
+    148 from ._ufunc import (
+    149     _UFunc_Nin1_Nout1 as _UFunc_Nin1_Nout1,
+    150     _UFunc_Nin2_Nout1 as _UFunc_Nin2_Nout1,
+   (...)
+    153     _GUFunc_Nin2_Nout1 as _GUFunc_Nin2_Nout1,
+    154 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/_dtype_like.py:194
+    162 _DTypeLikeInt: TypeAlias = (
+    163     type[int]
+    164     | type[np.signedinteger[Any]]
+   (...)
+    177     | _IntCodes
+    178 )
+    179 _DTypeLikeFloat: TypeAlias = (
+    180     type[float]
+    181     | type[np.floating[Any]]
+   (...)
+    190     | _LongDoubleCodes
+    191 )
+    192 _DTypeLikeComplex: TypeAlias = (
+    193     type[complex]
+--> 194     | type[np.complexfloating[Any]]
+    195     | np.dtype[np.complexfloating[Any]]
+    196     | _SupportsDType[np.dtype[np.complexfloating[Any]]]
+    197     | _Complex64Codes
+    198     | _Complex128Codes
+    199     | _CSingleCodes
+    200     | _CDoubleCodes
+    201     | _CLongDoubleCodes
+    202 )
+    203 _DTypeLikeDT64: TypeAlias = (
+    204     type[np.timedelta64]
+    205     | np.dtype[np.timedelta64]
+    206     | _SupportsDType[np.dtype[np.timedelta64]]
+    207     | _TD64Codes
+    208 )
+    209 _DTypeLikeTD64: TypeAlias = (
+    210     type[np.datetime64]
+    211     | np.dtype[np.datetime64]
+    212     | _SupportsDType[np.dtype[np.datetime64]]
+    213     | _DT64Codes
+    214 )
+
+TypeError: Too few arguments for numpy.complexfloating

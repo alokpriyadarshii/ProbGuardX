@@ -1,0 +1,22 @@
+An error occurred while executing the following cell:
+------------------
+import numpy as np
+
+try:
+    import GPy
+except ModuleNotFoundError:
+    %pip install -qq gpy
+    import GPy
+import matplotlib.pylab as plt
+import seaborn as sns
+------------------
+
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 1
+----> 1 import numpy as np
+      3 try:
+      4     import GPy
+
+ModuleNotFoundError: No module named 'numpy'
