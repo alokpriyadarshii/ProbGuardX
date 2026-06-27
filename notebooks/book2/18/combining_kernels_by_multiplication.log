@@ -1,0 +1,159 @@
+An error occurred while executing the following cell:
+------------------
+import jax
+import jax.numpy as jnp
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+try:
+    from probml_utils import latexify, savefig, is_latexify_enabled
+except ModuleNotFoundError:
+    %pip install git+https://github.com/probml/probml-utils.git
+    from probml_utils import latexify, savefig, is_latexify_enabled
+
+try:
+    import tinygp
+except ModuleNotFoundError:
+    %pip install -qqq tinygp
+    import tinygp
+
+kernels = tinygp.kernels
+from tinygp import GaussianProcess
+------------------
+
+----- stdout -----
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 13
+     12 try:
+---> 13     import tinygp
+     14 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'tinygp'
+
+During handling of the above exception, another exception occurred:
+
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 16
+     14 except ModuleNotFoundError:
+     15     get_ipython().run_line_magic('pip', 'install -qqq tinygp')
+---> 16     import tinygp
+     18 kernels = tinygp.kernels
+     19 from tinygp import GaussianProcess
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tinygp/__init__.py:11
+      1 """
+      2 ``tinygp`` is an extremely lightweight library for building Gaussian Process
+      3 models in Python, built on top of `jax <https://github.com/google/jax>`_. The
+   (...)
+      8 :ref:`tutorials` for a more complete introduction.
+      9 """
+---> 11 from tinygp import (
+     12     kernels as kernels,
+     13     noise as noise,
+     14     solvers as solvers,
+     15     transforms as transforms,
+     16 )
+     17 from tinygp.gp import GaussianProcess as GaussianProcess
+     18 from tinygp.tinygp_version import __version__ as __version__
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tinygp/kernels/__init__.py:33
+      1 """
+      2 The primary model building interface in ``tinygp`` is via "kernels", which are
+      3 typically constructed as sums and products of objects defined in this
+   (...)
+      7 fundamental building blocks.
+      8 """
+     10 __all__ = [
+     11     "quasisep",
+     12     "Distance",
+   (...)
+     30     "RationalQuadratic",
+     31 ]
+---> 33 from tinygp.kernels import quasisep
+     34 from tinygp.kernels.base import (
+     35     Conditioned,
+     36     Constant,
+   (...)
+     42     Sum,
+     43 )
+     44 from tinygp.kernels.distance import Distance, L1Distance, L2Distance
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tinygp/kernels/quasisep.py:31
+     28 from abc import abstractmethod
+     29 from typing import Any
+---> 31 import equinox as eqx
+     32 import jax
+     33 import jax.numpy as jnp
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/equinox/__init__.py:3
+      1 import importlib.metadata
+----> 3 from . import debug as debug, internal as internal, nn as nn
+      4 from ._ad import (
+      5     filter_checkpoint as filter_checkpoint,
+      6     filter_closure_convert as filter_closure_convert,
+   (...)
+     15     filter_vjp as filter_vjp,
+     16 )
+     17 from ._caches import clear_caches as clear_caches
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/equinox/debug/__init__.py:1
+----> 1 from ._announce_transform import announce_transform as announce_transform
+      2 from ._backward_nan import backward_nan as backward_nan
+      3 from ._breakpoint_if import breakpoint_if as breakpoint_if
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/equinox/debug/_announce_transform.py:5
+      2 from typing import Any
+      4 import jax
+----> 5 import jax.extend.core
+      6 import jax.interpreters.ad as ad
+      7 import jax.interpreters.batching as batching
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/extend/__init__.py:39
+      1 # Copyright 2023 The JAX Authors.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     12 # See the License for the specific language governing permissions and
+     13 # limitations under the License.
+     15 """Modules for JAX extensions.
+     16 
+     17 The :mod:`jax.extend` module provides modules for access to JAX
+   (...)
+     36 `JAX project changelog <https://docs.jax.dev/en/latest/changelog.html>`_.
+     37 """
+---> 39 from jax.extend import (
+     40     backend as backend,
+     41     core as core,
+     42     ffi as ffi,
+     43     linear_util as linear_util,
+     44     random as random,
+     45     source_info_util as source_info_util,
+     46 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/extend/backend.py:27
+     18 from jax._src.api import (
+     19   clear_backends as clear_backends,
+     20 )
+     21 from jax._src.xla_bridge import (
+     22   backends as backends,
+     23   backend_xla_version as backend_xla_version,
+     24   get_backend as get_backend,
+     25   register_backend_factory as register_backend_factory,
+     26 )
+---> 27 from jax._src.interpreters.pxla import (
+     28   get_default_device as get_default_device
+     29 )
+     30 from jax._src import (
+     31     util as _util
+     32 )
+     33 add_clear_backends_callback = _util.cache_clearing_funs.add  # type: ignore
+
+ImportError: cannot import name 'get_default_device' from 'jax._src.interpreters.pxla' (/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/pxla.py)
