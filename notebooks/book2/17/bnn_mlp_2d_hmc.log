@@ -202,30 +202,30 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:66
     669   obj.tiny = float8_e8m0fnu(tiny)
     670 if not hasattr(obj, "smallest_normal"):
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:627, in finfo.tiny(self)
-    612 @property
-    613 def tiny(self):
-    614     """Return the value for tiny, alias of smallest_normal.
-    615 
-    616     Returns
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:577, in finfo.tiny(self)
+    562 @property
+    563 def tiny(self):
+    564     """Return the value for tiny, alias of smallest_normal.
+    565 
+    566     Returns
    (...)
-    625         double-double.
-    626     """
---> 627     return self.smallest_normal
+    575         double-double.
+    576     """
+--> 577     return self.smallest_normal
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:606, in finfo.smallest_normal(self)
-    591 """Return the value for the smallest normal.
-    592 
-    593 Returns
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:556, in finfo.smallest_normal(self)
+    541 """Return the value for the smallest normal.
+    542 
+    543 Returns
    (...)
-    602     double-double.
-    603 """
-    604 # This check is necessary because the value for smallest_normal is
-    605 # platform dependent for longdouble types.
---> 606 if isnan(self._machar.smallest_normal.flat[0]):
-    607     warnings.warn(
-    608         'The value of smallest normal is undefined for double double',
-    609         UserWarning, stacklevel=2)
-    610 return self._machar.smallest_normal.flat[0]
+    552     double-double.
+    553 """
+    554 # This check is necessary because the value for smallest_normal is
+    555 # platform dependent for longdouble types.
+--> 556 if isnan(self._machar.smallest_normal.flat[0]):
+    557     warnings.warn(
+    558         'The value of smallest normal is undefined for double double',
+    559         UserWarning, stacklevel=2)
+    560 return self._machar.smallest_normal.flat[0]
 
 TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''

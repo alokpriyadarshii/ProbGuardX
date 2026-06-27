@@ -14,7 +14,7 @@ except ModuleNotFoundError:
 
 
 ---------------------------------------------------------------------------
-TypeError                                 Traceback (most recent call last)
+ValueError                                Traceback (most recent call last)
 Cell In[1], line 4
       2 import matplotlib.pyplot as plt
       3 import os
@@ -22,111 +22,116 @@ Cell In[1], line 4
       6 try:
       7     import probml_utils as pml
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/__init__.py:5
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/__init__.py:2
+      1 # Import seaborn objects
+----> 2 from .rcmod import *  # noqa: F401,F403
       3 from .utils import *  # noqa: F401,F403
       4 from .palettes import *  # noqa: F401,F403
-----> 5 from .relational import *  # noqa: F401,F403
-      6 from .regression import *  # noqa: F401,F403
-      7 from .categorical import *  # noqa: F401,F403
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/relational.py:21
-     13 from .utils import (
-     14     adjust_legend_subtitles,
-     15     _default_color,
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/rcmod.py:5
+      3 import matplotlib as mpl
+      4 from cycler import cycler
+----> 5 from . import palettes
+      8 __all__ = ["set_theme", "set", "reset_defaults", "reset_orig",
+      9            "axes_style", "set_style", "plotting_context", "set_context",
+     10            "set_palette"]
+     13 _style_keys = [
+     14 
+     15     "axes.facecolor",
    (...)
-     18     _scatter_legend_artist,
-     19 )
-     20 from ._compat import groupby_apply_include_groups
----> 21 from ._statistics import EstimateAggregator, WeightedAggregator
-     22 from .axisgrid import FacetGrid, _facet_docs
-     23 from ._docstrings import DocstringComponents, _core_docs
+     50 
+     51 ]
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/_statistics.py:32
-     30 import pandas as pd
-     31 try:
----> 32     from scipy.stats import gaussian_kde
-     33     _no_scipy = False
-     34 except ImportError:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/palettes.py:9
+      5 import matplotlib as mpl
+      7 from .external import husl
+----> 9 from .utils import desaturate, get_color_cycle
+     10 from .colors import xkcd_rgb, crayons
+     11 from ._compat import get_colormap
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/__init__.py:606
-      1 """
-      2 .. _statsrefmanual:
-      3 
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/utils.py:11
+      8 from types import ModuleType
+     10 import numpy as np
+---> 11 import pandas as pd
+     12 import matplotlib as mpl
+     13 from matplotlib.colors import to_rgb
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/__init__.py:22
+     19 del _hard_dependencies, _dependency, _missing_dependencies
+     21 # numpy compat
+---> 22 from pandas.compat import is_numpy_dev as _is_numpy_dev  # pyright: ignore # noqa:F401
+     24 try:
+     25     from pandas._libs import hashtable as _hashtable, lib as _lib, tslib as _tslib
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/__init__.py:25
+     17 from pandas.compat._constants import (
+     18     IS64,
+     19     PY39,
    (...)
-    601 
-    602 """  # noqa: E501
-    604 from ._warnings_errors import (ConstantInputWarning, NearConstantInputWarning,
-    605                                DegenerateDataWarning, FitError)
---> 606 from ._stats_py import *
-    607 from ._variation import variation
-    608 from .distributions import *
+     22     PYPY,
+     23 )
+     24 import pandas.compat.compressors
+---> 25 from pandas.compat.numpy import (
+     26     is_numpy_dev,
+     27     np_version_under1p21,
+     28 )
+     29 from pandas.compat.pyarrow import (
+     30     pa_version_under7p0,
+     31     pa_version_under8p0,
+     32     pa_version_under9p0,
+     33     pa_version_under11p0,
+     34 )
+     37 def set_function_name(f: F, name: str, cls) -> F:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/_stats_py.py:49
-     47 import scipy.special as special
-     48 from scipy import linalg
----> 49 from . import distributions
-     50 from . import _mstats_basic as mstats_basic
-     51 from ._stats_mstats_common import (_find_repeats, linregress, theilslopes,
-     52                                    siegelslopes)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/numpy/__init__.py:4
+      1 """ support numpy compatibility across versions """
+      2 import numpy as np
+----> 4 from pandas.util.version import Version
+      6 # numpy versioning
+      7 _np_version = np.__version__
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/distributions.py:11
-      8 from ._distn_infrastructure import (rv_discrete, rv_continuous, rv_frozen)  # noqa: F401
-     10 from . import _continuous_distns
----> 11 from . import _discrete_distns
-     13 from ._continuous_distns import *  # noqa: F403
-     14 from ._levy_stable import levy_stable
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/__init__.py:2
+      1 # pyright: reportUnusedImport = false
+----> 2 from pandas.util._decorators import (  # noqa:F401
+      3     Appender,
+      4     Substitution,
+      5     cache_readonly,
+      6 )
+      8 from pandas.core.util.hashing import (  # noqa:F401
+      9     hash_array,
+     10     hash_pandas_object,
+     11 )
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/_discrete_distns.py:10
-      8 from scipy.special import entr, logsumexp, betaln, gammaln as gamln, zeta
-      9 from scipy._lib._util import _lazywhere, rng_integers
----> 10 from scipy.interpolate import interp1d
-     12 from numpy import floor, ceil, log, exp, sqrt, log1p, expm1, tanh, cosh, sinh
-     14 import numpy as np
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/_decorators.py:14
+      6 from typing import (
+      7     Any,
+      8     Callable,
+      9     Mapping,
+     10     cast,
+     11 )
+     12 import warnings
+---> 14 from pandas._libs.properties import cache_readonly
+     15 from pandas._typing import (
+     16     F,
+     17     T,
+     18 )
+     19 from pandas.util._exceptions import find_stack_level
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/__init__.py:167
-      1 """
-      2 ========================================
-      3 Interpolation (:mod:`scipy.interpolate`)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/__init__.py:13
+      1 __all__ = [
+      2     "NaT",
+      3     "NaTType",
    (...)
-    165 (should not be used in new code).
-    166 """
---> 167 from ._interpolate import *
-    168 from ._fitpack_py import *
-    170 # New interface to fitpack library:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:14
-     11 from scipy._lib._util import copy_if_needed
-     12 from scipy.special import comb
----> 14 from . import _fitpack_py
-     15 from . import dfitpack
-     16 from ._polyint import _Interpolator1D
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_fitpack_py.py:8
-      5 import numpy as np
-      7 # These are in the API for fitpack even if not used in fitpack.py itself.
-----> 8 from ._fitpack_impl import bisplrep, bisplev, dblint  # noqa: F401
-      9 from . import _fitpack_impl as _impl
-     10 from ._bsplines import BSpline
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_fitpack_impl.py:103
-     52 _iermess = {
-     53     0: ["The spline has a residual sum of squares fp such that "
-     54         "abs(fp-s)/s<=0.001", None],
+      9     "Interval",
+     10 ]
+---> 13 from pandas._libs.interval import Interval
+     14 from pandas._libs.tslibs import (
+     15     NaT,
+     16     NaTType,
    (...)
-     68     'unknown': ["An error occurred", TypeError]
-     69 }
-     71 _iermess2 = {
-     72     0: ["The spline has a residual sum of squares fp such that "
-     73         "abs(fp-s)/s<=0.001", None],
-   (...)
-     99     'unknown': ["An error occurred", TypeError]
-    100 }
-    102 _parcur_cache = {'t': array([], float), 'wrk': array([], float),
---> 103                  'iwrk': array([], dfitpack_int), 'u': array([], float),
-    104                  'ub': 0, 'ue': 1}
-    107 def splprep(x, w=None, u=None, ub=None, ue=None, k=3, task=0, s=None, t=None,
-    108             full_output=0, nest=None, per=0, quiet=1):
-    109     # see the docstring of `_fitpack_py/splprep`
-    110     if task <= 0:
+     21     iNaT,
+     22 )
 
-TypeError: 
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/interval.pyx:1, in init pandas._libs.interval()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
