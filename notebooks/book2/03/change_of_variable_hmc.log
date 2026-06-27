@@ -35,13 +35,13 @@ For details and migration guidance, visit: https://python.arviz.org/en/latest/us
 ------------------
 
 ---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
+AttributeError                            Traceback (most recent call last)
 Cell In[1], line 1
 ----> 1 import arviz as az
       2 import jax
       3 import jax.numpy as jnp
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:85
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:87
      52     _log.addHandler(_handler)
      55 # adds perceptually uniform grey scale from colorcet
      56 _linear_grey_10_95_c0 = [
@@ -73,9 +73,9 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:85
      82     [0.17529, 0.17533, 0.17532],
      83     [0.17811, 0.17815, 0.17814],
      84     [0.18087, 0.18092, 0.1809],
----> 85     [0.18369, 0.18374, 0.18372],
+     85     [0.18369, 0.18374, 0.18372],
      86     [0.18652, 0.18656, 0.18655],
-     87     [0.18934, 0.18939, 0.18938],
+---> 87     [0.18934, 0.18939, 0.18938],
      88     [0.19217, 0.19221, 0.1922],
      89     [0.19502, 0.19506, 0.19505],
      90     [0.19785, 0.1979, 0.19788],
@@ -305,21 +305,4 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:85
     316 def _mpl_cm(name, colorlist):
     317     cmap = LinearSegmentedColormap.from_list(name, colorlist, N=256)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/__init__.py:3
-      1 """Plotting functions."""
-      2 from .autocorrplot import plot_autocorr
-----> 3 from .bpvplot import plot_bpv
-      4 from .bfplot import plot_bf
-      5 from .compareplot import plot_compare
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/autocorrplot.py:8
-      0 <Error retrieving source code with stack_data see ipython/ipython#13598>
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/plots/plot_utils.py:16
-     14 from ..rcparams import rcParams
-     15 from ..stats.density_utils import kde
----> 16 from ..stats import hdi
-     18 KwargSpec = Dict[str, Any]
-     21 def make_2d(ary):
-
-ModuleNotFoundError: No module named 'arviz.stats'
+AttributeError: module 'arviz.stats' has no attribute 'bayes_factor'
