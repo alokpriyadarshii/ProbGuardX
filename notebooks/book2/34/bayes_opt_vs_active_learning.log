@@ -1,0 +1,14 @@
+An error occurred while executing the following cell:
+------------------
+pml.latexify(width_scale_factor=2, fig_height=1.7)
+plt.rcParams["lines.markersize"] = 3 if pml.is_latexify_enabled() else 6
+------------------
+
+
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[3], line 2
+      1 pml.latexify(width_scale_factor=2, fig_height=1.7)
+----> 2 plt.rcParams["lines.markersize"] = 3 if pml.is_latexify_enabled() else 6
+
+NameError: name 'plt' is not defined
