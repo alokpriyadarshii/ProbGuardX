@@ -36,10 +36,6 @@ The project also includes a static **Project Outputs Dashboard** for viewing ver
 
 <img src="./images/preview-3.png" alt="Preview 3" width="100%" />
 
-<img src="./images/preview-4.png" alt="Preview 4" width="100%" />
-
-<img src="./images/preview-5.png" alt="Preview 4" width="100%" />
-
 ---
 
 ## Tech Stack
