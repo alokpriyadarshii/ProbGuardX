@@ -47,8 +47,9 @@ marksize = 3 if is_latexify_enabled() else 4
 
 ----- stdout -----
 Collecting git+https://github.com/SheffieldML/PyDeepGP.git
-  Cloning https://github.com/SheffieldML/PyDeepGP.git to /tmp/pip-req-build-6l6zgny3
-  Running command git clone --filter=blob:none --quiet https://github.com/SheffieldML/PyDeepGP.git /tmp/pip-req-build-6l6zgny3
+  Cloning https://github.com/SheffieldML/PyDeepGP.git to /tmp/pip-req-build-_nuds9y4
+----- stdout -----
+  Running command git clone --filter=blob:none --quiet https://github.com/SheffieldML/PyDeepGP.git /tmp/pip-req-build-_nuds9y4
 ----- stdout -----
   Resolved https://github.com/SheffieldML/PyDeepGP.git to commit f2a1f568a7462633a58ed433520dcf7f0c98515c
 ----- stdout -----
@@ -71,13 +72,13 @@ Collecting git+https://github.com/SheffieldML/PyDeepGP.git
           json_out["return_val"] = hook(**hook_input["kwargs"])
         File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 143, in get_requires_for_build_wheel
           return hook(config_settings)
-        File "/tmp/pip-build-env-iv_iacd6/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 333, in get_requires_for_build_wheel
+        File "/tmp/pip-build-env-93t5m2m6/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 333, in get_requires_for_build_wheel
           return self._get_build_requires(config_settings, requirements=[])
-        File "/tmp/pip-build-env-iv_iacd6/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 301, in _get_build_requires
+        File "/tmp/pip-build-env-93t5m2m6/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 301, in _get_build_requires
           self.run_setup()
-        File "/tmp/pip-build-env-iv_iacd6/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 520, in run_setup
+        File "/tmp/pip-build-env-93t5m2m6/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 520, in run_setup
           super().run_setup(setup_script=setup_script)
-        File "/tmp/pip-build-env-iv_iacd6/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 317, in run_setup
+        File "/tmp/pip-build-env-93t5m2m6/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 317, in run_setup
           exec(code, locals())
         File "<string>", line 6, in <module>
       ModuleNotFoundError: No module named 'numpy'
