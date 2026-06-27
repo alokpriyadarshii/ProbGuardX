@@ -1,19 +1,9 @@
 An error occurred while executing the following cell:
 ------------------
-# Author: Meduri Venkata Shivaditya
-
 import numpy as np
 import matplotlib.pyplot as plt
-
-%matplotlib inline
-from scipy.stats import norm, multivariate_normal
-
-try:
-    import bayes_logistic  # pip install -qq bayes_logistic
-except ModuleNotFoundError:
-    %pip install -qq bayes_logistic
-    import bayes_logistic  # pip install -qq bayes_logistic
-import warnings
+import os
+from scipy.stats import multivariate_normal
 
 try:
     import probml_utils as pml
@@ -21,7 +11,48 @@ except ModuleNotFoundError:
     %pip install -qq git+https://github.com/probml/probml-utils.git
     import probml_utils as pml
 
-warnings.filterwarnings("ignore", category=RuntimeWarning)
+fs = 12
+np.random.seed(0)
+true_mu1 = -10
+true_mu2 = 10
+true_pi = 0.5
+
+
+true_sigma = 5
+
+
+n_obs = 100
+obs = [true_mu1 + true_sigma * np.random.randn(1, n_obs), true_mu2 + true_sigma * np.random.randn(1, n_obs)]
+obs = np.reshape(obs, [1, 200])
+obs = np.transpose(obs)
+
+plt.figure()
+histogram = plt.hist(obs)
+pml.savefig("gmm_lik_surface_hist")
+plt.show()
+# print(obs.shape)
+
+dmu = 0.5
+mu1_bins = np.arange(-20, 20 + dmu, dmu)
+mu2_bins = np.arange(-20, 20 + dmu, dmu)
+
+n_mu1_bins = mu1_bins.size
+n_mu2_bins = mu2_bins.size
+
+lik_bins = np.zeros((n_mu1_bins, n_mu2_bins))
+
+for b1 in range(0, n_mu1_bins):
+    for b2 in range(0, n_mu2_bins):
+        p1 = true_pi * multivariate_normal.pdf(obs, mu1_bins[b1], true_sigma)
+        p2 = (1 - true_pi) * multivariate_normal.pdf(obs, mu1_bins[b2], true_sigma)
+        lik_bins[b1, b2] = sum(np.log(p1 + p2))
+
+plt.figure()
+plt.contour(lik_bins)
+plt.xlabel("$\mu_1$")
+plt.ylabel("$\mu_2$")
+pml.savefig("gmm_lik_surface_contour")
+plt.show()
 ------------------
 
 ----- stderr -----
@@ -31,12 +62,12 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 ---------------------------------------------------------------------------
 ValueError                                Traceback (most recent call last)
-Cell In[1], line 7
-      4 import matplotlib.pyplot as plt
-      6 get_ipython().run_line_magic('matplotlib', 'inline')
-----> 7 from scipy.stats import norm, multivariate_normal
-      9 try:
-     10     import bayes_logistic  # pip install -qq bayes_logistic
+Cell In[1], line 4
+      2 import matplotlib.pyplot as plt
+      3 import os
+----> 4 from scipy.stats import multivariate_normal
+      6 try:
+      7     import probml_utils as pml
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/__init__.py:441
       1 """
