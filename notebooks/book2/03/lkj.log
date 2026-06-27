@@ -58,56 +58,158 @@ plt.show()
 
 ------------------
 
+----- stdout -----
+jax version 0.4.30
+jax backend cpu
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/pty.py:89: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  pid, fd = os.forkpty()
+----- stdout -----
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
+optax 0.2.8 requires jax>=0.5.3, but you have jax 0.4.30 which is incompatible.
+optax 0.2.8 requires jaxlib>=0.5.3, but you have jaxlib 0.4.30 which is incompatible.
+orbax-checkpoint 0.11.39 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
 
 ---------------------------------------------------------------------------
 ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 12
-      9 np.set_printoptions(precision=3)
-     10 import matplotlib.pyplot as plt
----> 12 import jax
-     13 print("jax version {}".format(jax.__version__))
-     14 print("jax backend {}".format(jax.lib.xla_bridge.get_backend().platform))
+Cell In[1], line 23
+     22 try:
+---> 23     import numpyro
+     24 except ModuleNotFoundError:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:80
-     77 Device = _xc.Device
-     78 del _xc
----> 80 from jax._src.api import effects_barrier as effects_barrier
-     81 from jax._src.api import block_until_ready as block_until_ready
-     82 from jax._src.ad_checkpoint import checkpoint_wrapper as checkpoint
+ModuleNotFoundError: No module named 'numpyro'
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/api.py:39
-     36 from contextlib import contextmanager, ExitStack
-     38 from jax._src import linear_util as lu
----> 39 from jax._src import stages
-     40 from jax._src.tree_util import (
-     41     tree_map, tree_flatten, tree_unflatten, tree_structure, tree_transpose,
-     42     tree_leaves, Partial, PyTreeDef, all_leaves, keystr, broadcast_prefix,
-     43     prefix_errors, generate_key_paths)
-     44 from jax._src import api_util
+During handling of the above exception, another exception occurred:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/stages.py:50
-     48 from jax._src.sharding_impls import is_unspecified_or_auto
-     49 from jax._src.layout import Layout
----> 50 from jax._src.interpreters import mlir
-     51 from jax._src.lib.mlir import ir
-     52 from jax._src.lib import xla_client as xc
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 26
+     24 except ModuleNotFoundError:
+     25     get_ipython().run_line_magic('pip', 'install -qq numpyro')
+---> 26     import numpyro
+     27 import numpyro.distributions as dist
+     29 try:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:53
-     51 from jax._src.lib import xla_client as xc
-     52 from jax._src.lib import xla_extension
----> 53 from jax._src.lib.mlir import dialects
-     54 from jax._src.lib.mlir import ir
-     55 from jax._src.lib.mlir.dialects import func as func_dialect
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpyro/__init__.py:13
+      7 warnings.filterwarnings(
+      8     "ignore", message=".*Attempting to hash a tracer.*", category=FutureWarning
+      9 )
+     11 # ruff: noqa: E402
+---> 13 from numpyro import compat, diagnostics, distributions, handlers, infer, ops, optim
+     14 from numpyro.distributions.distribution import enable_validation, validation_enabled
+     15 from numpyro.infer.inspect import render_model
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/mlir/__init__.py:18
-      1 # Copyright 2021 The JAX Authors.
-      2 #
-      3 # Licensed under the Apache License, Version 2.0 (the "License");
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpyro/distributions/__init__.py:4
+      1 # Copyright Contributors to the Pyro project.
+      2 # SPDX-License-Identifier: Apache-2.0
+----> 4 from numpyro.distributions.conjugate import (
+      5     BetaBinomial,
+      6     DirichletMultinomial,
+      7     GammaPoisson,
+      8     NegativeBinomial2,
+      9     NegativeBinomialLogits,
+     10     NegativeBinomialProbs,
+     11     ZeroInflatedNegativeBinomial2,
+     12 )
+     13 from numpyro.distributions.continuous import (
+     14     CAR,
+     15     LKJ,
    (...)
-     14 
-     15 # ruff: noqa: F401
-     17 import jaxlib.mlir.ir as ir
----> 18 import jaxlib.mlir.passmanager as passmanager
-     19 from jaxlib.mlir._mlir_libs import register_jax_dialects
+     56     ZeroSumNormal,
+     57 )
+     58 from numpyro.distributions.copula import GaussianCopula, GaussianCopulaBeta
 
-ModuleNotFoundError: No module named 'jaxlib.mlir.passmanager'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpyro/distributions/conjugate.py:15
+     13 from numpyro._typing import ConstraintT
+     14 from numpyro.distributions import constraints
+---> 15 from numpyro.distributions.continuous import Beta, Dirichlet, Gamma
+     16 from numpyro.distributions.discrete import (
+     17     BinomialProbs,
+     18     MultinomialProbs,
+     19     Poisson,
+     20     ZeroInflatedDistribution,
+     21 )
+     22 from numpyro.distributions.distribution import Distribution
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpyro/distributions/continuous.py:35
+     33 import jax
+     34 from jax import Array, lax, vmap
+---> 35 from jax.experimental.sparse import BCOO
+     36 from jax.lax import scan
+     37 import jax.nn as nn
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/experimental/sparse/__init__.py:201
+    191 # Note: import <name> as <name> is required for names to be exported.
+    192 # See PEP 484 & https://github.com/jax-ml/jax/issues/7570
+    194 from jax.experimental.sparse.ad import (
+    195     jacfwd as jacfwd,
+    196     jacobian as jacobian,
+   (...)
+    199     value_and_grad as value_and_grad,
+    200 )
+--> 201 from jax.experimental.sparse.bcoo import (
+    202     bcoo_broadcast_in_dim as bcoo_broadcast_in_dim,
+    203     bcoo_concatenate as bcoo_concatenate,
+    204     bcoo_conv_general_dilated as bcoo_conv_general_dilated,
+    205     bcoo_dot_general as bcoo_dot_general,
+    206     bcoo_dot_general_p as bcoo_dot_general_p,
+    207     bcoo_dot_general_sampled as bcoo_dot_general_sampled,
+    208     bcoo_dot_general_sampled_p as bcoo_dot_general_sampled_p,
+    209     bcoo_dynamic_slice as bcoo_dynamic_slice,
+    210     bcoo_extract as bcoo_extract,
+    211     bcoo_extract_p as bcoo_extract_p,
+    212     bcoo_fromdense as bcoo_fromdense,
+    213     bcoo_fromdense_p as bcoo_fromdense_p,
+    214     bcoo_gather as bcoo_gather,
+    215     bcoo_multiply_dense as bcoo_multiply_dense,
+    216     bcoo_multiply_sparse as bcoo_multiply_sparse,
+    217     bcoo_update_layout as bcoo_update_layout,
+    218     bcoo_reduce_sum as bcoo_reduce_sum,
+    219     bcoo_reshape as bcoo_reshape,
+    220     bcoo_rev as bcoo_rev,
+    221     bcoo_slice as bcoo_slice,
+    222     bcoo_sort_indices as bcoo_sort_indices,
+    223     bcoo_sort_indices_p as bcoo_sort_indices_p,
+    224     bcoo_spdot_general_p as bcoo_spdot_general_p,
+    225     bcoo_squeeze as bcoo_squeeze,
+    226     bcoo_sum_duplicates as bcoo_sum_duplicates,
+    227     bcoo_sum_duplicates_p as bcoo_sum_duplicates_p,
+    228     bcoo_todense as bcoo_todense,
+    229     bcoo_todense_p as bcoo_todense_p,
+    230     bcoo_transpose as bcoo_transpose,
+    231     bcoo_transpose_p as bcoo_transpose_p,
+    232     BCOO as BCOO,
+    233 )
+    235 from jax.experimental.sparse.bcsr import (
+    236     bcsr_broadcast_in_dim as bcsr_broadcast_in_dim,
+    237     bcsr_concatenate as bcsr_concatenate,
+   (...)
+    247     BCSR as BCSR,
+    248 )
+    250 from jax.experimental.sparse._base import (
+    251     JAXSparse as JAXSparse
+    252 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/experimental/sparse/bcoo.py:38
+     32 from jax.experimental.sparse._base import JAXSparse
+     33 from jax.experimental.sparse.util import (
+     34   nfold_vmap, _count_stored_elements,
+     35   _dot_general_validated_shape, CuSparseEfficiencyWarning,
+     36   SparseEfficiencyError, SparseEfficiencyWarning, Shape,
+     37   SparseInfo)
+---> 38 from jax.experimental.sparse._lowerings import coo_spmv_p, coo_spmm_p
+     39 from jax._src.interpreters import mlir
+     40 import jax.numpy as jnp
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/experimental/sparse/_lowerings.py:28
+     26 from jax._src.interpreters import mlir
+     27 from jax._src.lib import gpu_sparse
+---> 28 from jax._src.lib import has_cpu_sparse
+     29 import numpy as np
+     31 if hasattr(gpu_sparse, "registrations"):
+
+ImportError: cannot import name 'has_cpu_sparse' from 'jax._src.lib' (/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py)

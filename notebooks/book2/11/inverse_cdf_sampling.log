@@ -1,0 +1,215 @@
+An error occurred while executing the following cell:
+------------------
+# author name: @AnandShegde
+try:
+    import tensorflow_probability.substrates.jax as tfp
+except:
+    %pip install tensorflow_probability
+    import tensorflow_probability.substrates.jax as tfp
+
+tfd = tfp.distributions
+import matplotlib.pyplot as plt
+import jax
+import jax.numpy as jnp
+import seaborn
+
+try:
+    import probml_utils as pml
+except:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+import warnings
+import os
+import logging
+
+logger = logging.getLogger()
+
+
+class CheckTypesFilter(logging.Filter):
+    def filter(self, record):
+        return "check_types" not in record.getMessage()
+
+
+logger.addFilter(CheckTypesFilter())
+
+jax.config.update("jax_platform_name", "cpu")
+
+key = jax.random.PRNGKey(2)
+------------------
+
+----- stdout -----
+Requirement already satisfied: tensorflow_probability in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (0.25.0)
+Requirement already satisfied: absl-py in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (2.4.0)
+Requirement already satisfied: six>=1.10.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (1.17.0)
+Requirement already satisfied: numpy>=1.13.3 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (2.2.6)
+Requirement already satisfied: decorator in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (5.3.1)
+Requirement already satisfied: cloudpickle>=1.3 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (3.1.2)
+Requirement already satisfied: gast>=0.3.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (0.7.0)
+Requirement already satisfied: dm-tree in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (0.1.10)
+Requirement already satisfied: attrs>=18.2.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from dm-tree->tensorflow_probability) (26.1.0)
+Requirement already satisfied: wrapt>=1.11.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from dm-tree->tensorflow_probability) (2.2.2)
+----- stdout -----
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[1], line 3
+      2 try:
+----> 3     import tensorflow_probability.substrates.jax as tfp
+      4 except:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:36
+     34     raise
+---> 36 _ensure_jax_install()
+     37 del _ensure_jax_install  # Cleanup symbol to avoid polluting namespace.
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:29, in _ensure_jax_install()
+     28 try:
+---> 29   import jax
+     30   del jax
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:82
+     81 from jax._src.core import typeof as typeof
+---> 82 from jax._src.api import effects_barrier as effects_barrier
+     83 from jax._src.api import block_until_ready as block_until_ready
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/api.py:43
+     42 from jax._src import linear_util as lu
+---> 43 from jax._src import stages
+     44 from jax._src.tree_util import (
+     45     tree_map, tree_flatten, tree_unflatten, tree_structure, tree_transpose,
+     46     tree_leaves, Partial, PyTreeDef, all_leaves, keystr, broadcast_prefix,
+     47     prefix_errors, generate_key_paths, tree_flatten_with_path,
+     48     equality_errors_pytreedef)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/stages.py:50
+     49 from jax._src.layout import Format, DeviceLocalLayout
+---> 50 from jax._src.interpreters import mlir
+     51 from jax._src.lib.mlir import ir
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:192
+    165 # Non-canonicalized dtype to IR type mapping.
+    166 _dtype_to_ir_type : dict[np.dtype, Callable[[], ir.Type]] = {
+    167   np.dtype(dtypes.float0): partial(ir.IntegerType.get_signless, 1),
+    168   np.dtype(np.bool_): partial(ir.IntegerType.get_signless, 1),
+    169   np.dtype(dtypes.int4): partial(ir.IntegerType.get_signless, 4),
+    170   np.dtype(np.int8): partial(ir.IntegerType.get_signless, 8),
+    171   np.dtype(np.int16): partial(ir.IntegerType.get_signless, 16),
+    172   np.dtype(np.int32): partial(ir.IntegerType.get_signless, 32),
+    173   np.dtype(np.int64): partial(ir.IntegerType.get_signless, 64),
+    174   np.dtype(dtypes.uint4): partial(ir.IntegerType.get_unsigned, 4),
+    175   np.dtype(np.uint8): partial(ir.IntegerType.get_unsigned, 8),
+    176   np.dtype(np.uint16): partial(ir.IntegerType.get_unsigned, 16),
+    177   np.dtype(np.uint32): partial(ir.IntegerType.get_unsigned, 32),
+    178   np.dtype(np.uint64): partial(ir.IntegerType.get_unsigned, 64),
+    179   np.dtype(dtypes.float8_e4m3b11fnuz): ir.Float8E4M3B11FNUZType.get,
+    180   np.dtype(dtypes.float8_e4m3fn): ir.Float8E4M3FNType.get,
+    181   np.dtype(dtypes.float8_e4m3fnuz): ir.Float8E4M3FNUZType.get,
+    182   np.dtype(dtypes.float8_e5m2): ir.Float8E5M2Type.get,
+    183   np.dtype(dtypes.float8_e5m2fnuz): ir.Float8E5M2FNUZType.get,
+    184   np.dtype(dtypes.bfloat16): ir.BF16Type.get,
+    185   np.dtype(np.float16): ir.F16Type.get,
+    186   np.dtype(np.float32): ir.F32Type.get,
+    187   np.dtype(np.float64): ir.F64Type.get,
+    188   np.dtype(np.complex64): lambda: ir.ComplexType.get(ir.F32Type.get()),
+    189   np.dtype(np.complex128): lambda: ir.ComplexType.get(ir.F64Type.get()),
+    190   np.dtype(dtypes.int2): partial(ir.IntegerType.get_signless, 2),
+    191   np.dtype(dtypes.uint2): partial(ir.IntegerType.get_unsigned, 2),
+--> 192   np.dtype(dtypes.float8_e3m4): ir.Float8E3M4Type.get,
+    193   np.dtype(dtypes.float8_e4m3): ir.Float8E4M3Type.get,
+    194   np.dtype(dtypes.float8_e8m0fnu): ir.Float8E8M0FNUType.get,
+    195   np.dtype(dtypes.float4_e2m1fn): ir.Float4E2M1FNType.get,
+    196 }
+    198 def dtype_to_ir_type(dtype: core.bint | np.dtype | np.generic) -> ir.Type:
+
+AttributeError: module 'jaxlib.mlir.ir' has no attribute 'Float8E3M4Type'
+
+During handling of the above exception, another exception occurred:
+
+Exception                                 Traceback (most recent call last)
+Cell In[1], line 6
+      4 except:
+      5     get_ipython().run_line_magic('pip', 'install tensorflow_probability')
+----> 6     import tensorflow_probability.substrates.jax as tfp
+      8 tfd = tfp.distributions
+      9 import matplotlib.pyplot as plt
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:36
+     32     print('\n\nFailed to import JAX. '
+     33           'pip install jax jaxlib\n\n')
+     34     raise
+---> 36 _ensure_jax_install()
+     37 del _ensure_jax_install  # Cleanup symbol to avoid polluting namespace.
+     39 from tensorflow_probability.python.version import __version__
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:29, in _ensure_jax_install()
+     23 """Attempt to import JAX.
+     24 
+     25 Raises:
+     26   ImportError: if JAX is not importable.
+     27 """
+     28 try:
+---> 29   import jax
+     30   del jax
+     31 except ImportError:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:82
+     79 del _xc
+     81 from jax._src.core import typeof as typeof
+---> 82 from jax._src.api import effects_barrier as effects_barrier
+     83 from jax._src.api import block_until_ready as block_until_ready
+     84 from jax._src.ad_checkpoint import checkpoint_wrapper as checkpoint  # noqa: F401
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/api.py:43
+     41 from jax._src import deprecations
+     42 from jax._src import linear_util as lu
+---> 43 from jax._src import stages
+     44 from jax._src.tree_util import (
+     45     tree_map, tree_flatten, tree_unflatten, tree_structure, tree_transpose,
+     46     tree_leaves, Partial, PyTreeDef, all_leaves, keystr, broadcast_prefix,
+     47     prefix_errors, generate_key_paths, tree_flatten_with_path,
+     48     equality_errors_pytreedef)
+     49 from jax._src import config
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/stages.py:50
+     48 from jax._src.sharding_impls import UnspecifiedValue, AUTO
+     49 from jax._src.layout import Format, DeviceLocalLayout
+---> 50 from jax._src.interpreters import mlir
+     51 from jax._src.lib.mlir import ir
+     52 from jax._src.lib import _jax
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:79
+     76 # mypy implicitly sets this variable to true when type checking.
+     77 MYPY = False
+---> 79 _JAX_DUMP_IR_TO = config.string_flag(
+     80     'jax_dump_ir_to', os.getenv('JAX_DUMP_IR_TO', ''),
+     81     help="Path to which the IR that is emitted by JAX should be dumped as "
+     82          "text files. If omitted, JAX will not dump IR. "
+     83          "Supports the special value 'sponge' to pick the path from the "
+     84          "environment variable TEST_UNDECLARED_OUTPUTS_DIR.")
+     86 _JAX_INCLUDE_DEBUG_INFO_IN_DUMPS = config.string_flag(
+     87   'jax_include_debug_info_in_dumps',
+     88   os.getenv('JAX_INCLUDE_DEBUG_INFO_IN_DUMPS', "True"),
+   (...)
+     91        "the IR dump. To avoid exposing source code and potentially sensitive "
+     92        "information, set to false")
+     93 lowerable_effects: effects_lib.EffectTypeSet = effects_lib.lowerable_effects
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:845, in string_flag(name, default, *args, **kwargs)
+    843 update_hook = kwargs.pop("update_hook", None)
+    844 holder = Flag(name, default, update_hook)
+--> 845 config.add_option(name, holder, str, args, kwargs)
+    846 return holder
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:133, in Config.add_option(self, name, holder, opt_type, meta_args, meta_kwargs)
+    131 def add_option(self, name, holder, opt_type, meta_args, meta_kwargs):
+    132   if name in self._value_holders:
+--> 133     raise Exception(f"Config option {name} already defined")
+    134   self._value_holders[name] = holder
+    135   self.meta[name] = (opt_type, meta_args, meta_kwargs)
+
+Exception: Config option jax_dump_ir_to already defined
