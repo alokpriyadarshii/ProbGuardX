@@ -17,59 +17,71 @@ from probml_utils import savefig, latexify, is_latexify_enabled
 from probml_utils import gauss_utils as gauss
 ------------------
 
------ stderr -----
-/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 2.2.6
-  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
-------------------
 
 ---------------------------------------------------------------------------
-ValueError                                Traceback (most recent call last)
-Cell In[1], line 4
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 1
+----> 1 import jax.numpy as jnp
       2 from jax import random
       3 import matplotlib.pyplot as plt
-----> 4 from scipy.stats import t, laplace, norm
-      5 import seaborn as sns
-      6 from sklearn.datasets import make_spd_matrix
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/__init__.py:441
-      1 """
-      2 .. _statsrefmanual:
-      3 
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:25
+     22 from jax.version import __version_info__ as __version_info__
+     24 # Set Cloud TPU env vars if necessary before transitively loading C++ backend
+---> 25 from jax._src.cloud_tpu_init import cloud_tpu_init as _cloud_tpu_init
+     26 try:
+     27   _cloud_tpu_init()
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/cloud_tpu_init.py:17
+     15 import os
+     16 from jax import version
+---> 17 from jax._src import config
+     18 from jax._src import hardware_utils
+     19 from typing import Optional
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:27
+     24 import threading
+     25 from typing import Any, Callable, Generic, NamedTuple, NoReturn, TypeVar, cast
+---> 27 from jax._src import lib
+     28 from jax._src.lib import jax_jit
+     29 from jax._src.lib import transfer_guard_lib
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:87
+     84 cpu_feature_guard.check_cpu_features()
+     86 import jaxlib.utils as utils
+---> 87 import jaxlib.xla_client as xla_client
+     88 import jaxlib.lapack as lapack
+     90 xla_extension = xla_client._xla
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jaxlib/xla_client.py:30
+     27 import threading
+     28 from typing import Any, Protocol, Union
+---> 30 import ml_dtypes
+     31 import numpy as np
+     33 from . import xla_extension as _xla
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/__init__.py:40
+     16 __all__ = [
+     17     "__version__",
+     18     "bfloat16",
    (...)
-    438 
-    439 """
---> 441 from .stats import *
-    442 from .distributions import *
-    443 from .morestats import *
+     35     "uint4",
+     36 ]
+     38 from typing import Type
+---> 40 from ml_dtypes._finfo import finfo
+     41 from ml_dtypes._iinfo import iinfo
+     42 from ml_dtypes._ml_dtypes_ext import bfloat16
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/stats.py:37
-     34 import numpy as np
-     35 from numpy import array, asarray, ma
----> 37 from scipy.spatial.distance import cdist
-     38 from scipy.ndimage import measurements
-     39 from scipy._lib._util import (check_random_state, MapWrapper,
-     40                               rng_integers, float_factorial)
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/spatial/__init__.py:96
-      1 """
-      2 =============================================================
-      3 Spatial algorithms and data structures (:mod:`scipy.spatial`)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:17
+      1 # Copyright 2023 The ml_dtypes Authors.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
    (...)
-     93 
-     94 """
----> 96 from .kdtree import *
-     97 from .ckdtree import *
-     98 from .qhull import *
+     12 # See the License for the specific language governing permissions and
+     13 # limitations under the License.
+     15 """Overload of numpy.finfo to handle dtypes defined in ml_dtypes."""
+---> 17 from ml_dtypes._ml_dtypes_ext import bfloat16
+     18 from ml_dtypes._ml_dtypes_ext import float4_e2m1fn
+     19 from ml_dtypes._ml_dtypes_ext import float6_e2m3fn
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/spatial/kdtree.py:5
-      3 import numpy as np
-      4 import warnings
-----> 5 from .ckdtree import cKDTree, cKDTreeNode
-      7 __all__ = ['minkowski_distance_p', 'minkowski_distance',
-      8            'distance_matrix',
-      9            'Rectangle', 'KDTree']
-     12 def minkowski_distance_p(x, y, p=2):
-
-File ckdtree.pyx:1, in init scipy.spatial.ckdtree()
-
-ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
+ImportError: numpy._core.umath failed to import

@@ -187,139 +187,40 @@ pml.savefig("bayesLinRegPlot2d_bayes.png")
 plt.show()
 ------------------
 
------ stderr -----
-/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:70: UserWarning: renaming figures/bayesLinRegPlot2dB.pdf to figures/bayesLinRegPlot2dB_latexified.pdf because LATEXIFY is True
-  warnings.warn(
------ stdout -----
-saving image to figures/bayesLinRegPlot2dB_latexified.pdf
-Figure size: [10. 10.]
------ stdout -----
-Error in callback <function _draw_all_if_interactive at 0x7fb522c0da20> (for post_execute), with arguments args (),kwargs {}:
-------------------
 
 ---------------------------------------------------------------------------
-ValueError                                Traceback (most recent call last)
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/formatters.py:402, in BaseFormatter.__call__(self, obj)
-    400     pass
-    401 else:
---> 402     return printer(obj)
-    403 # Finally look for special method names
-    404 method = get_real_method(obj, self.print_method)
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 7
+      1 # Bayesian inference for simple linear regression with known noise variance
+      2 # The goal is to reproduce fig 3.7 from Bishop's book.
+      3 # We fit the linear model f(x,w) = w0 + w1*x and plot the posterior over w.
+      6 import numpy as np
+----> 7 import matplotlib.pyplot as plt
+      8 import os
+     10 try:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/pylabtools.py:170, in print_figure(fig, fmt, bbox_inches, base64, **kwargs)
-    167     from matplotlib.backend_bases import FigureCanvasBase
-    168     FigureCanvasBase(fig)
---> 170 fig.canvas.print_figure(bytes_io, **kw)
-    171 data = bytes_io.getvalue()
-    172 if fmt == 'svg':
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:259
+    254         if parse_version(module.__version__) < parse_version(minver):
+    255             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    256                               f"you have {module.__version__}")
+--> 259 _check_versions()
+    262 # The decorator ensures this always returns the same handler (and it is only
+    263 # attached once).
+    264 @functools.cache
+    265 def _ensure_handler():
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backend_bases.py:2193, in FigureCanvasBase.print_figure(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, pad_inches, bbox_extra_artists, backend, **kwargs)
-   2189 try:
-   2190     # _get_renderer may change the figure dpi (as vector formats
-   2191     # force the figure dpi to 72), so we need to set it again here.
-   2192     with cbook._setattr_cm(self.figure, dpi=dpi):
--> 2193         result = print_method(
-   2194             filename,
-   2195             facecolor=facecolor,
-   2196             edgecolor=edgecolor,
-   2197             orientation=orientation,
-   2198             bbox_inches_restore=_bbox_inches_restore,
-   2199             **kwargs)
-   2200 finally:
-   2201     if bbox_inches and restore_bbox:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backend_bases.py:2043, in FigureCanvasBase._switch_canvas_and_return_print_method.<locals>.<lambda>(*args, **kwargs)
-   2039     optional_kws = {  # Passed by print_figure for other renderers.
-   2040         "dpi", "facecolor", "edgecolor", "orientation",
-   2041         "bbox_inches_restore"}
-   2042     skip = optional_kws - {*inspect.signature(meth).parameters}
--> 2043     print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
-   2044         *args, **{k: v for k, v in kwargs.items() if k not in skip}))
-   2045 else:  # Let third-parties do as they see fit.
-   2046     print_method = meth
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:497, in FigureCanvasAgg.print_png(self, filename_or_obj, metadata, pil_kwargs)
-    450 def print_png(self, filename_or_obj, *, metadata=None, pil_kwargs=None):
-    451     """
-    452     Write the figure to a PNG file.
-    453 
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:244, in _check_versions()
+    240 def _check_versions():
+    241 
+    242     # Quickfix to ensure Microsoft Visual C++ redistributable
+    243     # DLLs are loaded before importing kiwisolver
+--> 244     from . import ft2font
+    246     for modname, minver in [
+    247             ("cycler", "0.10"),
+    248             ("dateutil", "2.7"),
    (...)
-    495         *metadata*, including the default 'Software' key.
-    496     """
---> 497     self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+    251             ("pyparsing", "2.3.1"),
+    252     ]:
+    253         module = importlib.import_module(modname)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:445, in FigureCanvasAgg._print_pil(self, filename_or_obj, fmt, pil_kwargs, metadata)
-    440 def _print_pil(self, filename_or_obj, fmt, pil_kwargs, metadata=None):
-    441     """
-    442     Draw the canvas, then save it using `.image.imsave` (to which
-    443     *pil_kwargs* and *metadata* are forwarded).
-    444     """
---> 445     FigureCanvasAgg.draw(self)
-    446     mpl.image.imsave(
-    447         filename_or_obj, self.buffer_rgba(), format=fmt, origin="upper",
-    448         dpi=self.figure.dpi, metadata=metadata, pil_kwargs=pil_kwargs)
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:388, in FigureCanvasAgg.draw(self)
-    385 # Acquire a lock on the shared font cache.
-    386 with (self.toolbar._wait_cursor_for_draw_cm() if self.toolbar
-    387       else nullcontext()):
---> 388     self.figure.draw(self.renderer)
-    389     # A GUI class may be need to update a window using this draw, so
-    390     # don't forget to call the superclass.
-    391     super().draw()
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/artist.py:95, in _finalize_rasterization.<locals>.draw_wrapper(artist, renderer, *args, **kwargs)
-     93 @wraps(draw)
-     94 def draw_wrapper(artist, renderer, *args, **kwargs):
----> 95     result = draw(artist, renderer, *args, **kwargs)
-     96     if renderer._rasterizing:
-     97         renderer.stop_rasterizing()
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/artist.py:72, in allow_rasterization.<locals>.draw_wrapper(artist, renderer)
-     69     if artist.get_agg_filter() is not None:
-     70         renderer.start_filter()
----> 72     return draw(artist, renderer)
-     73 finally:
-     74     if artist.get_agg_filter() is not None:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/figure.py:3153, in Figure.draw(self, renderer)
-   3150         pass
-   3151         # ValueError can occur when resizing a window.
--> 3153 self.patch.draw(renderer)
-   3154 mimage._draw_list_compositing_images(
-   3155     renderer, self, artists, self.suppressComposite)
-   3157 for sfig in self.subfigs:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/artist.py:72, in allow_rasterization.<locals>.draw_wrapper(artist, renderer)
-     69     if artist.get_agg_filter() is not None:
-     70         renderer.start_filter()
----> 72     return draw(artist, renderer)
-     73 finally:
-     74     if artist.get_agg_filter() is not None:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/patches.py:588, in Patch.draw(self, renderer)
-    586 tpath = transform.transform_path_non_affine(path)
-    587 affine = transform.get_affine()
---> 588 self._draw_paths_with_artist_properties(
-    589     renderer,
-    590     [(tpath, affine,
-    591       # Work around a bug in the PDF and SVG renderers, which
-    592       # do not draw the hatches if the facecolor is fully
-    593       # transparent, but do if it is None.
-    594       self._facecolor if self._facecolor[3] else None)])
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/patches.py:573, in Patch._draw_paths_with_artist_properties(self, renderer, draw_path_args_list)
-    570     renderer = PathEffectRenderer(self.get_path_effects(), renderer)
-    572 for draw_path_args in draw_path_args_list:
---> 573     renderer.draw_path(gc, *draw_path_args)
-    575 gc.restore()
-    576 renderer.close_group('patch')
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:132, in RendererAgg.draw_path(self, gc, path, transform, rgbFace)
-    130 else:
-    131     try:
---> 132         self._renderer.draw_path(gc, path, transform, rgbFace)
-    133     except OverflowError:
-    134         cant_chunk = ''
-
-ValueError: object __array__ method not producing an array
+ImportError: numpy._core.multiarray failed to import

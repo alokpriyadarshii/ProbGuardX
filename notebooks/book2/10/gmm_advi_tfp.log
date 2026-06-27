@@ -27,12 +27,8 @@ print(tf.__version__, tfp.__version__)
 
 ----- stdout -----
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
-jax 0.6.2 requires scipy>=1.12, but you have scipy 1.7.3 which is incompatible.
-jaxlib 0.6.2 requires scipy>=1.12, but you have scipy 1.7.3 which is incompatible.
-pymc3 3.11.6 requires numpy<1.22.2,>=1.15.0, but you have numpy 2.2.6 which is incompatible.
-scikit-learn 1.7.2 requires scipy>=1.8.0, but you have scipy 1.7.3 which is incompatible.
-scipy 1.7.3 requires numpy<1.23.0,>=1.16.5, but you have numpy 2.2.6 which is incompatible.
+optax 0.2.8 requires jax>=0.5.3, which is not installed.
+optax 0.2.8 requires jaxlib>=0.5.3, which is not installed.
 
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
@@ -105,108 +101,113 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/auto
      20 from tensorflow.python.ops import tensor_array_ops
      23 def control_dependency_on_returns(return_value):
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/ops.py:30
-     28 from absl import app
-     29 import numpy as np
----> 30 from numpy import typing as npt
-     32 from google.protobuf import message
-     33 from tensorflow.core.framework import attr_value_pb2
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/ops.py:50
+     48 from tensorflow.python import tf2
+     49 from tensorflow.python.client import pywrap_tf_session
+---> 50 from tensorflow.python.eager import context
+     51 from tensorflow.python.eager import core
+     52 from tensorflow.python.eager import monitoring
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/typing/__init__.py:158
-      1 """
-      2 ============================
-      3 Typing (:mod:`numpy.typing`)
-   (...)
-    153 
-    154 """
-    155 # NOTE: The API section will be appended with additional entries
-    156 # further down in this file
---> 158 from numpy._typing import (
-    159     ArrayLike,
-    160     DTypeLike,
-    161     NBitBase,
-    162     NDArray,
-    163 )
-    165 __all__ = ["ArrayLike", "DTypeLike", "NBitBase", "NDArray"]
-    167 if __doc__ is not None:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/eager/context.py:38
+     36 from tensorflow.python.client import pywrap_tf_session
+     37 from tensorflow.python.eager import cancellation
+---> 38 from tensorflow.python.eager import execute
+     39 from tensorflow.python.eager import executor
+     40 from tensorflow.python.eager import monitoring
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/__init__.py:102
-     86 from ._scalars import (
-     87     _CharLike_co as _CharLike_co,
-     88     _BoolLike_co as _BoolLike_co,
-   (...)
-     96     _VoidLike_co as _VoidLike_co,
-     97 )
-     98 from ._shape import (
-     99     _Shape as _Shape,
-    100     _ShapeLike as _ShapeLike,
-    101 )
---> 102 from ._dtype_like import (
-    103     DTypeLike as DTypeLike,
-    104     _DTypeLike as _DTypeLike,
-    105     _SupportsDType as _SupportsDType,
-    106     _VoidDTypeLike as _VoidDTypeLike,
-    107     _DTypeLikeBool as _DTypeLikeBool,
-    108     _DTypeLikeUInt as _DTypeLikeUInt,
-    109     _DTypeLikeInt as _DTypeLikeInt,
-    110     _DTypeLikeFloat as _DTypeLikeFloat,
-    111     _DTypeLikeComplex as _DTypeLikeComplex,
-    112     _DTypeLikeTD64 as _DTypeLikeTD64,
-    113     _DTypeLikeDT64 as _DTypeLikeDT64,
-    114     _DTypeLikeObject as _DTypeLikeObject,
-    115     _DTypeLikeVoid as _DTypeLikeVoid,
-    116     _DTypeLikeStr as _DTypeLikeStr,
-    117     _DTypeLikeBytes as _DTypeLikeBytes,
-    118     _DTypeLikeComplex_co as _DTypeLikeComplex_co,
-    119 )
-    120 from ._array_like import (
-    121     NDArray as NDArray,
-    122     ArrayLike as ArrayLike,
-   (...)
-    145     _UnknownType as _UnknownType,
-    146 )
-    148 from ._ufunc import (
-    149     _UFunc_Nin1_Nout1 as _UFunc_Nin1_Nout1,
-    150     _UFunc_Nin2_Nout1 as _UFunc_Nin2_Nout1,
-   (...)
-    153     _GUFunc_Nin2_Nout1 as _GUFunc_Nin2_Nout1,
-    154 )
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/eager/execute.py:21
+     19 from tensorflow.python import pywrap_tfe
+     20 from tensorflow.python.eager import core
+---> 21 from tensorflow.python.framework import dtypes
+     22 from tensorflow.python.framework import tensor_conversion_registry
+     23 from tensorflow.python.framework import tensor_shape
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/_dtype_like.py:194
-    162 _DTypeLikeInt: TypeAlias = (
-    163     type[int]
-    164     | type[np.signedinteger[Any]]
-   (...)
-    177     | _IntCodes
-    178 )
-    179 _DTypeLikeFloat: TypeAlias = (
-    180     type[float]
-    181     | type[np.floating[Any]]
-   (...)
-    190     | _LongDoubleCodes
-    191 )
-    192 _DTypeLikeComplex: TypeAlias = (
-    193     type[complex]
---> 194     | type[np.complexfloating[Any]]
-    195     | np.dtype[np.complexfloating[Any]]
-    196     | _SupportsDType[np.dtype[np.complexfloating[Any]]]
-    197     | _Complex64Codes
-    198     | _Complex128Codes
-    199     | _CSingleCodes
-    200     | _CDoubleCodes
-    201     | _CLongDoubleCodes
-    202 )
-    203 _DTypeLikeDT64: TypeAlias = (
-    204     type[np.timedelta64]
-    205     | np.dtype[np.timedelta64]
-    206     | _SupportsDType[np.dtype[np.timedelta64]]
-    207     | _TD64Codes
-    208 )
-    209 _DTypeLikeTD64: TypeAlias = (
-    210     type[np.datetime64]
-    211     | np.dtype[np.datetime64]
-    212     | _SupportsDType[np.dtype[np.datetime64]]
-    213     | _DT64Codes
-    214 )
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/dtypes.py:21
+     18 import dataclasses
+     19 from typing import Type, Sequence, Optional
+---> 21 import ml_dtypes
+     22 import numpy as np
+     24 from tensorflow.core.framework import types_pb2
 
-TypeError: Too few arguments for numpy.complexfloating
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/__init__.py:40
+     16 __all__ = [
+     17     "__version__",
+     18     "bfloat16",
+   (...)
+     35     "uint4",
+     36 ]
+     38 from typing import Type
+---> 40 from ml_dtypes._finfo import finfo
+     41 from ml_dtypes._iinfo import iinfo
+     42 from ml_dtypes._ml_dtypes_ext import bfloat16
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:153
+    149     smallest_subnormal = float.fromhex("0x1p-127")
+    150     self.smallest_subnormal = float8_e8m0fnu(smallest_subnormal)
+--> 153 class finfo(np.finfo):  # pylint: disable=invalid-name,missing-class-docstring
+    154   __doc__ = np.finfo.__doc__
+    156   @staticmethod
+    157   def _bfloat16_finfo():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:699, in finfo()
+    684 _finfo_type_map = {
+    685     _bfloat16_dtype: _bfloat16_finfo,
+    686     _float4_e2m1fn_dtype: _float4_e2m1fn_finfo,
+   (...)
+    696     _float8_e8m0fnu_dtype: _float8_e8m0fnu_finfo,
+    697 }
+    698 _finfo_name_map = {t.name: t for t in _finfo_type_map}
+--> 699 _finfo_cache = {
+    700     t: init_fn.__func__()  # pytype: disable=attribute-error
+    701     for t, init_fn in _finfo_type_map.items()
+    702 }
+    704 def __new__(cls, dtype):
+    705   if isinstance(dtype, str):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:700, in <dictcomp>(.0)
+    684 _finfo_type_map = {
+    685     _bfloat16_dtype: _bfloat16_finfo,
+    686     _float4_e2m1fn_dtype: _float4_e2m1fn_finfo,
+   (...)
+    696     _float8_e8m0fnu_dtype: _float8_e8m0fnu_finfo,
+    697 }
+    698 _finfo_name_map = {t.name: t for t in _finfo_type_map}
+    699 _finfo_cache = {
+--> 700     t: init_fn.__func__()  # pytype: disable=attribute-error
+    701     for t, init_fn in _finfo_type_map.items()
+    702 }
+    704 def __new__(cls, dtype):
+    705   if isinstance(dtype, str):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:668, in finfo._float8_e8m0fnu_finfo()
+    666 # pylint: disable=protected-access
+    667 obj._machar = _Float8E8m0fnuMachArLike()
+--> 668 if not hasattr(obj, "tiny"):
+    669   obj.tiny = float8_e8m0fnu(tiny)
+    670 if not hasattr(obj, "smallest_normal"):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:577, in tiny(self)
+    566 def __str__(self):
+    567     fmt = (
+    568         'Machine parameters for %(dtype)s\n'
+    569         '---------------------------------------------------------------\n'
+    570         'precision = %(precision)3s   resolution = %(_str_resolution)s\n'
+    571         'machep = %(machep)6s   eps =        %(_str_eps)s\n'
+    572         'negep =  %(negep)6s   epsneg =     %(_str_epsneg)s\n'
+    573         'minexp = %(minexp)6s   tiny =       %(_str_tiny)s\n'
+    574         'maxexp = %(maxexp)6s   max =        %(_str_max)s\n'
+    575         'nexp =   %(nexp)6s   min =        -max\n'
+    576         'smallest_normal = %(_str_smallest_normal)s   '
+--> 577         'smallest_subnormal = %(_str_smallest_subnormal)s\n'
+    578         '---------------------------------------------------------------\n'
+    579         )
+    580     return fmt % self.__dict__
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:556, in smallest_normal(self)
+    554 self.nexp = machar.iexp
+    555 self.nmant = machar.it
+--> 556 self._machar = machar
+    557 self._str_tiny = machar._str_xmin.strip()
+    558 self._str_max = machar._str_xmax.strip()
+
+TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''

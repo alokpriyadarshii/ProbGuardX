@@ -14,124 +14,35 @@ except ModuleNotFoundError:
 
 
 ---------------------------------------------------------------------------
-ValueError                                Traceback (most recent call last)
-Cell In[1], line 4
-      2 import matplotlib.pyplot as plt
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 2
+      1 import numpy as np
+----> 2 import matplotlib.pyplot as plt
       3 import os
-----> 4 import seaborn as sns
-      6 try:
-      7     import probml_utils as pml
+      4 import seaborn as sns
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/__init__.py:2
-      1 # Import seaborn objects
-----> 2 from .rcmod import *  # noqa: F401,F403
-      3 from .utils import *  # noqa: F401,F403
-      4 from .palettes import *  # noqa: F401,F403
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:259
+    254         if parse_version(module.__version__) < parse_version(minver):
+    255             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    256                               f"you have {module.__version__}")
+--> 259 _check_versions()
+    262 # The decorator ensures this always returns the same handler (and it is only
+    263 # attached once).
+    264 @functools.cache
+    265 def _ensure_handler():
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/rcmod.py:5
-      3 import matplotlib as mpl
-      4 from cycler import cycler
-----> 5 from . import palettes
-      8 __all__ = ["set_theme", "set", "reset_defaults", "reset_orig",
-      9            "axes_style", "set_style", "plotting_context", "set_context",
-     10            "set_palette"]
-     13 _style_keys = [
-     14 
-     15     "axes.facecolor",
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:244, in _check_versions()
+    240 def _check_versions():
+    241 
+    242     # Quickfix to ensure Microsoft Visual C++ redistributable
+    243     # DLLs are loaded before importing kiwisolver
+--> 244     from . import ft2font
+    246     for modname, minver in [
+    247             ("cycler", "0.10"),
+    248             ("dateutil", "2.7"),
    (...)
-     50 
-     51 ]
+    251             ("pyparsing", "2.3.1"),
+    252     ]:
+    253         module = importlib.import_module(modname)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/palettes.py:9
-      5 import matplotlib as mpl
-      7 from .external import husl
-----> 9 from .utils import desaturate, get_color_cycle
-     10 from .colors import xkcd_rgb, crayons
-     11 from ._compat import get_colormap
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/utils.py:11
-      8 from types import ModuleType
-     10 import numpy as np
----> 11 import pandas as pd
-     12 import matplotlib as mpl
-     13 from matplotlib.colors import to_rgb
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/__init__.py:22
-     19 del _hard_dependencies, _dependency, _missing_dependencies
-     21 # numpy compat
----> 22 from pandas.compat import is_numpy_dev as _is_numpy_dev  # pyright: ignore # noqa:F401
-     24 try:
-     25     from pandas._libs import hashtable as _hashtable, lib as _lib, tslib as _tslib
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/__init__.py:25
-     17 from pandas.compat._constants import (
-     18     IS64,
-     19     PY39,
-   (...)
-     22     PYPY,
-     23 )
-     24 import pandas.compat.compressors
----> 25 from pandas.compat.numpy import (
-     26     is_numpy_dev,
-     27     np_version_under1p21,
-     28 )
-     29 from pandas.compat.pyarrow import (
-     30     pa_version_under7p0,
-     31     pa_version_under8p0,
-     32     pa_version_under9p0,
-     33     pa_version_under11p0,
-     34 )
-     37 def set_function_name(f: F, name: str, cls) -> F:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/numpy/__init__.py:4
-      1 """ support numpy compatibility across versions """
-      2 import numpy as np
-----> 4 from pandas.util.version import Version
-      6 # numpy versioning
-      7 _np_version = np.__version__
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/__init__.py:2
-      1 # pyright: reportUnusedImport = false
-----> 2 from pandas.util._decorators import (  # noqa:F401
-      3     Appender,
-      4     Substitution,
-      5     cache_readonly,
-      6 )
-      8 from pandas.core.util.hashing import (  # noqa:F401
-      9     hash_array,
-     10     hash_pandas_object,
-     11 )
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/_decorators.py:14
-      6 from typing import (
-      7     Any,
-      8     Callable,
-      9     Mapping,
-     10     cast,
-     11 )
-     12 import warnings
----> 14 from pandas._libs.properties import cache_readonly
-     15 from pandas._typing import (
-     16     F,
-     17     T,
-     18 )
-     19 from pandas.util._exceptions import find_stack_level
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/__init__.py:13
-      1 __all__ = [
-      2     "NaT",
-      3     "NaTType",
-   (...)
-      9     "Interval",
-     10 ]
----> 13 from pandas._libs.interval import Interval
-     14 from pandas._libs.tslibs import (
-     15     NaT,
-     16     NaTType,
-   (...)
-     21     iNaT,
-     22 )
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/interval.pyx:1, in init pandas._libs.interval()
-
-ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
+ImportError: numpy._core.multiarray failed to import

@@ -70,45 +70,34 @@ plt.show()
 
 ---------------------------------------------------------------------------
 ImportError                               Traceback (most recent call last)
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/__init__.py:23
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/multiarray.py:10
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/overrides.py:6
-
-ImportError: libgfortran-040039e1.so.5.0.0: cannot open shared object file: No such file or directory
-
-During handling of the above exception, another exception occurred:
-
-ImportError                               Traceback (most recent call last)
-Cell In[1], line 1
-----> 1 import numpy as np
-      2 import matplotlib
+Cell In[1], line 2
+      1 import numpy as np
+----> 2 import matplotlib
       3 import matplotlib.pyplot as plt 
+      4 import os
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py:144
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:259
+    254         if parse_version(module.__version__) < parse_version(minver):
+    255             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    256                               f"you have {module.__version__}")
+--> 259 _check_versions()
+    262 # The decorator ensures this always returns the same handler (and it is only
+    263 # attached once).
+    264 @functools.cache
+    265 def _ensure_handler():
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/__init__.py:49
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:244, in _check_versions()
+    240 def _check_versions():
+    241 
+    242     # Quickfix to ensure Microsoft Visual C++ redistributable
+    243     # DLLs are loaded before importing kiwisolver
+--> 244     from . import ft2font
+    246     for modname, minver in [
+    247             ("cycler", "0.10"),
+    248             ("dateutil", "2.7"),
+   (...)
+    251             ("pyparsing", "2.3.1"),
+    252     ]:
+    253         module = importlib.import_module(modname)
 
-ImportError: 
-
-IMPORTANT: PLEASE READ THIS FOR ADVICE ON HOW TO SOLVE THIS ISSUE!
-
-Importing the numpy C-extensions failed. This error can happen for
-many reasons, often due to issues with your setup or how NumPy was
-installed.
-
-We have compiled some common reasons and troubleshooting tips at:
-
-    https://numpy.org/devdocs/user/troubleshooting-importerror.html
-
-Please note and check the following:
-
-  * The Python version is: Python3.10 from "/github/home/miniconda3/envs/py310/bin/python3.10"
-  * The NumPy version is: "1.22.1"
-
-and make sure that they are the versions you expect.
-Please carefully study the documentation linked above for further help.
-
-Original error was: libgfortran-040039e1.so.5.0.0: cannot open shared object file: No such file or directory
-
+ImportError: numpy._core.multiarray failed to import
