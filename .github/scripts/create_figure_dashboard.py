@@ -158,7 +158,7 @@ for book_no in [1, 2]:
             total_cnt += len(notebooks)
 
     print(f"*** {book_no}: {latexify_cnt} latexify found! ****")
-    headline = f"## Instructions\n\n* Follow [the contributing guidelines](https://github.com/alokpriyadarshii/ProbGuardX/blob/master/CONTRIBUTING.md) and specific instructions given over [here](https://github.com/alokpriyadarshii/ProbGuardX/blob/master/notebooks/README.md).\n\n## Book{book_no}Dashboard\n"
+    headline = f"## Instructions\n\n* Follow the notebook instructions given over [here](https://github.com/alokpriyadarshii/ProbGuardX/blob/main/notebooks/README.md).\n\n## Book{book_no}Dashboard\n"
     md_content = (
         headline
         + f"""Total Notebooks | Latexified | Jaxified | 

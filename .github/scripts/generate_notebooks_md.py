@@ -38,13 +38,13 @@ def github_url_to_colab_url(url):
 def make_url_from_chapter_no_and_script_name(
     chapter_no,
     script_name,
-    base_url="https://github.com/alokpriyadarshii/ProbGuardX/blob/master/notebooks",
+    base_url="https://github.com/alokpriyadarshii/ProbGuardX/blob/main/notebooks",
     book_no=1,
     convert_to_which_url="github",
 ):
     """
     create mapping between chapter_no and actual_url path
-    (chapter_no = 3,script_name=iris_plot.ipynb) converted to https://github.com/alokpriyadarshii/ProbGuardX/blob/master/notebooks/book1/01/iris_plot.ipynb
+    (chapter_no = 3,script_name=iris_plot.ipynb) converted to https://github.com/alokpriyadarshii/ProbGuardX/blob/main/notebooks/book1/01/iris_plot.ipynb
     convert_to_which_url = Union["github","colab","gihub-raw"]
     """
     base_url_ipynb = os.path.join(base_url, f"book{book_no}/{chapter_no}")
@@ -183,7 +183,7 @@ supp_book = (
 print(f"{len(supp_book)} supplementary notebooks found")
 
 # convert to github url
-github_root = "https://github.com/alokpriyadarshii/ProbGuardX/blob/master/"
+github_root = "https://github.com/alokpriyadarshii/ProbGuardX/blob/main/"
 nb_github_colab_list = list(map(lambda x: [x.split("/")[-1], github_root + x], supp_book))
 df_supp = pd.DataFrame(nb_github_colab_list, columns=df_ProbGuardX.columns)
 

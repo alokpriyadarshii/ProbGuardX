@@ -10,7 +10,7 @@ user, repo = args.user_name.split("/") # github.repository gives owner/repo
 print(f"\n**** creating dashboard on {user}/{repo} *********\n")
 base_url = f"https://github.com/{user}/{repo}/tree/"
 get_url = lambda x: f'<img width="20" alt="image" src=https://raw.githubusercontent.com/{user}/{repo}/{x}>'
-get_nb_url = lambda x: os.path.join(base_url, "master", x.split("/", 1)[-1].replace(".png", ".ipynb"))
+get_nb_url = lambda x: os.path.join(base_url, "main", x.split("/", 1)[-1].replace(".png", ".ipynb"))
 
 # sort statuses
 def sort_key(x):
