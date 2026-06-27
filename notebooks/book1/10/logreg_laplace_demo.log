@@ -1,0 +1,51 @@
+An error occurred while executing the following cell:
+------------------
+# Author: Meduri Venkata Shivaditya
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+from scipy.stats import norm, multivariate_normal
+
+try:
+    import bayes_logistic  # pip install -qq bayes_logistic
+except ModuleNotFoundError:
+    %pip install -qq bayes_logistic
+    import bayes_logistic  # pip install -qq bayes_logistic
+import warnings
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+------------------
+
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 2.2.6
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+------------------
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[1], line 7
+      4 import matplotlib.pyplot as plt
+      6 get_ipython().run_line_magic('matplotlib', 'inline')
+----> 7 from scipy.stats import norm, multivariate_normal
+      9 try:
+     10     import bayes_logistic  # pip install -qq bayes_logistic
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/__init__.py:441
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/stats.py:37
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/spatial/__init__.py:96
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/spatial/kdtree.py:5
+
+File ckdtree.pyx:1, in init scipy.spatial.ckdtree()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
