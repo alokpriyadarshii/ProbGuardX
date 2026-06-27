@@ -4,9 +4,9 @@ make_plot(use_inverse=False)
 ------------------
 
 ----- stderr -----
-/tmp/ipykernel_4267/850322357.py:16: RuntimeWarning: invalid value encountered in sqrt
+/tmp/ipykernel_3033/850322357.py:16: RuntimeWarning: invalid value encountered in sqrt
   yrange_up = np.sqrt(b * (r**2 - a * (xrange - x0) ** 2)) / b + y0
-/tmp/ipykernel_4267/850322357.py:17: RuntimeWarning: invalid value encountered in sqrt
+/tmp/ipykernel_3033/850322357.py:17: RuntimeWarning: invalid value encountered in sqrt
   yrange_down = -np.sqrt(b * (r**2 - a * (xrange - x0) ** 2)) / b + y0
 ----- stdout -----
 saving image to figures/gaussEvec_latexified.pdf
