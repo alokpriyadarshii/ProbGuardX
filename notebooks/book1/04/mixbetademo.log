@@ -1,0 +1,89 @@
+An error occurred while executing the following cell:
+------------------
+import numpy as np
+from scipy.special import betaln, betainc
+from scipy.special import logsumexp
+from matplotlib import pyplot as plt
+from scipy.stats import beta
+
+
+def normalizeLogspace(x):
+    L = logsumexp(x, 0)
+    y = x - L
+    return y
+
+
+def evalpdf(thetas, postZ, alphaPost):
+    p = np.zeros_like(thetas)
+    M = np.size(postZ)
+    for k in range(M):
+        a = alphaPost[k, 0]
+        b = alphaPost[k, 1]
+        # p += postZ[k] * np.exp(beta.logpdf(thetas, a, b)) # this also works
+        p += postZ[k] * beta.pdf(thetas, a, b)
+
+    return p
+
+
+dataSS = np.array([20, 10])
+alphaPrior = np.array([[20, 20], [30, 10]])
+M = 2
+mixprior = np.array([0.5, 0.5])
+logmarglik = np.zeros((2,))
+for i in range(M):
+    logmarglik[i] = betaln(alphaPrior[i, 0] + dataSS[0], alphaPrior[i, 1] + dataSS[1]) - betaln(
+        alphaPrior[i, 0], alphaPrior[i, 1]
+    )
+
+mixpost = np.exp(normalizeLogspace(logmarglik + np.log(mixprior)))
+alphaPost = np.zeros_like(alphaPrior)
+for z in range(M):
+    alphaPost[z, :] = alphaPrior[z, :] + dataSS
+
+grid = np.arange(0.0001, 0.9999, 0.01)
+post = evalpdf(grid, mixpost, alphaPost)
+prior = evalpdf(grid, mixprior, alphaPrior)
+fig, axs = plt.subplots(1, 1)
+fig.suptitle("mixture of Beta distributions", fontsize=10)
+axs.plot(grid, prior, "--r", label="prior")
+axs.plot(grid, post, "-b", label="posterior")
+axs.legend()
+fig.savefig("figures/mixBetaDemo.png")
+
+pbiased = 0
+for k in range(M):
+    a = alphaPost[k, 0]
+    b = alphaPost[k, 1]
+    pbiased += mixpost[k] * (1 - betainc(0.5, a, b))
+
+pbiasedSimple = 1 - betainc(0.5, alphaPost[0, 0], alphaPost[0, 1])
+------------------
+
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 2.2.6
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+------------------
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[1], line 2
+      1 import numpy as np
+----> 2 from scipy.special import betaln, betainc
+      3 from scipy.special import logsumexp
+      4 from matplotlib import pyplot as plt
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/special/__init__.py:643
+      1 """
+      2 ========================================
+      3 Special functions (:mod:`scipy.special`)
+   (...)
+    638 
+    639 """
+    641 from .sf_error import SpecialFunctionWarning, SpecialFunctionError
+--> 643 from . import _ufuncs
+    644 from ._ufuncs import *
+    646 from . import _basic
+
+File _ufuncs.pyx:1, in init scipy.special._ufuncs()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject

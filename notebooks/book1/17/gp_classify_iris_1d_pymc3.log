@@ -161,20 +161,124 @@ treescope 0.1.10 requires numpy>=1.25.2, but you have numpy 1.22.1 which is inco
 
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
-------------------
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 2.2.6
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
 
----------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 7
-      6 try:
-----> 7     import pymc3 as pm
-      8 except ModuleNotFoundError:
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.6 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
 
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/github/home/miniconda3/envs/py310/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel_launcher.py", line 18, in <module>
+    app.launch_new_instance()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/traitlets/config/application.py", line 1082, in launch_instance
+    app.start()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/kernelapp.py", line 807, in start
+    self.io_loop.start()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/tornado/platform/asyncio.py", line 211, in start
+    self.asyncio_loop.run_forever()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/utils.py", line 71, in preserve_context
+    return await f(*args, **kwargs)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 621, in shell_main
+    await self.dispatch_shell(msg, subshell_id=subshell_id)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 478, in dispatch_shell
+    await result
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/ipkernel.py", line 372, in execute_request
+    await super().execute_request(stream, ident, parent)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 834, in execute_request
+    reply_content = await reply_content
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/ipkernel.py", line 460, in do_execute
+    res = shell.run_cell(
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/zmqshell.py", line 665, in run_cell
+    return super().run_cell(*args, **kwargs)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3077, in run_cell
+    result = self._run_cell(
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3132, in _run_cell
+    result = runner(coro)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/async_helpers.py", line 128, in _pseudo_sync_runner
+    coro.send(None)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3336, in run_cell_async
+    has_raised = await self.run_ast_nodes(code_ast.body, cell_name,
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3519, in run_ast_nodes
+    if await self.run_code(code, result, async_=asy):
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3579, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "/tmp/ipykernel_2722/3888614036.py", line 10, in <module>
+    import pymc3 as pm
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pymc3/__init__.py", line 45, in <module>
+    import theano
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/theano/__init__.py", line 83, in <module>
+    from theano import scalar, tensor
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/__init__.py", line 20, in <module>
+    from theano.tensor import nnet  # used for softmax, sigmoid, etc.
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/nnet/__init__.py", line 3, in <module>
+    from . import opt
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/nnet/opt.py", line 15, in <module>
+    from theano.tensor.nnet.abstract_conv import (
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/nnet/abstract_conv.py", line 33, in <module>
+    from scipy.signal.signaltools import _bvalfromboundary, _valfrommode, convolve
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/signal/__init__.py", line 292, in <module>
+    from . import sigtools, windows
+Traceback (most recent call last):
+  File "/tmp/ipykernel_2722/3888614036.py", line 7, in <module>
 ModuleNotFoundError: No module named 'pymc3'
 
 During handling of the above exception, another exception occurred:
 
-ModuleNotFoundError                       Traceback (most recent call last)
+AttributeError: _ARRAY_API not found
+------------------
+
+---------------------------------------------------------------------------
+NoSectionError                            Traceback (most recent call last)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/configparser.py:238, in TheanoConfigParser.fetch_val_for_key(self, key, delete_key)
+    237 try:
+--> 238     return self._theano_cfg.get(section, option)
+    239 except InterpolationError:
+
+File ~/miniconda3/envs/py310/lib/python3.10/configparser.py:783, in RawConfigParser.get(self, section, option, raw, vars, fallback)
+    782 try:
+--> 783     d = self._unify_values(section, vars)
+    784 except NoSectionError:
+
+File ~/miniconda3/envs/py310/lib/python3.10/configparser.py:1154, in RawConfigParser._unify_values(self, section, vars)
+   1153     if section != self.default_section:
+-> 1154         raise NoSectionError(section) from None
+   1155 # Update with the entry specific variables
+
+NoSectionError: No section: 'blas'
+
+During handling of the above exception, another exception occurred:
+
+KeyError                                  Traceback (most recent call last)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/configparser.py:354, in ConfigParam.__get__(self, cls, type_, delete_key)
+    353 try:
+--> 354     val_str = cls.fetch_val_for_key(self.name, delete_key=delete_key)
+    355     self.is_default = False
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/configparser.py:242, in TheanoConfigParser.fetch_val_for_key(self, key, delete_key)
+    241 except (NoOptionError, NoSectionError):
+--> 242     raise KeyError(key)
+
+KeyError: 'blas__ldflags'
+
+During handling of the above exception, another exception occurred:
+
+TypeError                                 Traceback (most recent call last)
 Cell In[1], line 10
       8 except ModuleNotFoundError:
       9     get_ipython().run_line_magic('pip', 'install -qq pymc3')
@@ -182,51 +286,216 @@ Cell In[1], line 10
      11 import numpy as np
      13 try:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pymc3/__init__.py:35
-     26 # Workaround for Theano bug that tries to access blas_opt_info;
-     27 #  must be done before importing theano.
-     28 # https://github.com/pymc-devs/pymc/issues/5310
-     29 # Copied from theano/link/c/cmodule.py: default_blas_ldflags()
-     30 if (
-     31     hasattr(numpy.distutils, "__config__")
-     32     and numpy.distutils.__config__
-     33     and not hasattr(numpy.distutils.__config__, "blas_opt_info")
-     34 ):
----> 35     import numpy.distutils.system_info  # noqa
-     37     # We need to catch warnings as in some cases NumPy print
-     38     # stuff that we don't want the user to see.
-     39     with warnings.catch_warnings(record=True):
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pymc3/__init__.py:45
+     41         blas_info = numpy.distutils.system_info.get_info("blas_opt")
+     43     numpy.distutils.__config__.blas_opt_info = blas_info
+---> 45 import theano
+     47 _log = logging.getLogger("pymc3")
+     49 if not logging.root.handlers:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:196
-    191 from numpy.distutils.exec_command import (
-    192     find_executable, filepath_from_subprocess_output,
-    193     )
-    194 from numpy.distutils.misc_util import (is_sequence, is_string,
-    195                                        get_shared_lib_extension)
---> 196 from numpy.distutils.command.config import config as cmd_config
-    197 from numpy.distutils import customized_ccompiler as _customized_ccompiler
-    198 from numpy.distutils import _shell_utils
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/command/config.py:19
-     17 import distutils
-     18 from numpy.distutils.exec_command import filepath_from_subprocess_output
----> 19 from numpy.distutils.mingw32ccompiler import generate_manifest
-     20 from numpy.distutils.command.autodist import (check_gcc_function_attribute,
-     21                                               check_gcc_function_attribute_with_intrinsics,
-     22                                               check_gcc_variable_attribute,
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/__init__.py:83
+     75 # This is the api version for ops that generate C code.  External ops
+     76 # might need manual changes if this number goes up.  An undefined
+     77 # __api_version__ can be understood to mean api version 0.
+     78 #
+     79 # This number is not tied to the release version and should change
+     80 # very rarely.
+     81 __api_version__ = 1
+---> 83 from theano import scalar, tensor
+     84 from theano.compile import (
+     85     In,
+     86     Mode,
    (...)
-     25                                               check_restrict,
-     26                                               check_compiler_gcc)
-     28 LANG_EXT['f77'] = '.f'
+     93     shared,
+     94 )
+     95 from theano.compile.function import function, function_dump
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/mingw32ccompiler.py:28
-     26 import distutils.cygwinccompiler
-     27 from distutils.unixccompiler import UnixCCompiler
----> 28 from distutils.msvccompiler import get_build_version as get_build_msvc_version
-     29 from distutils.errors import UnknownFileError
-     30 from numpy.distutils.misc_util import (msvc_runtime_library,
-     31                                        msvc_runtime_version,
-     32                                        msvc_runtime_major,
-     33                                        get_build_architecture)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/__init__.py:20
+      9 from theano.compile import SpecifyShape, specify_shape
+     10 from theano.gradient import (
+     11     Lop,
+     12     Rop,
+   (...)
+     18     verify_grad,
+     19 )
+---> 20 from theano.tensor import nnet  # used for softmax, sigmoid, etc.
+     21 from theano.tensor import sharedvar  # adds shared-variable constructors
+     22 from theano.tensor import (
+     23     blas,
+     24     blas_c,
+   (...)
+     29     xlogx,
+     30 )
 
-ModuleNotFoundError: No module named 'distutils.msvccompiler'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/nnet/__init__.py:3
+      1 import warnings
+----> 3 from . import opt
+      4 from .abstract_conv import conv2d as abstract_conv2d
+      5 from .abstract_conv import conv2d_grad_wrt_inputs, conv3d, separable_conv2d
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/nnet/opt.py:32
+     24 from theano.tensor.nnet.blocksparse import (
+     25     SparseBlockGemv,
+     26     SparseBlockOuter,
+     27     sparse_block_gemv_inplace,
+     28     sparse_block_outer_inplace,
+     29 )
+     31 # Cpu implementation
+---> 32 from theano.tensor.nnet.conv import ConvOp, conv2d
+     33 from theano.tensor.nnet.corr import CorrMM, CorrMM_gradInputs, CorrMM_gradWeights
+     34 from theano.tensor.nnet.corr3d import Corr3dMM, Corr3dMMGradInputs, Corr3dMMGradWeights
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/nnet/conv.py:20
+     18 from theano.graph.basic import Apply
+     19 from theano.graph.op import OpenMPOp
+---> 20 from theano.tensor import blas
+     21 from theano.tensor.basic import (
+     22     NotScalarConstantError,
+     23     as_tensor_variable,
+     24     get_scalar_constant_value,
+     25     patternbroadcast,
+     26 )
+     27 from theano.tensor.nnet.abstract_conv import get_conv_output_shape, get_conv_shape_1axis
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/blas.py:163
+    161 from theano.scalar import bool as bool_t
+    162 from theano.tensor import basic as tt
+--> 163 from theano.tensor.blas_headers import blas_header_text, blas_header_version
+    164 from theano.tensor.opt import in2out, local_dimshuffle_lift
+    165 from theano.tensor.type import values_eq_approx_remove_inf_nan
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/tensor/blas_headers.py:1016
+    997             header += textwrap.dedent(
+    998                 """\
+    999                     static float sdot_(int* Nx, float* x, int* Sx, float* y, int* Sy)
+   (...)
+   1010                     """
+   1011             )
+   1013     return header + blas_code
+-> 1016 if not config.blas__ldflags:
+   1017     _logger.warning("Using NumPy C-API based implementation for BLAS functions.")
+   1020 def mkl_threads_text():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/configparser.py:358, in ConfigParam.__get__(self, cls, type_, delete_key)
+    356 except KeyError:
+    357     if callable(self.default):
+--> 358         val_str = self.default()
+    359     else:
+    360         val_str = self.default
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/theano/link/c/cmodule.py:2639, in default_blas_ldflags()
+   2637     with warnings.catch_warnings(record=True):
+   2638         numpy.distutils.system_info.system_info.verbosity = 0
+-> 2639         blas_info = numpy.distutils.system_info.get_info("blas_opt")
+   2641 # If we are in a EPD installation, mkl is available
+   2642 if "EPD" in sys.version:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:592, in get_info(name, notfound_action)
+    501 """
+    502 notfound_action:
+    503   0 - do nothing
+    504   1 - display warning message
+    505   2 - raise error
+    506 """
+    507 cl = {'armpl': armpl_info,
+    508       'blas_armpl': blas_armpl_info,
+    509       'lapack_armpl': lapack_armpl_info,
+   (...)
+    590       'amd': amd_info,
+    591       }.get(name.lower(), system_info)
+--> 592 return cl().get_info(notfound_action)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:852, in system_info.get_info(self, notfound_action)
+    850 log.info(self.__class__.__name__ + ':')
+    851 if hasattr(self, 'calc_info'):
+--> 852     self.calc_info()
+    853 if notfound_action:
+    854     if not self.has_info():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:2158, in blas_opt_info.calc_info(self)
+   2155     return
+   2157 for blas in blas_order:
+-> 2158     if self._calc_info(blas):
+   2159         return
+   2161 if 'blas' not in blas_order:
+   2162     # Since the user may request *not* to use any library, we still need
+   2163     # to raise warnings to signal missing packages!
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:2144, in blas_opt_info._calc_info(self, name)
+   2143 def _calc_info(self, name):
+-> 2144     return getattr(self, '_calc_info_{}'.format(name))()
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:2053, in blas_opt_info._calc_info_armpl(self)
+   2052 def _calc_info_armpl(self):
+-> 2053     info = get_info('blas_armpl')
+   2054     if info:
+   2055         self.set_info(**info)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:592, in get_info(name, notfound_action)
+    501 """
+    502 notfound_action:
+    503   0 - do nothing
+    504   1 - display warning message
+    505   2 - raise error
+    506 """
+    507 cl = {'armpl': armpl_info,
+    508       'blas_armpl': blas_armpl_info,
+    509       'lapack_armpl': lapack_armpl_info,
+   (...)
+    590       'amd': amd_info,
+    591       }.get(name.lower(), system_info)
+--> 592 return cl().get_info(notfound_action)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:852, in system_info.get_info(self, notfound_action)
+    850 log.info(self.__class__.__name__ + ':')
+    851 if hasattr(self, 'calc_info'):
+--> 852     self.calc_info()
+    853 if notfound_action:
+    854     if not self.has_info():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:1401, in armpl_info.calc_info(self)
+   1399 incl_dirs = self.get_include_dirs()
+   1400 armpl_libs = self.get_libs('armpl_libs', self._lib_armpl)
+-> 1401 info = self.check_libs2(lib_dirs, armpl_libs)
+   1402 if info is None:
+   1403     return
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:1008, in system_info.check_libs2(self, lib_dirs, libs, opt_libs)
+   1002 def check_libs2(self, lib_dirs, libs, opt_libs=[]):
+   1003     """If static or shared libraries are available then return
+   1004     their info dictionary.
+   1005 
+   1006     Checks each library for shared or static.
+   1007     """
+-> 1008     exts = self.library_extensions()
+   1009     info = self._check_libs(lib_dirs, libs, opt_libs, exts)
+   1010     if not info:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:967, in system_info.library_extensions(self)
+    966 def library_extensions(self):
+--> 967     c = customized_ccompiler()
+    968     static_exts = []
+    969     if c.compiler_type != 'msvc':
+    970         # MSVC doesn't understand binutils
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:219, in customized_ccompiler()
+    217 global global_compiler
+    218 if not global_compiler:
+--> 219     global_compiler = _customized_ccompiler()
+    220 return global_compiler
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/__init__.py:62, in customized_ccompiler(plat, compiler, verbose)
+     61 def customized_ccompiler(plat=None, compiler=None, verbose=1):
+---> 62     c = ccompiler.new_compiler(plat=plat, compiler=compiler, verbose=verbose)
+     63     c.customize('')
+     64     return c
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/ccompiler.py:792, in new_compiler(plat, compiler, verbose, dry_run, force)
+    789 except KeyError:
+    790     raise DistutilsModuleError(("can't compile C/C++ code: unable to find class '%s' " +
+    791            "in module '%s'") % (class_name, module_name))
+--> 792 compiler = klass(None, dry_run, force)
+    793 compiler.verbose = verbose
+    794 log.debug('new_compiler returns %s' % (klass))
+
+TypeError: Compiler.__init__() takes from 1 to 3 positional arguments but 4 were given
