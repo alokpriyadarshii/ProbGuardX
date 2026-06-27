@@ -65,6 +65,8 @@ assert np.allclose(0.5 * e2, grads[1], atol=1e-1)
 
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+
 ------------------
 
 ---------------------------------------------------------------------------
