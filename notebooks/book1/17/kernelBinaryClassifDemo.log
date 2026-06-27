@@ -1,0 +1,190 @@
+An error occurred while executing the following cell:
+------------------
+# This file shows a demo implementation of kernel classifiers like L1,L2-logreg,
+# SVC, RVC.
+# Author alokpriyadarshii(@alokpriyadarshii)
+
+
+import numpy as np
+import h5py
+import requests
+from io import BytesIO
+from scipy.io import loadmat
+
+import matplotlib.pyplot as plt
+
+try:
+    from sklearn.svm import SVC
+except ModuleNotFoundError:
+    %pip install -qq scikit-learn
+    from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import cross_val_score
+from sklearn.kernel_approximation import RBFSampler
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+from probml_utils.rvm_classifier import RVC  # Core implementation.
+from sklearn.datasets import make_moons
+
+
+N = 200
+X, y = make_moons(n_samples=N, noise=0.3, random_state=10)
+# X, y = make_moons(n_samples=100, noise=0.15, random_state=42)
+
+
+# Feature Mapping X to rbf_features to simulate non-linear logreg using linear ones.
+rbf_feature = RBFSampler(gamma=0.3, random_state=1, n_components=N)
+X_rbf = rbf_feature.fit_transform(X)
+
+# Using CV to find SVM regularization parameter.
+C = np.power(2, np.linspace(-5, 5, 10))
+mean_scores = [cross_val_score(SVC(kernel="rbf", gamma=0.3, C=c), X, y, cv=5).mean() for c in C]
+c = C[np.argmax(mean_scores)]
+print("SVM c= ", c)
+
+classifiers = {
+    "logregL2": LogisticRegression(C=c, penalty="l2", solver="saga", multi_class="ovr", max_iter=10000),
+    "logregL1": LogisticRegression(C=c, penalty="l1", solver="saga", multi_class="ovr", max_iter=10000),
+    "RVM": RVC(),
+    "SVM": SVC(kernel="rbf", gamma=0.3, C=c, probability=True),
+}
+
+h = 0.05  # step size in the mesh
+
+# Mesh to use in the boundary plotting.
+x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+
+def plot_scatters(X, y):
+    for class_value in range(2):
+        # get row indexes for samples with this class
+        row_ix = np.where(y == class_value)
+        # creating scatter of these samples
+        plt.scatter(X[row_ix, 0], X[row_ix, 1], cmap="Paired", marker="X", s=30)
+
+
+def plot_SVs(SV):
+    plt.scatter(SV[:, 0], SV[:, 1], s=100, facecolor="none", edgecolor="green")
+
+
+levels = [0.5]
+# levels = np.linspace(0, 1, 5)
+
+for (name, clf) in classifiers.items():
+
+    if name == "logregL2":
+        clf.fit(X_rbf, y)
+        Z = clf.predict_proba(rbf_feature.fit_transform(np.c_[xx.ravel(), yy.ravel()]))
+        Z = Z[:, 0].reshape(xx.shape)
+        plt.title(name + ", nerr= {}".format(np.sum(y != clf.predict(X_rbf))))
+        plt.contour(xx, yy, Z, levels)
+        plot_scatters(X, y)
+        pml.savefig("kernelBinaryClassifDemo{}.pdf".format(name), dpi=300)
+        plt.show()
+    elif name == "logregL1":
+        clf.fit(X_rbf, y)
+        Z = clf.predict_proba(rbf_feature.fit_transform(np.c_[xx.ravel(), yy.ravel()]))
+        Z = Z[:, 0].reshape(xx.shape)
+        plt.contour(xx, yy, Z, levels)
+        plot_scatters(X, y)
+        conf_scores = np.abs(clf.decision_function(X_rbf))
+        SV = X[(conf_scores > conf_scores.mean())]
+        nsupport = SV.shape[0]
+        nerr = np.sum(y != clf.predict(X_rbf))
+        plot_SVs(SV)
+        plt.title(f"{name}, nerr={nerr}, nsupport={nsupport}")
+        pml.savefig("kernelBinaryClassifDemo{}.pdf".format(name), dpi=300)
+        plt.show()
+    elif name == "RVM":
+        clf.fit(X, y)
+        Z = clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])
+        Z = Z.reshape(xx.shape)
+        plt.contour(xx, yy, Z, levels)
+        plot_scatters(X, y)
+        SV = clf.relevance_vectors_
+        plot_SVs(SV)
+        nsupport = SV.shape[0]
+        nerr = np.sum(y != clf.predict(X))
+        plt.title(f"{name}, nerr={nerr}, nsupport={nsupport}")
+        pml.savefig("kernelBinaryClassifDemo{}.pdf".format(name), dpi=300)
+        plt.show()
+    elif name == "SVM":
+        clf.fit(X, y)
+        Z = clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])
+        Z = Z[:, 0]
+        Z = Z.reshape(xx.shape)
+        plt.contour(xx, yy, Z, levels)
+        plot_scatters(X, y)
+        SV = clf.support_vectors_
+        plot_SVs(SV)
+        nsupport = SV.shape[0]
+        nerr = np.sum(y != clf.predict(X))
+        plt.title(f"{name}, nerr={nerr}, nsupport={nsupport}")
+        pml.savefig("kernelBinaryClassifDemo{}.pdf".format(name), dpi=300)
+        plt.show()
+------------------
+
+----- stdout -----
+SVM c=  14.81399539659665
+saving image to figures/kernelBinaryClassifDemologregL2_latexified.pdf
+Figure size: [6.4 4.8]
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1281: FutureWarning: 'multi_class' was deprecated in version 1.5 and will be removed in 1.8. Use OneVsRestClassifier(LogisticRegression(..)) instead. Leave it to its default value to avoid this warning.
+  warnings.warn(
+/tmp/ipykernel_2838/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
+  plt.scatter(X[row_ix, 0], X[row_ix, 1], cmap="Paired", marker="X", s=30)
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:70: UserWarning: renaming figures/kernelBinaryClassifDemologregL2.pdf to figures/kernelBinaryClassifDemologregL2_latexified.pdf because LATEXIFY is True
+  warnings.warn(
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1281: FutureWarning: 'multi_class' was deprecated in version 1.5 and will be removed in 1.8. Use OneVsRestClassifier(LogisticRegression(..)) instead. Leave it to its default value to avoid this warning.
+  warnings.warn(
+----- stderr -----
+/tmp/ipykernel_2838/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
+  plt.scatter(X[row_ix, 0], X[row_ix, 1], cmap="Paired", marker="X", s=30)
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:70: UserWarning: renaming figures/kernelBinaryClassifDemologregL1.pdf to figures/kernelBinaryClassifDemologregL1_latexified.pdf because LATEXIFY is True
+  warnings.warn(
+----- stdout -----
+saving image to figures/kernelBinaryClassifDemologregL1_latexified.pdf
+Figure size: [6.4 4.8]
+----- stderr -----
+/tmp/ipykernel_2838/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
+  plt.scatter(X[row_ix, 0], X[row_ix, 1], cmap="Paired", marker="X", s=30)
+------------------
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[1], line 111
+    109 plot_SVs(SV)
+    110 nsupport = SV.shape[0]
+--> 111 nerr = np.sum(y != clf.predict(X))
+    112 plt.title(f"{name}, nerr={nerr}, nsupport={nsupport}")
+    113 pml.savefig("kernelBinaryClassifDemo{}.pdf".format(name), dpi=300)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/rvm_classifier.py:100, in RVC.predict(self, X)
+     98 def predict(self, X):
+     99     phi = self.kernel_mat(X, self.relevance_vectors_)
+--> 100     return (phi @ self.mean > 0).astype(np.int)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py:397, in __getattr__(attr)
+    392     warnings.warn(
+    393         f"In the future `np.{attr}` will be defined as the "
+    394         "corresponding NumPy scalar.", FutureWarning, stacklevel=2)
+    396 if attr in __former_attrs__:
+--> 397     raise AttributeError(__former_attrs__[attr], name=None)
+    399 if attr in __expired_attributes__:
+    400     raise AttributeError(
+    401         f"`np.{attr}` was removed in the NumPy 2.0 release. "
+    402         f"{__expired_attributes__[attr]}",
+    403         name=None
+    404     )
+
+AttributeError: module 'numpy' has no attribute 'int'.
+`np.int` was a deprecated alias for the builtin `int`. To avoid this error in existing code, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+The aliases was originally deprecated in NumPy 1.20; for more details and guidance see the original release note at:
+    https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations

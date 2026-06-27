@@ -1,0 +1,55 @@
+An error occurred while executing the following cell:
+------------------
+# Least confidence uncertanity
+uncertainty_lc = 1 - np.maximum.reduce((prob_iris_setosa, prob_iris_versicolor, prob_iris_virginica))
+
+plot_data(
+    prob_iris_setosa,
+    prob_iris_versicolor,
+    prob_iris_virginica,
+    uncertainty_lc,
+    "Least Confidence Sampling",
+    save_name="Least Confidence Sampling Ternary Countor",
+)
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[6], line 4
+      1 # Least confidence uncertanity
+      2 uncertainty_lc = 1 - np.maximum.reduce((prob_iris_setosa, prob_iris_versicolor, prob_iris_virginica))
+----> 4 plot_data(
+      5     prob_iris_setosa,
+      6     prob_iris_versicolor,
+      7     prob_iris_virginica,
+      8     uncertainty_lc,
+      9     "Least Confidence Sampling",
+     10     save_name="Least Confidence Sampling Ternary Countor",
+     11 )
+
+Cell In[5], line 3, in plot_data(prob0, prob1, prob2, uncertanity, title, save_name)
+      1 def plot_data(prob0, prob1, prob2, uncertanity, title, save_name):
+----> 3     fig = ff.create_ternary_contour(
+      4         np.stack((prob_iris_setosa, prob_iris_versicolor, prob_iris_virginica)),
+      5         uncertanity,
+      6         pole_labels=["Setosa", "Versicolor", "Virginica"],
+      7         interp_mode="cartesian",
+      8         ncontours=25,
+      9         colorscale="Jet",
+     10         showscale=True,
+     11         title=title,
+     12     )
+     14     fig.update_ternaries(
+     15         aaxis=dict(
+     16             tickmode="array",
+   (...)
+     32         ),
+     33     )
+     35     fig.data[-1].update(marker_colorbar_x=1.12, marker_colorbar_len=0.87, marker_colorbar_y=0.48)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/plotly/figure_factory/__init__.py:53, in create_ternary_contour(*args, **kwargs)
+     52 def create_ternary_contour(*args, **kwargs):
+---> 53     raise ImportError("Please install scikit-image to use `create_ternary_contour`")
+
+ImportError: Please install scikit-image to use `create_ternary_contour`
