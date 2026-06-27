@@ -1,85 +1,47 @@
 An error occurred while executing the following cell:
 ------------------
-import os
-import numpy as np
-import jax
-from jax import numpy as jnp
-from jax import grad, jit, vmap, random
+# In practice you can use many more than 100 hidden units, up to 1000-2000.
+#  A small number is chosen here so that training is fast.
+N_vis, N_hid = mnist_train_imgs.shape[-1], 100
+key = random.PRNGKey(111)
+key, subkey = random.split(key)
+init_params = initialise_params(N_vis, N_hid, subkey)
 
-try:
-    import optax
-except ModuleNotFoundError:
-    %pip install -qq optax
-    import optax
-try:
-    import tensorflow_datasets as tfds
-except ModuleNotFoundError:
-    %pip install -qq tensorflow tensorflow_datasets
-    import tensorflow_datasets as tfds
+optimizer = optax.sgd(learning_rate=0.05, momentum=0.9)
+eval_samples = (mnist_train_imgs[:1000], mnist_test_imgs[:1000])
 
-try:
-    import probml_utils as pml
-except ModuleNotFoundError:
-    %pip install -qq git+https://github.com/probml/probml-utils.git
-    import probml_utils as pml
-
-from sklearn.linear_model import LogisticRegression
-from matplotlib import pyplot as plt
-import matplotlib.gridspec as gridspec
+params, metric_list, param_list = train_RBM(init_params, mnist_train_imgs, optimizer, key, eval_samples)
 ------------------
 
 
 ---------------------------------------------------------------------------
-RuntimeError                              Traceback (most recent call last)
-Cell In[1], line 3
-      1 import os
-      2 import numpy as np
-----> 3 import jax
-      4 from jax import numpy as jnp
-      5 from jax import grad, jit, vmap, random
+AttributeError                            Traceback (most recent call last)
+Cell In[9], line 11
+      8 optimizer = optax.sgd(learning_rate=0.05, momentum=0.9)
+      9 eval_samples = (mnist_train_imgs[:1000], mnist_test_imgs[:1000])
+---> 11 params, metric_list, param_list = train_RBM(init_params, mnist_train_imgs, optimizer, key, eval_samples)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:25
-     22 from jax.version import __version_info__ as __version_info__
-     24 # Set Cloud TPU env vars if necessary before transitively loading C++ backend
----> 25 from jax._src.cloud_tpu_init import cloud_tpu_init as _cloud_tpu_init
-     26 try:
-     27   _cloud_tpu_init()
+Cell In[8], line 24, in train_RBM(params, train_data, optimizer, key, eval_samples, n_epochs, batch_size)
+     22 batch = mnist_train_imgs[perm, ...]
+     23 key, subkey = random.split(key)
+---> 24 params, opt_state = batch_step(params, opt_state, batch, subkey)
+     25 if n % 200 == 0:
+     26     key, eval_key = random.split(key)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/cloud_tpu_init.py:20
-     18 import warnings
-     19 from jax import version
----> 20 from jax._src import config
-     21 from jax._src import hardware_utils
-     23 running_in_cloud_tpu_vm: bool = False
+    [... skipping hidden 14 frame]
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:27
-     24 import sys
-     25 from typing import Any, Generic, NoReturn, Optional, Protocol, TypeVar, cast
----> 27 from jax._src.lib import guard_lib
-     28 from jax._src.lib import jax_jit
-     29 from jax._src.lib import xla_client
+Cell In[8], line 6, in train_RBM.<locals>.batch_step(params, opt_state, batch, key)
+      4 @jit
+      5 def batch_step(params, opt_state, batch, key):
+----> 6     grads = jax.tree_map(lambda x: x.mean(0), CD1(batch, params, key))
+      7     updates, opt_state = optimizer.update(grads, opt_state, params)
+      8     params = jax.tree_map(lambda p, u: p - u, params, updates)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:75
-     71   return _jaxlib_version
-     74 version_str = jaxlib.version.__version__
----> 75 version = check_jaxlib_version(
-     76   jax_version=jax.version.__version__,
-     77   jaxlib_version=jaxlib.version.__version__,
-     78   minimum_jaxlib_version=jax.version._minimum_jaxlib_version)
-     80 # Before importing any C compiled modules, first import the CPU
-     81 # feature guard module to verify that jaxlib was compiled in a way that only
-     82 # uses instructions that are present on this machine.
-     83 import jaxlib.cpu_feature_guard as cpu_feature_guard
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/deprecations.py:54, in deprecation_getattr.<locals>.getattr(name)
+     52 message, fn = deprecations[name]
+     53 if fn is None:  # Is the deprecation accelerated?
+---> 54   raise AttributeError(message)
+     55 warnings.warn(message, DeprecationWarning, stacklevel=2)
+     56 return fn
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:64, in check_jaxlib_version(jax_version, jaxlib_version, minimum_jaxlib_version)
-     61 if _jaxlib_version < _minimum_jaxlib_version:
-     62   msg = (f'jaxlib is version {jaxlib_version}, but this version '
-     63          f'of jax requires version >= {minimum_jaxlib_version}.')
----> 64   raise RuntimeError(msg)
-     66 if _jaxlib_version > _jax_version:
-     67   raise RuntimeError(
-     68       f'jaxlib version {jaxlib_version} is newer than and '
-     69       f'incompatible with jax version {jax_version}. Please '
-     70       'update your jax and/or jaxlib packages.')
-
-RuntimeError: jaxlib is version 0.4.30, but this version of jax requires version >= 0.6.2.
+AttributeError: jax.tree_map was removed in JAX v0.6.0: use jax.tree.map (jax v0.4.25 or newer) or jax.tree_util.tree_map (any JAX version).
