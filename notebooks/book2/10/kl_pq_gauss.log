@@ -1,0 +1,92 @@
+An error occurred while executing the following cell:
+------------------
+# Plot KL(p,q) and KL(q,p) for 2d Gaussian
+# Author: alokpriyadarshiii
+# Based on matlab code by alokpriyadarshii
+# https://github.com/probml/pmtk3/blob/master/demos/KLpqGauss.m
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
+import math
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+
+def mnv_func(mu, Sigma):
+    x1 = np.linspace(-1, 1, 201).reshape(-1, 1)
+    x2 = np.linspace(-1, 1, 201).reshape(-1, 1)
+    n1 = len(x1)
+    n2 = len(x2)
+    f = np.zeros((n1, n2))
+
+    for i in range(n1):
+        x = np.full((n2, 1), x1[i])
+        q = np.concatenate((x, x2), axis=1)
+        f[i, :] = multivariate_normal.pdf(q, mean=mu, cov=Sigma)
+
+    return f
+
+
+mu = np.array([0, 0])
+Sigma = np.array([[1, 0.97], [0.97, 1]])
+f = mnv_func(mu, Sigma)
+
+mu = np.array([0, 0])
+Sigma_kla = np.eye(2) / 25
+klqp = mnv_func(mu, Sigma_kla)
+
+mu = np.array([0, 0])
+Sigma_klb = np.eye(2)
+klpq = mnv_func(mu, Sigma_klb)
+
+x1 = np.linspace(-1, 1, 201).reshape(-1, 1)
+x2 = np.linspace(-1, 1, 201).reshape(-1, 1)
+x1, x2 = np.meshgrid(x1, x2)
+
+plt.contour(x1, x2, klpq, colors="r")
+plt.contour(x1, x2, f, colors="b")
+pml.savefig("KL_pq_gauss.pdf")
+plt.show()
+
+plt.contour(x1, x2, klqp, colors="r")
+plt.contour(x1, x2, f, colors="b")
+pml.savefig("KL_qp_gauss.pdf")
+plt.show()
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 8
+      1 # Plot KL(p,q) and KL(q,p) for 2d Gaussian
+      2 # Author: alokpriyadarshiii
+      3 # Based on matlab code by alokpriyadarshii
+      4 # https://github.com/probml/pmtk3/blob/master/demos/KLpqGauss.m
+      7 import numpy as np
+----> 8 import matplotlib.pyplot as plt
+      9 from scipy.stats import multivariate_normal
+     10 import math
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
+
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4

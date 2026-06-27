@@ -1,0 +1,23 @@
+An error occurred while executing the following cell:
+------------------
+import jax.numpy as jnp
+import jax
+from jax.config import config
+
+# need 64bit computation for kernel + cholesky
+config.update("jax_enable_x64", True)
+
+from matplotlib import pyplot as plt
+------------------
+
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 3
+      1 import jax.numpy as jnp
+      2 import jax
+----> 3 from jax.config import config
+      5 # need 64bit computation for kernel + cholesky
+      6 config.update("jax_enable_x64", True)
+
+ModuleNotFoundError: No module named 'jax.config'
