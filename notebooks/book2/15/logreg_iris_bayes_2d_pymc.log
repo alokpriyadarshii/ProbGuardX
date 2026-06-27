@@ -39,71 +39,73 @@ Collecting mkl-service
 ----- stdout -----
   Downloading mkl_service-2.7.2-0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
 Collecting mkl<2027.0a0,>=2026.0.0 (from mkl-service)
-  Downloading mkl-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.7 kB)
 ----- stdout -----
+  Downloading mkl-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.7 kB)
 Collecting onemkl-license==2026.0.0 (from mkl<2027.0a0,>=2026.0.0->mkl-service)
+----- stdout -----
   Downloading onemkl_license-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.6 kB)
 ----- stdout -----
 Collecting intel-openmp<2027,>=2025 (from mkl<2027.0a0,>=2026.0.0->mkl-service)
   Downloading intel_openmp-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.2 kB)
-Collecting tbb==2023.* (from mkl<2027.0a0,>=2026.0.0->mkl-service)
 ----- stdout -----
+Collecting tbb==2023.* (from mkl<2027.0a0,>=2026.0.0->mkl-service)
   Downloading tbb-2023.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.0 kB)
+----- stdout -----
 Collecting intel-cmplr-lib-ur==2026.0.0 (from intel-openmp<2027,>=2025->mkl<2027.0a0,>=2026.0.0->mkl-service)
   Downloading intel_cmplr_lib_ur-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.2 kB)
 ----- stdout -----
 Collecting umf==1.1.* (from intel-cmplr-lib-ur==2026.0.0->intel-openmp<2027,>=2025->mkl<2027.0a0,>=2026.0.0->mkl-service)
   Downloading umf-1.1.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (1.0 kB)
-Collecting tcmlib==1.* (from tbb==2023.*->mkl<2027.0a0,>=2026.0.0->mkl-service)
-  Downloading tcmlib-1.5.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (962 bytes)
 ----- stdout -----
+Collecting tcmlib==1.* (from tbb==2023.*->mkl<2027.0a0,>=2026.0.0->mkl-service)
+----- stdout -----
+  Downloading tcmlib-1.5.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (962 bytes)
 Downloading mkl_service-2.7.2-0-cp310-cp310-manylinux_2_28_x86_64.whl (77 kB)
 ----- stdout -----
 Downloading mkl-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (224.0 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/224.0 MB ? eta -:--:--
 ----- stdout -----
-   ━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.0/224.0 MB 228.8 MB/s eta 0:00:01
+   ━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.5/224.0 MB 64.6 MB/s eta 0:00:04
 ----- stdout -----
-   ━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 65.0/224.0 MB 169.5 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━ 83.6/224.0 MB 227.7 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━ 90.2/224.0 MB 154.7 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━ 147.1/224.0 MB 258.3 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 108.0/224.0 MB 136.6 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺ 218.9/224.0 MB 283.9 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━ 137.1/224.0 MB 137.3 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 284.7 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 178.3/224.0 MB 148.5 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 284.7 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━ 202.4/224.0 MB 144.4 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 284.7 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 284.7 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 284.7 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.0/224.0 MB 118.5 MB/s  0:00:01
+
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 223.9/224.0 MB 149.7 MB/s eta 0:00:01
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.0/224.0 MB 91.7 MB/s  0:00:02
 Downloading onemkl_license-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (58 kB)
+----- stdout -----
 Downloading intel_openmp-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (57.3 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/57.3 MB ? eta -:--:--
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 46.1/57.3 MB 231.1 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 57.1/57.3 MB 374.7 MB/s eta 0:00:01
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.3/57.3 MB 185.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.3/57.3 MB 267.7 MB/s  0:00:00
 Downloading intel_cmplr_lib_ur-2026.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (31.6 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/31.6 MB ? eta -:--:--
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 31.6/31.6 MB 194.6 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 31.6/31.6 MB 255.9 MB/s  0:00:00
 Downloading tbb-2023.0.0-py2.py3-none-manylinux_2_28_x86_64.whl (6.8 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/6.8 MB ? eta -:--:--
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.8/6.8 MB 220.2 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.8/6.8 MB 245.6 MB/s  0:00:00
 Downloading tcmlib-1.5.0-py2.py3-none-manylinux_2_28_x86_64.whl (2.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/2.8 MB ? eta -:--:--   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.8/2.8 MB 255.9 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/2.8 MB ? eta -:--:--   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.8/2.8 MB 277.1 MB/s  0:00:00
+
+----- stdout -----
 Downloading umf-1.1.0-py2.py3-none-manylinux_2_28_x86_64.whl (424 kB)
 ----- stdout -----
 Installing collected packages: tcmlib, onemkl-license, umf, tbb, intel-cmplr-lib-ur, intel-openmp, mkl, mkl-service
@@ -122,6 +124,14 @@ Installing collected packages: tcmlib, onemkl-license, umf, tbb, intel-cmplr-lib
    ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 5/8 [intel-openmp]
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 5/8 [intel-openmp]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 5/8 [intel-openmp]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 5/8 [intel-openmp]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━ 6/8 [mkl]
 ----- stdout -----
