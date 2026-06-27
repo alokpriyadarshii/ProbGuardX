@@ -160,26 +160,117 @@ p.write_png("../figures/tree_structure.png")
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ----- stdout -----
-Note: you may need to restart the kernel to use updated packages.
------ stderr -----
-/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/estimators/__init__.py:4: FutureWarning: `pgmpy.estimators.StructureScore` is deprecated and will be removed in v1.3.0. Use `pgmpy.structure_score` instead.
-  from .StructureScore import (
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+arviz 0.23.4 requires xarray>=2023.7.0, which is not installed.
+matplotlib 3.10.9 requires contourpy>=1.0.1, which is not installed.
+xarray-einstats 0.8.0 requires xarray>=2022.09.0, which is not installed.
+
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ------------------
 
 ---------------------------------------------------------------------------
-TypeError                                 Traceback (most recent call last)
-Cell In[1], line 139
-     38 newsgroups_train = fetch_20newsgroups(subset="train")
-     40 list_of_words = [
-     41     "email",
-     42     "disk",
-   (...)
-    136     "evidence",
-    137 ]
---> 139 count_vect = CountVectorizer(newsgroups_train.data, vocabulary=list_of_words)
-    140 X_train_counts = count_vect.fit_transform(newsgroups_train.data)
-    141 df_ = pd.DataFrame.sparse.from_spmatrix(X_train_counts, columns=list_of_words)
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 18
+     17 try:
+---> 18     from pgmpy.estimators import TreeSearch
+     19 except ModuleNotFoundError:
 
-TypeError: CountVectorizer.__init__() takes 1 positional argument but 2 positional arguments (and 1 keyword-only argument) were given
+ModuleNotFoundError: No module named 'pgmpy'
+
+During handling of the above exception, another exception occurred:
+
+AttributeError                            Traceback (most recent call last)
+Cell In[1], line 21
+     19 except ModuleNotFoundError:
+     20     get_ipython().run_line_magic('pip', 'install -qq pgmpy')
+---> 21     from pgmpy.estimators import TreeSearch
+     22 from sklearn.feature_extraction.text import CountVectorizer
+     24 try:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/estimators/__init__.py:1
+----> 1 from .base import BaseEstimator, MarginalEstimator, ParameterEstimator, StructureEstimator
+      2 from .MLE import MaximumLikelihoodEstimator
+      3 from .BayesianEstimator import BayesianEstimator
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/estimators/base.py:9
+      7 from pgmpy.factors import FactorDict
+      8 from pgmpy.factors.discrete import DiscreteFactor
+----> 9 from pgmpy.inference.ExactInference import BeliefPropagation
+     10 from pgmpy.utils import build_state_names, get_state_counts, preprocess_data
+     13 class BaseEstimator:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/inference/__init__.py:2
+      1 from .base import Inference  # isort: skip  # noqa: E402
+----> 2 from .CausalInference import CausalInference
+      3 from .ExactInference import BeliefPropagation, BeliefPropagationWithMessagePassing, VariableElimination
+      4 from .ApproxInference import ApproxInference
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/inference/CausalInference.py:12
+     10 from pgmpy import config, logger
+     11 from pgmpy.base import DAG
+---> 12 from pgmpy.estimators.LinearModel import LinearEstimator
+     13 from pgmpy.factors.discrete import DiscreteFactor
+     14 from pgmpy.models import (
+     15     DiscreteBayesianNetwork,
+     16     FunctionalBayesianNetwork,
+     17     LinearGaussianBayesianNetwork,
+     18     SEMGraph,
+     19 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/estimators/LinearModel.py:1
+----> 1 import statsmodels.api as sm
+      2 from statsmodels.api import GLS, OLS, WLS
+      5 class LinearEstimator:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/statsmodels/api.py:138
+    136 from .regression.recursive_ls import RecursiveLS
+    137 from .robust.robust_linear_model import RLM
+--> 138 from .stats import api as stats
+    139 from .tools.print_version import show_versions
+    140 from .tools.tools import add_constant, categorical
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/statsmodels/stats/api.py:15
+     12 from ._lilliefors import lilliefors
+     14 from ._knockoff import RegressionFDR
+---> 15 from . import multicomp
+     16 from .multitest import (multipletests, fdrcorrection, fdrcorrection_twostage,
+     17                         local_fdr, NullDistribution)
+     18 from .multicomp import tukeyhsd
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/statsmodels/stats/multicomp.py:7
+      1 """
+      2 
+      3 Created on Fri Mar 30 18:27:25 2012
+      4 Author: Josef Perktold
+      5 """
+----> 7 from statsmodels.sandbox.stats.multicomp import (  # noqa:F401
+      8     tukeyhsd, MultiComparison)
+     10 __all__ = ['tukeyhsd', 'MultiComparison']
+     13 def pairwise_tukeyhsd(endog, groups, alpha=0.05):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/statsmodels/sandbox/stats/multicomp.py:72
+     69 import math
+     71 import numpy as np
+---> 72 from numpy.testing import assert_almost_equal, assert_equal
+     73 from scipy import stats, interpolate
+     75 from statsmodels.iolib.table import SimpleTable
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/testing/__init__.py:11
+      8 from unittest import TestCase
+     10 from . import _private
+---> 11 from ._private.utils import *
+     12 from ._private.utils import (_assert_valid_refcount, _gen_alignment_data)
+     13 from ._private import extbuild
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/testing/_private/utils.py:96
+     94 IS_PYSTON = hasattr(sys, "pyston_version_info")
+     95 HAS_REFCOUNT = getattr(sys, 'getrefcount', None) is not None and not IS_PYSTON
+---> 96 HAS_LAPACK64 = numpy.linalg._umath_linalg._ilp64
+     98 IS_MUSL = False
+     99 # alternate way is
+    100 # from packaging.tags import sys_tags
+    101 #     _tags = list(sys_tags())
+    102 #     if 'musllinux' in _tags[0].platform:
+
+AttributeError: module 'numpy.linalg._umath_linalg' has no attribute '_ilp64'

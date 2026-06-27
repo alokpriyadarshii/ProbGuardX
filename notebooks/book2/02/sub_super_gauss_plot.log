@@ -2,16 +2,17 @@ An error occurred while executing the following cell:
 ------------------
 import jax
 import jax.numpy as jnp
-import seaborn as sns
+from jax.scipy.stats import uniform, laplace, norm
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 try:
-    from probml_utils import latexify, savefig, is_latexify_enabled
+    from probml_utils import savefig, latexify
 except ModuleNotFoundError:
     %pip install -qq git+https://github.com/probml/probml-utils.git
-    from probml_utils import latexify, savefig, is_latexify_enabled
+    from probml_utils import savefig, latexify
 
-from jax.scipy.stats import t, norm, laplace
+seed = 48
 ------------------
 
 
@@ -20,7 +21,7 @@ AttributeError                            Traceback (most recent call last)
 Cell In[1], line 1
 ----> 1 import jax
       2 import jax.numpy as jnp
-      3 import seaborn as sns
+      3 from jax.scipy.stats import uniform, laplace, norm
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:37
      34 del _cloud_tpu_init
