@@ -57,7 +57,7 @@ os.environ["XLA_PYTHON_CLIENT_PREALLOCATE"] = "False"
 ------------------
 
 ----- stderr -----
-/tmp/ipykernel_2211/3867189385.py:1: DeprecationWarning: The Tix Tk extension is unmaintained, and the tkinter.tix wrapper module is deprecated in favor of tkinter.ttk
+/tmp/ipykernel_2209/3867189385.py:1: DeprecationWarning: The Tix Tk extension is unmaintained, and the tkinter.tix wrapper module is deprecated in favor of tkinter.ttk
   from tkinter.tix import Tree
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
@@ -65,8 +65,8 @@ Note: you may need to restart the kernel to use updated packages.
 Note: you may need to restart the kernel to use updated packages.
 ----- stdout -----
 Collecting git+https://github.com/probml/probml-utils.git
-  Cloning https://github.com/probml/probml-utils.git to /tmp/pip-req-build-g7z_n4t3
-  Running command git clone --filter=blob:none --quiet https://github.com/probml/probml-utils.git /tmp/pip-req-build-g7z_n4t3
+  Cloning https://github.com/probml/probml-utils.git to /tmp/pip-req-build-zhvlplah
+  Running command git clone --filter=blob:none --quiet https://github.com/probml/probml-utils.git /tmp/pip-req-build-zhvlplah
 ----- stdout -----
   Resolved https://github.com/probml/probml-utils.git to commit 638ebb99f2e1ecc32f97bc02e8b81a8798c38c77
 ----- stdout -----
@@ -86,6 +86,12 @@ Collecting git+https://github.com/probml/probml-utils.git
 ----- stdout -----
  /
 ----- stdout -----
+ -
+----- stdout -----
+ \
+----- stdout -----
+ |
+----- stdout -----
  done
 ----- stdout -----
   Getting requirements to build wheel ... -
@@ -100,8 +106,8 @@ Collecting git+https://github.com/probml/probml-utils.git
 Requirement already satisfied: arviz in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from probml_utils==0.1.dev116+g638ebb99f) (0.23.4)
 Requirement already satisfied: jaxlib in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from probml_utils==0.1.dev116+g638ebb99f) (0.6.2)
 Requirement already satisfied: jax in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from probml_utils==0.1.dev116+g638ebb99f) (0.6.2)
-Collecting jaxopt (from probml_utils==0.1.dev116+g638ebb99f)
 ----- stdout -----
+Collecting jaxopt (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jaxopt-0.8.5-py3-none-any.whl.metadata (3.3 kB)
 Requirement already satisfied: jupyter in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from probml_utils==0.1.dev116+g638ebb99f) (1.1.1)
 Requirement already satisfied: matplotlib in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from probml_utils==0.1.dev116+g638ebb99f) (3.10.9)
@@ -110,9 +116,9 @@ Requirement already satisfied: scipy in /github/home/miniconda3/envs/py310/lib/p
 Requirement already satisfied: graphviz in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from probml_utils==0.1.dev116+g638ebb99f) (0.21)
 Collecting distrax==0.1.3 (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached distrax-0.1.3-py3-none-any.whl.metadata (13 kB)
+----- stdout -----
 Collecting umap-learn (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached umap_learn-0.5.12-py3-none-any.whl.metadata (24 kB)
------ stdout -----
 Requirement already satisfied: pandas in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from probml_utils==0.1.dev116+g638ebb99f) (2.3.3)
 Collecting TexSoup (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached texsoup-0.3.3-py3-none-any.whl.metadata (3.8 kB)
@@ -128,38 +134,33 @@ Collecting chex>=0.0.7 (from distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f
 ----- stdout -----
 Collecting numpy<1.23,>=1.18.0 (from distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f)
   Using cached numpy-1.22.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.0 kB)
------ stdout -----
 Collecting tensorflow-probability>=0.15.0 (from distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f)
------ stdout -----
   Using cached tensorflow_probability-0.25.0-py2.py3-none-any.whl.metadata (13 kB)
 Requirement already satisfied: typing_extensions>=4.2.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from chex>=0.0.7->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f) (4.15.0)
 INFO: pip is looking at multiple versions of chex to determine which version is compatible with other requirements. This could take a while.
 Collecting chex>=0.0.7 (from distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f)
   Using cached chex-0.1.89-py3-none-any.whl.metadata (17 kB)
------ stdout -----
   Using cached chex-0.1.88-py3-none-any.whl.metadata (17 kB)
   Using cached chex-0.1.87-py3-none-any.whl.metadata (17 kB)
   Using cached chex-0.1.86-py3-none-any.whl.metadata (17 kB)
   Using cached chex-0.1.85-py3-none-any.whl.metadata (17 kB)
   Using cached chex-0.1.84-py3-none-any.whl.metadata (17 kB)
+----- stdout -----
   Using cached chex-0.1.83-py3-none-any.whl.metadata (17 kB)
 INFO: pip is still looking at multiple versions of chex to determine which version is compatible with other requirements. This could take a while.
   Using cached chex-0.1.82-py3-none-any.whl.metadata (17 kB)
   Using cached chex-0.1.81-py3-none-any.whl.metadata (17 kB)
------ stdout -----
 Collecting dm-tree>=0.1.5 (from chex>=0.0.7->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f)
   Using cached dm_tree-0.1.10-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (2.6 kB)
 Collecting chex>=0.0.7 (from distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f)
   Using cached chex-0.1.7-py3-none-any.whl.metadata (17 kB)
------ stdout -----
 Collecting toolz>=0.9.0 (from chex>=0.0.7->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f)
   Using cached toolz-1.1.0-py3-none-any.whl.metadata (5.1 kB)
-Requirement already satisfied: attrs>=18.2.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from dm-tree>=0.1.5->chex>=0.0.7->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f) (26.1.0)
 ----- stdout -----
+Requirement already satisfied: attrs>=18.2.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from dm-tree>=0.1.5->chex>=0.0.7->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f) (26.1.0)
 Requirement already satisfied: wrapt>=1.11.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from dm-tree>=0.1.5->chex>=0.0.7->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f) (2.2.2)
 Requirement already satisfied: ml_dtypes>=0.5.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jax->probml_utils==0.1.dev116+g638ebb99f) (0.5.4)
 INFO: pip is looking at multiple versions of jax to determine which version is compatible with other requirements. This could take a while.
------ stdout -----
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jax-0.6.1-py3-none-any.whl.metadata (13 kB)
 ----- stdout -----
@@ -167,9 +168,9 @@ Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jaxlib-0.6.1-cp310-cp310-manylinux2014_x86_64.whl.metadata (1.2 kB)
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jax-0.6.0-py3-none-any.whl.metadata (22 kB)
+----- stdout -----
 Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jaxlib-0.6.0-cp310-cp310-manylinux2014_x86_64.whl.metadata (1.2 kB)
------ stdout -----
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jax-0.5.3-py3-none-any.whl.metadata (22 kB)
 Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
@@ -186,11 +187,11 @@ Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jax-0.4.38-py3-none-any.whl.metadata (22 kB)
 Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
------ stdout -----
   Using cached jaxlib-0.4.38-cp310-cp310-manylinux2014_x86_64.whl.metadata (1.0 kB)
 INFO: pip is still looking at multiple versions of jax to determine which version is compatible with other requirements. This could take a while.
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jax-0.4.37-py3-none-any.whl.metadata (22 kB)
+----- stdout -----
 Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jaxlib-0.4.36-cp310-cp310-manylinux2014_x86_64.whl.metadata (1.0 kB)
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
@@ -204,13 +205,13 @@ Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jaxlib-0.4.34-cp310-cp310-manylinux2014_x86_64.whl.metadata (983 bytes)
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jax-0.4.33-py3-none-any.whl.metadata (22 kB)
------ stdout -----
 Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jaxlib-0.4.33-cp310-cp310-manylinux2014_x86_64.whl.metadata (983 bytes)
 INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jax-0.4.31-py3-none-any.whl.metadata (22 kB)
 Collecting jaxlib (from probml_utils==0.1.dev116+g638ebb99f)
+----- stdout -----
   Using cached jaxlib-0.4.31-cp310-cp310-manylinux2014_x86_64.whl.metadata (983 bytes)
 Collecting jax (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached jax-0.4.30-py3-none-any.whl.metadata (22 kB)
@@ -222,14 +223,13 @@ INFO: pip is looking at multiple versions of scipy to determine which version is
 Collecting scipy (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached scipy-1.15.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
   Using cached scipy-1.15.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
------ stdout -----
   Using cached scipy-1.15.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
   Using cached scipy-1.14.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
   Using cached scipy-1.14.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+----- stdout -----
   Using cached scipy-1.13.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
 Requirement already satisfied: six>=1.10.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow-probability>=0.15.0->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f) (1.17.0)
 Requirement already satisfied: decorator in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow-probability>=0.15.0->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f) (5.3.1)
------ stdout -----
 Collecting cloudpickle>=1.3 (from tensorflow-probability>=0.15.0->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f)
   Using cached cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
 Requirement already satisfied: gast>=0.3.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow-probability>=0.15.0->distrax==0.1.3->probml_utils==0.1.dev116+g638ebb99f) (0.7.0)
@@ -238,10 +238,10 @@ INFO: pip is looking at multiple versions of arviz to determine which version is
 Collecting arviz (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached arviz-0.23.3-py3-none-any.whl.metadata (9.1 kB)
   Using cached arviz-0.23.1-py3-none-any.whl.metadata (9.1 kB)
+----- stdout -----
   Using cached arviz-0.23.0-py3-none-any.whl.metadata (9.1 kB)
   Using cached arviz-0.22.0-py3-none-any.whl.metadata (8.9 kB)
   Using cached arviz-0.21.0-py3-none-any.whl.metadata (8.8 kB)
------ stdout -----
   Using cached arviz-0.20.0-py3-none-any.whl.metadata (8.8 kB)
   Using cached arviz-0.19.0-py3-none-any.whl.metadata (8.9 kB)
 INFO: pip is still looking at multiple versions of arviz to determine which version is compatible with other requirements. This could take a while.
@@ -265,12 +265,12 @@ Collecting matplotlib (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached matplotlib-3.10.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
   Using cached matplotlib-3.10.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
   Using cached matplotlib-3.10.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+----- stdout -----
 INFO: pip is still looking at multiple versions of matplotlib to determine which version is compatible with other requirements. This could take a while.
   Using cached matplotlib-3.9.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
   Using cached matplotlib-3.9.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
   Using cached matplotlib-3.9.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
   Using cached matplotlib-3.9.1.post1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
------ stdout -----
   Using cached matplotlib-3.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
 INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
   Using cached matplotlib-3.8.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.8 kB)
@@ -287,8 +287,8 @@ Collecting contourpy>=1.0.1 (from matplotlib->probml_utils==0.1.dev116+g638ebb99
 Requirement already satisfied: pytz>=2020.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from pandas->probml_utils==0.1.dev116+g638ebb99f) (2026.2)
 Requirement already satisfied: tzdata>=2022.7 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from pandas->probml_utils==0.1.dev116+g638ebb99f) (2026.2)
 INFO: pip is looking at multiple versions of xarray to determine which version is compatible with other requirements. This could take a while.
-Collecting xarray>=0.21.0 (from arviz->probml_utils==0.1.dev116+g638ebb99f)
 ----- stdout -----
+Collecting xarray>=0.21.0 (from arviz->probml_utils==0.1.dev116+g638ebb99f)
   Using cached xarray-2025.6.0-py3-none-any.whl.metadata (12 kB)
   Using cached xarray-2025.4.0-py3-none-any.whl.metadata (12 kB)
   Using cached xarray-2025.3.1-py3-none-any.whl.metadata (12 kB)
@@ -301,29 +301,30 @@ INFO: pip is still looking at multiple versions of xarray to determine which ver
   Using cached xarray-2024.11.0-py3-none-any.whl.metadata (11 kB)
   Using cached xarray-2024.10.0-py3-none-any.whl.metadata (11 kB)
   Using cached xarray-2024.9.0-py3-none-any.whl.metadata (11 kB)
+----- stdout -----
   Using cached xarray-2024.7.0-py3-none-any.whl.metadata (11 kB)
   Using cached xarray-2024.6.0-py3-none-any.whl.metadata (11 kB)
 INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
   Using cached xarray-2024.5.0-py3-none-any.whl.metadata (11 kB)
------ stdout -----
   Using cached xarray-2024.3.0-py3-none-any.whl.metadata (11 kB)
   Using cached xarray-2024.2.0-py3-none-any.whl.metadata (11 kB)
   Using cached xarray-2024.1.1-py3-none-any.whl.metadata (11 kB)
   Using cached xarray-2024.1.0-py3-none-any.whl.metadata (11 kB)
   Using cached xarray-2023.12.0-py3-none-any.whl.metadata (11 kB)
+----- stdout -----
 INFO: pip is looking at multiple versions of xarray-einstats to determine which version is compatible with other requirements. This could take a while.
 Collecting xarray-einstats>=0.3 (from arviz->probml_utils==0.1.dev116+g638ebb99f)
   Using cached xarray_einstats-0.7.0-py3-none-any.whl.metadata (5.8 kB)
------ stdout -----
 Collecting cachecontrol>=0.14.3 (from firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached cachecontrol-0.14.4-py3-none-any.whl.metadata (3.1 kB)
 Collecting google-api-core<3.0.0dev,>=2.25.1 (from google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached google_api_core-2.31.0-py3-none-any.whl.metadata (3.2 kB)
+----- stdout -----
 Collecting google-cloud-firestore>=2.21.0 (from firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached google_cloud_firestore-2.28.0-py3-none-any.whl.metadata (9.5 kB)
------ stdout -----
 Collecting google-cloud-storage>=3.1.1 (from firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached google_cloud_storage-3.12.0-py3-none-any.whl.metadata (15 kB)
+----- stdout -----
 Collecting pyjwt>=2.10.1 (from pyjwt[crypto]>=2.10.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached pyjwt-2.13.0-py3-none-any.whl.metadata (3.4 kB)
 Requirement already satisfied: httpx==0.28.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from httpx[http2]==0.28.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (0.28.1)
@@ -331,15 +332,14 @@ Requirement already satisfied: anyio in /github/home/miniconda3/envs/py310/lib/p
 Requirement already satisfied: certifi in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from httpx==0.28.1->httpx[http2]==0.28.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (2026.6.17)
 Requirement already satisfied: httpcore==1.* in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from httpx==0.28.1->httpx[http2]==0.28.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (1.0.9)
 Requirement already satisfied: idna in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from httpx==0.28.1->httpx[http2]==0.28.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (3.18)
------ stdout -----
 Collecting h2<5,>=3 (from httpx[http2]==0.28.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached h2-4.3.0-py3-none-any.whl.metadata (5.1 kB)
 Collecting googleapis-common-protos<2.0.0,>=1.63.2 (from google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached googleapis_common_protos-1.75.0-py3-none-any.whl.metadata (8.6 kB)
 Requirement already satisfied: protobuf<8.0.0,>=5.29.6 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (7.35.1)
+----- stdout -----
 Collecting proto-plus<2.0.0,>=1.24.0 (from google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached proto_plus-1.28.0-py3-none-any.whl.metadata (2.2 kB)
------ stdout -----
 Collecting google-auth<3.0.0,>=2.14.1 (from google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached google_auth-2.55.1-py3-none-any.whl.metadata (5.1 kB)
 Requirement already satisfied: requests<3.0.0,>=2.33.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (2.34.2)
@@ -359,8 +359,8 @@ Collecting hpack<5,>=4.1 (from h2<5,>=3->httpx[http2]==0.28.1->firebase_admin->p
 Requirement already satisfied: h11>=0.16 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from httpcore==1.*->httpx==0.28.1->httpx[http2]==0.28.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (0.16.0)
 Requirement already satisfied: charset_normalizer<4,>=2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from requests<3.0.0,>=2.33.0->google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (3.4.7)
 Requirement already satisfied: urllib3<3,>=1.26 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from requests<3.0.0,>=2.33.0->google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (2.7.0)
------ stdout -----
 Requirement already satisfied: msgpack<2.0.0,>=0.5.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from cachecontrol>=0.14.3->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (1.2.1)
+----- stdout -----
 Requirement already satisfied: cffi>=2.0.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from cryptography>=38.0.3->google-auth<3.0.0,>=2.14.1->google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (2.0.0)
 Requirement already satisfied: pycparser in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from cffi>=2.0.0->cryptography>=38.0.3->google-auth<3.0.0,>=2.14.1->google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (3.0)
 Collecting google-cloud-core<3.0.0,>=2.0.0 (from google-cloud-firestore>=2.21.0->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
@@ -371,9 +371,9 @@ Collecting google-resumable-media<3.0.0,>=2.7.2 (from google-cloud-storage>=3.1.
 ----- stdout -----
 Collecting google-crc32c<2.0.0,>=1.6.0 (from google-cloud-storage>=3.1.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached google_crc32c-1.8.0-cp310-cp310-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl.metadata (1.7 kB)
------ stdout -----
 Collecting pyasn1<0.7.0,>=0.6.1 (from pyasn1-modules>=0.2.1->google-auth<3.0.0,>=2.14.1->google-api-core<3.0.0dev,>=2.25.1->google-api-core[grpc]<3.0.0dev,>=2.25.1; platform_python_implementation != "PyPy"->firebase_admin->probml_utils==0.1.dev116+g638ebb99f)
   Using cached pyasn1-0.6.3-py3-none-any.whl.metadata (8.4 kB)
+----- stdout -----
 Requirement already satisfied: exceptiongroup>=1.0.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from anyio->httpx==0.28.1->httpx[http2]==0.28.1->firebase_admin->probml_utils==0.1.dev116+g638ebb99f) (1.3.1)
 Requirement already satisfied: notebook in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyter->probml_utils==0.1.dev116+g638ebb99f) (7.6.0)
 Requirement already satisfied: jupyter-console in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyter->probml_utils==0.1.dev116+g638ebb99f) (6.6.3)
@@ -392,13 +392,13 @@ Requirement already satisfied: psutil>=5.7 in /github/home/miniconda3/envs/py310
 Requirement already satisfied: pyzmq>=25 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (27.1.0)
 Requirement already satisfied: tornado>=6.4.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (6.5.7)
 Requirement already satisfied: traitlets>=5.4.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (5.15.1)
------ stdout -----
 Requirement already satisfied: jedi>=0.16 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.20.0)
 Requirement already satisfied: pexpect>4.3 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (4.9.0)
 Requirement already satisfied: prompt_toolkit<3.1.0,>=3.0.41 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (3.0.52)
 Requirement already satisfied: pygments>=2.4.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (2.20.0)
 Requirement already satisfied: stack_data in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.6.3)
 Requirement already satisfied: wcwidth in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from prompt_toolkit<3.1.0,>=3.0.41->ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.8.1)
+----- stdout -----
 Requirement already satisfied: parso<0.9.0,>=0.8.6 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jedi>=0.16->ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.8.7)
 Requirement already satisfied: platformdirs>=2.5 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyter-core!=6.0.*,>=5.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (4.10.0)
 Requirement already satisfied: ptyprocess>=0.5 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from pexpect>4.3->ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.7.0)
@@ -411,7 +411,6 @@ Requirement already satisfied: jupyter-lsp>=2.0.0 in /github/home/miniconda3/env
 Requirement already satisfied: jupyter-server<3,>=2.19.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (2.20.0)
 Requirement already satisfied: jupyterlab-server<3,>=2.28.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (2.28.0)
 Requirement already satisfied: notebook-shim>=0.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.2.4)
------ stdout -----
 Requirement already satisfied: tomli>=1.2.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (2.4.1)
 Requirement already satisfied: argon2-cffi>=21.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (25.1.0)
 Requirement already satisfied: jupyter-events>=0.11.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.12.1)
@@ -422,6 +421,7 @@ Requirement already satisfied: prometheus-client>=0.9 in /github/home/miniconda3
 Requirement already satisfied: send2trash>=1.8.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (2.1.0)
 Requirement already satisfied: terminado>=0.8.3 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.18.1)
 Requirement already satisfied: websocket-client>=1.7 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (1.9.0)
+----- stdout -----
 Requirement already satisfied: babel>=2.10 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyterlab-server<3,>=2.28.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (2.18.0)
 Requirement already satisfied: json5>=0.9.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyterlab-server<3,>=2.28.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.15.0)
 Requirement already satisfied: jsonschema>=4.18.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jupyterlab-server<3,>=2.28.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (4.26.0)
@@ -440,7 +440,6 @@ Requirement already satisfied: jsonpointer>1.13 in /github/home/miniconda3/envs/
 Requirement already satisfied: rfc3987-syntax>=1.1.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (1.1.0)
 Requirement already satisfied: uri-template in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (1.3.0)
 Requirement already satisfied: webcolors>=24.6.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (25.10.0)
------ stdout -----
 Requirement already satisfied: beautifulsoup4 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from nbconvert->jupyter->probml_utils==0.1.dev116+g638ebb99f) (4.15.0)
 Requirement already satisfied: bleach!=5.0.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from bleach[css]!=5.0.0->nbconvert->jupyter->probml_utils==0.1.dev116+g638ebb99f) (6.4.0)
 Requirement already satisfied: defusedxml in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from nbconvert->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.7.1)
@@ -448,6 +447,7 @@ Requirement already satisfied: jupyterlab-pygments in /github/home/miniconda3/en
 Requirement already satisfied: mistune<4,>=2.0.3 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from nbconvert->jupyter->probml_utils==0.1.dev116+g638ebb99f) (3.3.2)
 Requirement already satisfied: nbclient>=0.5.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from nbconvert->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.11.0)
 Requirement already satisfied: pandocfilters>=1.4.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from nbconvert->jupyter->probml_utils==0.1.dev116+g638ebb99f) (1.5.1)
+----- stdout -----
 Requirement already satisfied: webencodings in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from bleach!=5.0.0->bleach[css]!=5.0.0->nbconvert->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.5.1)
 Requirement already satisfied: tinycss2>=1.1.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from bleach[css]!=5.0.0->nbconvert->jupyter->probml_utils==0.1.dev116+g638ebb99f) (1.5.1)
 Requirement already satisfied: fastjsonschema>=2.15 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from nbformat>=5.3.0->jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (2.21.2)
@@ -457,10 +457,10 @@ Requirement already satisfied: soupsieve>=1.6.1 in /github/home/miniconda3/envs/
 Requirement already satisfied: arrow>=0.15.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from isoduration->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab->jupyter->probml_utils==0.1.dev116+g638ebb99f) (1.4.0)
 Requirement already satisfied: joblib>=1.2.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from scikit-learn->probml_utils==0.1.dev116+g638ebb99f) (1.5.3)
 Requirement already satisfied: threadpoolctl>=3.1.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from scikit-learn->probml_utils==0.1.dev116+g638ebb99f) (3.6.0)
------ stdout -----
 Requirement already satisfied: executing>=1.2.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from stack_data->ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (2.2.1)
 Requirement already satisfied: asttokens>=2.1.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from stack_data->ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (3.0.1)
 Requirement already satisfied: pure-eval in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from stack_data->ipython>=7.23.1->ipykernel->jupyter->probml_utils==0.1.dev116+g638ebb99f) (0.2.3)
+----- stdout -----
 INFO: pip is looking at multiple versions of umap-learn to determine which version is compatible with other requirements. This could take a while.
 Collecting umap-learn (from probml_utils==0.1.dev116+g638ebb99f)
   Using cached umap_learn-0.5.11-py3-none-any.whl.metadata (26 kB)
@@ -478,6 +478,7 @@ Collecting tqdm (from umap-learn->probml_utils==0.1.dev116+g638ebb99f)
 ----- stdout -----
 Collecting llvmlite<0.48,>=0.47.0dev0 (from numba>=0.51.2->umap-learn->probml_utils==0.1.dev116+g638ebb99f)
   Using cached llvmlite-0.47.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.0 kB)
+----- stdout -----
 Using cached distrax-0.1.3-py3-none-any.whl (317 kB)
 Using cached numpy-1.22.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.8 MB)
 Using cached chex-0.1.7-py3-none-any.whl (89 kB)
@@ -491,7 +492,6 @@ Using cached cloudpickle-3.1.2-py3-none-any.whl (22 kB)
 Using cached toolz-1.1.0-py3-none-any.whl (58 kB)
 Using cached arviz-0.17.1-py3-none-any.whl (1.7 MB)
 Using cached matplotlib-3.8.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (11.6 MB)
------ stdout -----
 Using cached contourpy-1.2.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (305 kB)
 Using cached xarray-2023.12.0-py3-none-any.whl (1.1 MB)
 Using cached xarray_einstats-0.7.0-py3-none-any.whl (31 kB)
@@ -509,6 +509,7 @@ Using cached cryptography-49.0.0-cp39-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
 Using cached google_cloud_firestore-2.28.0-py3-none-any.whl (431 kB)
 Using cached google_cloud_core-2.6.0-py3-none-any.whl (29 kB)
 Using cached google_cloud_storage-3.12.0-py3-none-any.whl (340 kB)
+----- stdout -----
 Using cached google_crc32c-1.8.0-cp310-cp310-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl (33 kB)
 Using cached google_resumable_media-2.10.0-py3-none-any.whl (81 kB)
 Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
@@ -520,7 +521,6 @@ Using cached texsoup-0.3.3-py3-none-any.whl (33 kB)
 Using cached umap_learn-0.5.7-py3-none-any.whl (88 kB)
 Using cached numba-0.65.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (3.7 MB)
 Using cached llvmlite-0.47.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (56.3 MB)
------ stdout -----
 Using cached pynndescent-0.6.0-py3-none-any.whl (73 kB)
 Using cached tqdm-4.68.3-py3-none-any.whl (78 kB)
 ----- stdout -----
@@ -531,8 +531,8 @@ Building wheels for collected packages: probml_utils
  \
 ----- stdout -----
  done
-  Created wheel for probml_utils: filename=probml_utils-0.1.dev116+g638ebb99f-py3-none-any.whl size=120766 sha256=beb1703f5d64393f0de9d7004ea6cd6934a561ec97068e462db21dab56e62953
-  Stored in directory: /tmp/pip-ephem-wheel-cache-s7d6lqxa/wheels/85/05/ac/9b97aeae3a76e1149e06781bcb60e7873501f8bbbeb62ec6e5
+  Created wheel for probml_utils: filename=probml_utils-0.1.dev116+g638ebb99f-py3-none-any.whl size=120766 sha256=6cda0f5463f0e19595c1b3bca53e849d876d0a4e13d2a010d466975cbcaefae5
+  Stored in directory: /tmp/pip-ephem-wheel-cache-zi_u77wq/wheels/85/05/ac/9b97aeae3a76e1149e06781bcb60e7873501f8bbbeb62ec6e5
 Successfully built probml_utils
 ----- stdout -----
 WARNING: Error parsing dependencies of numpy: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/numpy-2.2.6.dist-info/METADATA'
@@ -543,23 +543,25 @@ Installing collected packages: TexSoup, tqdm, toolz, regex, pyjwt, pyasn1, proto
 ----- stdout -----
    ━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  3/43 [regex]
 ----- stdout -----
+   ━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  4/43 [pyjwt]
+----- stdout -----
+   ━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  4/43 [pyjwt]
+----- stdout -----
+   ━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/43 [pyasn1]
+----- stdout -----
+   ━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/43 [pyasn1]
+----- stdout -----
+   ━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/43 [pyasn1]
+----- stdout -----
+   ━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/43 [pyasn1]
+----- stdout -----
+   ━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/43 [pyasn1]
+----- stdout -----
   Attempting uninstall: numpy
-   ━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  3/43 [regex]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
+   ━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/43 [pyasn1]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
     Found existing installation: numpy 2.2.6
-   ━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  3/43 [regex]
------ stdout -----
-    Can't uninstall 'numpy'. No files were found to uninstall.
-   ━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  3/43 [regex]   ━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  7/43 [numpy]
------ stdout -----
-   ━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  7/43 [numpy]
------ stdout -----
-   ━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  7/43 [numpy]
------ stdout -----
-   ━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  7/43 [numpy]
------ stdout -----
-   ━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  7/43 [numpy]
------ stdout -----
-   ━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  7/43 [numpy]
+   ━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/43 [pyasn1]    Can't uninstall 'numpy'. No files were found to uninstall.
+   ━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/43 [pyasn1]   ━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  7/43 [numpy]
 ----- stdout -----
    ━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  7/43 [numpy]
 ----- stdout -----
@@ -647,19 +649,21 @@ Installing collected packages: TexSoup, tqdm, toolz, regex, pyjwt, pyasn1, proto
 ----- stdout -----
    ━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━ 16/43 [numba]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━ 20/43 [dm-tree]
+   ━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━ 17/43 [h2]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 21/43 [cryptography]
 ----- stdout -----
   Attempting uninstall: contourpy
-   ━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━ 20/43 [dm-tree]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
+   ━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 21/43 [cryptography]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
     Found existing installation: contourpy 1.3.2
-   ━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━ 20/43 [dm-tree]    Can't uninstall 'contourpy'. No files were found to uninstall.
-   ━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━ 20/43 [dm-tree]   ━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━ 22/43 [contourpy]
+   ━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 21/43 [cryptography]    Can't uninstall 'contourpy'. No files were found to uninstall.
+   ━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 21/43 [cryptography]
 ----- stdout -----
   Attempting uninstall: xarray
-   ━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━ 22/43 [contourpy]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
+   ━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 21/43 [cryptography]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
     Found existing installation: xarray 2025.6.1
-   ━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━ 22/43 [contourpy]    Can't uninstall 'xarray'. No files were found to uninstall.
-   ━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━ 22/43 [contourpy]
+   ━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 21/43 [cryptography]    Can't uninstall 'xarray'. No files were found to uninstall.
+   ━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━ 21/43 [cryptography]
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━ 24/43 [xarray]
 ----- stdout -----
@@ -668,6 +672,8 @@ Installing collected packages: TexSoup, tqdm, toolz, regex, pyjwt, pyasn1, proto
    ━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━ 24/43 [xarray]
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━ 24/43 [xarray]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━ 25/43 [tensorflow-probability]
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━ 25/43 [tensorflow-probability]
 ----- stdout -----
@@ -715,11 +721,13 @@ Installing collected packages: TexSoup, tqdm, toolz, regex, pyjwt, pyasn1, proto
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━ 26/43 [matplotlib]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━ 26/43 [matplotlib]  Attempting uninstall: jaxlib
+  Attempting uninstall: jaxlib
    ━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━ 26/43 [matplotlib]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
     Found existing installation: jaxlib 0.6.2
    ━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━ 26/43 [matplotlib]    Can't uninstall 'jaxlib'. No files were found to uninstall.
    ━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━ 26/43 [matplotlib]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 27/43 [jaxlib]
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 27/43 [jaxlib]
 ----- stdout -----
@@ -743,11 +751,13 @@ Installing collected packages: TexSoup, tqdm, toolz, regex, pyjwt, pyasn1, proto
    ━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━ 28/43 [google-auth]    Can't uninstall 'xarray-einstats'. No files were found to uninstall.
    ━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━ 28/43 [google-auth]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━ 30/43 [pynndescent]  Attempting uninstall: jax
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━ 30/43 [pynndescent]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
+  Attempting uninstall: jax
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━ 28/43 [google-auth]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
     Found existing installation: jax 0.6.2
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━ 30/43 [pynndescent]    Can't uninstall 'jax'. No files were found to uninstall.
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━ 30/43 [pynndescent]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━ 28/43 [google-auth]    Can't uninstall 'jax'. No files were found to uninstall.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━ 28/43 [google-auth]
+----- stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 31/43 [jax]
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 31/43 [jax]
 ----- stdout -----
@@ -766,7 +776,9 @@ Installing collected packages: TexSoup, tqdm, toolz, regex, pyjwt, pyasn1, proto
   Attempting uninstall: arviz
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━ 34/43 [jaxopt]    WARNING: No metadata found in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages
     Found existing installation: arviz 0.23.4
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━ 34/43 [jaxopt]    Can't uninstall 'arviz'. No files were found to uninstall.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━ 34/43 [jaxopt]
+----- stdout -----
+    Can't uninstall 'arviz'. No files were found to uninstall.
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━ 34/43 [jaxopt]
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━ 37/43 [arviz]
@@ -779,9 +791,9 @@ Installing collected packages: TexSoup, tqdm, toolz, regex, pyjwt, pyasn1, proto
 ----- stdout -----
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━ 40/43 [distrax]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺ 42/43 [probml_utils]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━ 40/43 [distrax]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43/43 [probml_utils]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺ 42/43 [probml_utils]   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43/43 [probml_utils]
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
 flax 0.10.7 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
 optax 0.2.8 requires jax>=0.5.3, but you have jax 0.4.30 which is incompatible.

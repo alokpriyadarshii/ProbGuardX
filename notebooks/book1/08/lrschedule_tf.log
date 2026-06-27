@@ -1,179 +1,94 @@
 An error occurred while executing the following cell:
 ------------------
-import numpy as np
-import matplotlib.pyplot as plt
-import os
+for name, lr_scheduler in schedules.items():
+    tf.random.set_seed(42)
+    np.random.seed(42)
+    model = make_model()
+    history = model.fit(
+        X_train_scaled, y_train, epochs=n_epochs, validation_data=(X_valid_scaled, y_valid), callbacks=[lr_scheduler]
+    )
+    plt.figure()
+    plt.plot(history.epoch, history.history["lr"], "o-")
+    # plt.axis([0, n_epochs - 1, 0, 0.011])
+    plt.xlabel("Epoch")
+    plt.ylabel("Learning rate")
+    plt.title(name, fontsize=14)
+    plt.grid(True)
 
-try:
-    import tensorflow
-except ModuleNotFoundError:
-    %pip install -qq tensorflow
-    import tensorflow
-import tensorflow as tf
-from tensorflow import keras
+    if name == "perf":
+        ax2 = plt.gca().twinx()
+        hist = history.history["val_loss"]
+        ax2.plot(history.epoch, hist, "r^-")
+        ax2.set_ylabel("Validation Loss", color="r")
+        ax2.tick_params("y", colors="r")
 
-assert tf.__version__ >= "2.0"
+        # plt.figure()
+        # plt.plot(history.epoch, ema(hist, 0.95))
 
-
-K = tf.keras.backend
+    fname = "lrschedule-{}.pdf".format(name)
+    save_fig(fname)
+    plt.show()
 ------------------
 
 
 ---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-Cell In[1], line 6
-      3 import os
-      5 try:
-----> 6     import tensorflow
-      7 except ModuleNotFoundError:
-      8     get_ipython().run_line_magic('pip', 'install -qq tensorflow')
+ValueError                                Traceback (most recent call last)
+Cell In[5], line 4
+      2 tf.random.set_seed(42)
+      3 np.random.seed(42)
+----> 4 model = make_model()
+      5 history = model.fit(
+      6     X_train_scaled, y_train, epochs=n_epochs, validation_data=(X_valid_scaled, y_valid), callbacks=[lr_scheduler]
+      7 )
+      8 plt.figure()
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/__init__.py:55
-     53 from tensorflow._api.v2 import autograph
-     54 from tensorflow._api.v2 import bitwise
----> 55 from tensorflow._api.v2 import compat
-     56 from tensorflow._api.v2 import config
-     57 from tensorflow._api.v2 import data
+Cell In[4], line 9, in make_model(lr0, momentum)
+      8 def make_model(lr0=0.01, momentum=0.9):
+----> 9     optimizer = tf.keras.optimizers.SGD(lr=lr0, momentum=momentum)
+     10     model = tf.keras.models.Sequential(
+     11         [
+     12             tf.keras.layers.Flatten(input_shape=[28, 28]),
+   (...)
+     16         ]
+     17     )
+     18     model.compile(loss="sparse_categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/compat/__init__.py:8
-      3 """Public API for tf._api.v2.compat namespace
-      4 """
-      6 import sys as _sys
-----> 8 from tensorflow._api.v2.compat import v1
-      9 from tensorflow._api.v2.compat import v2
-     10 from tensorflow.python.compat.compat import forward_compatibility_horizon # line: 125
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/keras/src/optimizers/sgd.py:60, in SGD.__init__(self, learning_rate, momentum, nesterov, weight_decay, clipnorm, clipvalue, global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency, loss_scale_factor, gradient_accumulation_steps, name, **kwargs)
+     43 def __init__(
+     44     self,
+     45     learning_rate=0.01,
+   (...)
+     58     **kwargs,
+     59 ):
+---> 60     super().__init__(
+     61         learning_rate=learning_rate,
+     62         name=name,
+     63         weight_decay=weight_decay,
+     64         clipnorm=clipnorm,
+     65         clipvalue=clipvalue,
+     66         global_clipnorm=global_clipnorm,
+     67         use_ema=use_ema,
+     68         ema_momentum=ema_momentum,
+     69         ema_overwrite_frequency=ema_overwrite_frequency,
+     70         loss_scale_factor=loss_scale_factor,
+     71         gradient_accumulation_steps=gradient_accumulation_steps,
+     72         **kwargs,
+     73     )
+     74     if not isinstance(momentum, float) or momentum < 0 or momentum > 1:
+     75         raise ValueError("`momentum` must be a float between [0, 1].")
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/compat/v1/__init__.py:30
-     28 from tensorflow._api.v2.compat.v1 import autograph
-     29 from tensorflow._api.v2.compat.v1 import bitwise
----> 30 from tensorflow._api.v2.compat.v1 import compat
-     31 from tensorflow._api.v2.compat.v1 import config
-     32 from tensorflow._api.v2.compat.v1 import data
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/keras/src/backend/tensorflow/optimizer.py:21, in TFOptimizer.__init__(self, *args, **kwargs)
+     20 def __init__(self, *args, **kwargs):
+---> 21     super().__init__(*args, **kwargs)
+     22     self._distribution_strategy = tf.distribute.get_strategy()
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/compat/v1/compat/__init__.py:8
-      3 """Public API for tf._api.v2.compat namespace
-      4 """
-      6 import sys as _sys
-----> 8 from tensorflow._api.v2.compat.v1.compat import v1
-      9 from tensorflow._api.v2.compat.v1.compat import v2
-     10 from tensorflow.python.compat.compat import forward_compatibility_horizon # line: 125
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/keras/src/optimizers/base_optimizer.py:90, in BaseOptimizer.__init__(self, learning_rate, weight_decay, clipnorm, clipvalue, global_clipnorm, use_ema, ema_momentum, ema_overwrite_frequency, loss_scale_factor, gradient_accumulation_steps, name, **kwargs)
+     86     warnings.warn(
+     87         "Argument `decay` is no longer supported and will be ignored."
+     88     )
+     89 if kwargs:
+---> 90     raise ValueError(f"Argument(s) not recognized: {kwargs}")
+     92 if name is None:
+     93     name = auto_name(self.__class__.__name__)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/compat/v1/compat/v1/__init__.py:47
-     45 from tensorflow._api.v2.compat.v1 import layers
-     46 from tensorflow._api.v2.compat.v1 import linalg
----> 47 from tensorflow._api.v2.compat.v1 import lite
-     48 from tensorflow._api.v2.compat.v1 import logging
-     49 from tensorflow._api.v2.compat.v1 import lookup
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/compat/v1/lite/__init__.py:9
-      6 import sys as _sys
-      8 from tensorflow._api.v2.compat.v1.lite import constants
-----> 9 from tensorflow._api.v2.compat.v1.lite import experimental
-     10 from tensorflow.lite.python.convert import OpsSet # line: 151
-     11 from tensorflow.lite.python.convert import toco_convert # line: 929
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/compat/v1/lite/experimental/__init__.py:8
-      3 """Public API for tf._api.v2.lite.experimental namespace
-      4 """
-      6 import sys as _sys
-----> 8 from tensorflow._api.v2.compat.v1.lite.experimental import authoring
-      9 from tensorflow.lite.python.analyzer import ModelAnalyzer as Analyzer # line: 35
-     10 from tensorflow.lite.python.interpreter import OpResolverType # line: 315
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/compat/v1/lite/experimental/authoring/__init__.py:8
-      3 """Public API for tf._api.v2.lite.experimental.authoring namespace
-      4 """
-      6 import sys as _sys
-----> 8 from tensorflow.lite.python.authoring.authoring import compatible # line: 263
-     10 from tensorflow.python.util import module_wrapper as _module_wrapper
-     12 if not isinstance(_sys.modules[__name__], _module_wrapper.TFModuleWrapper):
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/lite/python/authoring/authoring.py:42
-     40 from tensorflow.compiler.mlir.lite.metrics import converter_error_data_pb2
-     41 # pylint: disable=g-import-not-at-top
----> 42 from tensorflow.lite.python import convert
-     43 from tensorflow.lite.python import lite
-     44 from tensorflow.python.util.tf_export import tf_export as _tf_export
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/lite/python/convert.py:29
-     27 from tensorflow.compiler.mlir.lite.python import wrap_converter
-     28 from tensorflow.lite.python import lite_constants
----> 29 from tensorflow.lite.python import util
-     30 from tensorflow.lite.python.convert_phase import Component
-     31 from tensorflow.lite.python.convert_phase import convert_phase
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/lite/python/util.py:53
-     49 # Jax functions used by TFLite
-     50 # pylint: disable=g-import-not-at-top
-     51 # pylint: disable=unused-import
-     52 try:
----> 53   from jax import jit as _jit
-     54 except ImportError:
-     55   _jit = None
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:82
-     79 del _xc
-     81 from jax._src.core import typeof as typeof
----> 82 from jax._src.api import effects_barrier as effects_barrier
-     83 from jax._src.api import block_until_ready as block_until_ready
-     84 from jax._src.ad_checkpoint import checkpoint_wrapper as checkpoint  # noqa: F401
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/api.py:43
-     41 from jax._src import deprecations
-     42 from jax._src import linear_util as lu
----> 43 from jax._src import stages
-     44 from jax._src.tree_util import (
-     45     tree_map, tree_flatten, tree_unflatten, tree_structure, tree_transpose,
-     46     tree_leaves, Partial, PyTreeDef, all_leaves, keystr, broadcast_prefix,
-     47     prefix_errors, generate_key_paths, tree_flatten_with_path,
-     48     equality_errors_pytreedef)
-     49 from jax._src import config
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/stages.py:50
-     48 from jax._src.sharding_impls import UnspecifiedValue, AUTO
-     49 from jax._src.layout import Format, DeviceLocalLayout
----> 50 from jax._src.interpreters import mlir
-     51 from jax._src.lib.mlir import ir
-     52 from jax._src.lib import _jax
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:192
-    161   return (isinstance(x, tuple) and len(x) != 1
-    162           and all(isinstance(v, ir.Value) for v in x))
-    165 # Non-canonicalized dtype to IR type mapping.
-    166 _dtype_to_ir_type : dict[np.dtype, Callable[[], ir.Type]] = {
-    167   np.dtype(dtypes.float0): partial(ir.IntegerType.get_signless, 1),
-    168   np.dtype(np.bool_): partial(ir.IntegerType.get_signless, 1),
-    169   np.dtype(dtypes.int4): partial(ir.IntegerType.get_signless, 4),
-    170   np.dtype(np.int8): partial(ir.IntegerType.get_signless, 8),
-    171   np.dtype(np.int16): partial(ir.IntegerType.get_signless, 16),
-    172   np.dtype(np.int32): partial(ir.IntegerType.get_signless, 32),
-    173   np.dtype(np.int64): partial(ir.IntegerType.get_signless, 64),
-    174   np.dtype(dtypes.uint4): partial(ir.IntegerType.get_unsigned, 4),
-    175   np.dtype(np.uint8): partial(ir.IntegerType.get_unsigned, 8),
-    176   np.dtype(np.uint16): partial(ir.IntegerType.get_unsigned, 16),
-    177   np.dtype(np.uint32): partial(ir.IntegerType.get_unsigned, 32),
-    178   np.dtype(np.uint64): partial(ir.IntegerType.get_unsigned, 64),
-    179   np.dtype(dtypes.float8_e4m3b11fnuz): ir.Float8E4M3B11FNUZType.get,
-    180   np.dtype(dtypes.float8_e4m3fn): ir.Float8E4M3FNType.get,
-    181   np.dtype(dtypes.float8_e4m3fnuz): ir.Float8E4M3FNUZType.get,
-    182   np.dtype(dtypes.float8_e5m2): ir.Float8E5M2Type.get,
-    183   np.dtype(dtypes.float8_e5m2fnuz): ir.Float8E5M2FNUZType.get,
-    184   np.dtype(dtypes.bfloat16): ir.BF16Type.get,
-    185   np.dtype(np.float16): ir.F16Type.get,
-    186   np.dtype(np.float32): ir.F32Type.get,
-    187   np.dtype(np.float64): ir.F64Type.get,
-    188   np.dtype(np.complex64): lambda: ir.ComplexType.get(ir.F32Type.get()),
-    189   np.dtype(np.complex128): lambda: ir.ComplexType.get(ir.F64Type.get()),
-    190   np.dtype(dtypes.int2): partial(ir.IntegerType.get_signless, 2),
-    191   np.dtype(dtypes.uint2): partial(ir.IntegerType.get_unsigned, 2),
---> 192   np.dtype(dtypes.float8_e3m4): ir.Float8E3M4Type.get,
-    193   np.dtype(dtypes.float8_e4m3): ir.Float8E4M3Type.get,
-    194   np.dtype(dtypes.float8_e8m0fnu): ir.Float8E8M0FNUType.get,
-    195   np.dtype(dtypes.float4_e2m1fn): ir.Float4E2M1FNType.get,
-    196 }
-    198 def dtype_to_ir_type(dtype: core.bint | np.dtype | np.generic) -> ir.Type:
-    199   if isinstance(dtype, core.bint):
-    200     # TODO Support different-size underlying dtypes to take advantage of the
-    201     # bound for packing?
-
-AttributeError: module 'jaxlib.mlir.ir' has no attribute 'Float8E3M4Type'
+ValueError: Argument(s) not recognized: {'lr': 0.01}

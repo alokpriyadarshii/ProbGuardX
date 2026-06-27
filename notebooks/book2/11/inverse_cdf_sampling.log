@@ -37,179 +37,234 @@ jax.config.update("jax_platform_name", "cpu")
 key = jax.random.PRNGKey(2)
 ------------------
 
------ stdout -----
-Requirement already satisfied: tensorflow_probability in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (0.25.0)
-Requirement already satisfied: absl-py in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (2.4.0)
-Requirement already satisfied: six>=1.10.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (1.17.0)
-Requirement already satisfied: numpy>=1.13.3 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (2.2.6)
-Requirement already satisfied: decorator in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (5.3.1)
-Requirement already satisfied: cloudpickle>=1.3 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (3.1.2)
-Requirement already satisfied: gast>=0.3.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (0.7.0)
-Requirement already satisfied: dm-tree in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (0.1.10)
-Requirement already satisfied: attrs>=18.2.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from dm-tree->tensorflow_probability) (26.1.0)
-Requirement already satisfied: wrapt>=1.11.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from dm-tree->tensorflow_probability) (2.2.2)
------ stdout -----
-WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-
------ stdout -----
-Note: you may need to restart the kernel to use updated packages.
-------------------
 
 ---------------------------------------------------------------------------
 AttributeError                            Traceback (most recent call last)
-Cell In[1], line 3
-      2 try:
-----> 3     import tensorflow_probability.substrates.jax as tfp
-      4 except:
+Cell In[1], line 35
+     31 logger.addFilter(CheckTypesFilter())
+     33 jax.config.update("jax_platform_name", "cpu")
+---> 35 key = jax.random.PRNGKey(2)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:36
-     34     raise
----> 36 _ensure_jax_install()
-     37 del _ensure_jax_install  # Cleanup symbol to avoid polluting namespace.
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/random.py:233, in PRNGKey(seed, impl)
+    223 def PRNGKey(seed: int | ArrayLike, *,
+    224             impl: PRNGSpecDesc | None = None) -> Array:
+    225   """Create a legacy PRNG key given an integer seed.
+    226 
+    227   This function produces old-style legacy PRNG keys, which are arrays
+    228   of dtype ``uint32``. For more, see the note in the `PRNG keys
+    229   <https://docs.jax.dev/en/latest/jax.random.html#prng-keys>`_
+    230   section. When possible, :func:`jax.random.key` is recommended for
+    231   use instead.
+    232 
+--> 233   The resulting key does not carry a PRNG implementation. The returned
+    234   key matches the implementation given by the optional ``impl``
+    235   argument or, otherwise, determined by the ``jax_default_prng_impl``
+    236   config flag. Callers must ensure that same implementation is set as
+    237   the default when passing this key as an argument to other functions
+    238   (such as ``jax.random.split`` and ``jax.random.normal``).
+    239 
+    240   Args:
+    241     seed: a 64- or 32-bit integer used as the value of the key.
+    242     impl: optional string specifying the PRNG implementation (e.g.
+    243       ``'threefry2x32'``)
+    244 
+    245   Returns:
+    246     A PRNG key, consumable by random functions as well as ``split``
+    247     and ``fold_in``.
+    248   """
+    249   return _return_prng_keys(True, _key('PRNGKey', seed, impl))
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:29, in _ensure_jax_install()
-     28 try:
----> 29   import jax
-     30   del jax
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/random.py:195, in _key(ctor_name, seed, impl_spec)
+    193 impl = resolve_prng_impl(impl_spec)
+    194 if hasattr(seed, 'dtype') and jnp.issubdtype(seed.dtype, dtypes.prng_key):
+--> 195   raise TypeError(
+    196       f"{ctor_name} accepts a scalar seed, but was given a PRNG key.")
+    197 if np.ndim(seed):
+    198   raise TypeError(
+    199       f"{ctor_name} accepts a scalar seed, but was given an array of "
+    200       f"shape {np.shape(seed)} != (). Use jax.vmap for batching")
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:82
-     81 from jax._src.core import typeof as typeof
----> 82 from jax._src.api import effects_barrier as effects_barrier
-     83 from jax._src.api import block_until_ready as block_until_ready
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/prng.py:533, in random_seed(seeds, impl)
+    531 if 0 in [ndim1, ndim2]:
+    532   if ndim1 == 0:
+--> 533     return lambda x, y: iterated_vmap_unary(ndim2, lambda y: f(x, y))(y)
+    534   else:
+    535     return lambda x, y: iterated_vmap_unary(ndim1, lambda x: f(x, y))(x)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/api.py:43
-     42 from jax._src import linear_util as lu
----> 43 from jax._src import stages
-     44 from jax._src.tree_util import (
-     45     tree_map, tree_flatten, tree_unflatten, tree_structure, tree_transpose,
-     46     tree_leaves, Partial, PyTreeDef, all_leaves, keystr, broadcast_prefix,
-     47     prefix_errors, generate_key_paths, tree_flatten_with_path,
-     48     equality_errors_pytreedef)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/numpy/lax_numpy.py:3289, in asarray(a, dtype, order, copy)
+   3282 @export
+   3283 def dsplit(ary: ArrayLike, indices_or_sections: int | Sequence[int] | ArrayLike) -> list[Array]:
+   3284   """Split an array into sub-arrays depth-wise.
+   3285 
+   3286   JAX implementation of :func:`numpy.dsplit`.
+   3287 
+   3288   Refer to the documentation of :func:`jax.numpy.split` for details. ``dsplit`` is
+-> 3289   equivalent to ``split`` with ``axis=2``.
+   3290 
+   3291   Examples:
+   3292 
+   3293     >>> x = jnp.arange(12).reshape(3, 1, 4)
+   3294     >>> print(x)
+   3295     [[[ 0  1  2  3]]
+   3296     <BLANKLINE>
+   3297      [[ 4  5  6  7]]
+   3298     <BLANKLINE>
+   3299      [[ 8  9 10 11]]]
+   3300     >>> x1, x2 = jnp.dsplit(x, 2)
+   3301     >>> print(x1)
+   3302     [[[0 1]]
+   3303     <BLANKLINE>
+   3304      [[4 5]]
+   3305     <BLANKLINE>
+   3306      [[8 9]]]
+   3307     >>> print(x2)
+   3308     [[[ 2  3]]
+   3309     <BLANKLINE>
+   3310      [[ 6  7]]
+   3311     <BLANKLINE>
+   3312      [[10 11]]]
+   3313 
+   3314   See also:
+   3315     - :func:`jax.numpy.split`: split an array along any axis.
+   3316     - :func:`jax.numpy.vsplit`: split vertically, i.e. along axis=0
+   3317     - :func:`jax.numpy.hsplit`: split horizontally, i.e. along axis=1
+   3318     - :func:`jax.numpy.array_split`: like ``split``, but allows ``indices_or_sections``
+   3319       to be an integer that does not evenly divide the size of the array.
+   3320   """
+   3321   return _split("dsplit", ary, indices_or_sections, axis=2)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/stages.py:50
-     49 from jax._src.layout import Format, DeviceLocalLayout
----> 50 from jax._src.interpreters import mlir
-     51 from jax._src.lib.mlir import ir
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/numpy/lax_numpy.py:3214, in array(object, dtype, copy, order, ndmin)
+   3207 @export
+   3208 def vsplit(ary: ArrayLike, indices_or_sections: int | Sequence[int] | ArrayLike) -> list[Array]:
+   3209   """Split an array into sub-arrays vertically.
+   3210 
+   3211   JAX implementation of :func:`numpy.vsplit`.
+   3212 
+   3213   Refer to the documentation of :func:`jax.numpy.split` for details; ``vsplit`` is
+-> 3214   equivalent to ``split`` with ``axis=0``.
+   3215 
+   3216   Examples:
+   3217     1D array:
+   3218 
+   3219     >>> x = jnp.array([1, 2, 3, 4, 5, 6])
+   3220     >>> x1, x2 = jnp.vsplit(x, 2)
+   3221     >>> print(x1, x2)
+   3222     [1 2 3] [4 5 6]
+   3223 
+   3224     2D array:
+   3225 
+   3226     >>> x = jnp.array([[1, 2, 3, 4],
+   3227     ...                [5, 6, 7, 8]])
+   3228     >>> x1, x2 = jnp.vsplit(x, 2)
+   3229     >>> print(x1, x2)
+   3230     [[1 2 3 4]] [[5 6 7 8]]
+   3231 
+   3232   See also:
+   3233     - :func:`jax.numpy.split`: split an array along any axis.
+   3234     - :func:`jax.numpy.hsplit`: split horizontally, i.e. along axis=1
+   3235     - :func:`jax.numpy.dsplit`: split depth-wise, i.e. along axis=2
+   3236     - :func:`jax.numpy.array_split`: like ``split``, but allows ``indices_or_sections``
+   3237       to be an integer that does not evenly divide the size of the array.
+   3238   """
+   3239   return _split("vsplit", ary, indices_or_sections, axis=0)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:192
-    165 # Non-canonicalized dtype to IR type mapping.
-    166 _dtype_to_ir_type : dict[np.dtype, Callable[[], ir.Type]] = {
-    167   np.dtype(dtypes.float0): partial(ir.IntegerType.get_signless, 1),
-    168   np.dtype(np.bool_): partial(ir.IntegerType.get_signless, 1),
-    169   np.dtype(dtypes.int4): partial(ir.IntegerType.get_signless, 4),
-    170   np.dtype(np.int8): partial(ir.IntegerType.get_signless, 8),
-    171   np.dtype(np.int16): partial(ir.IntegerType.get_signless, 16),
-    172   np.dtype(np.int32): partial(ir.IntegerType.get_signless, 32),
-    173   np.dtype(np.int64): partial(ir.IntegerType.get_signless, 64),
-    174   np.dtype(dtypes.uint4): partial(ir.IntegerType.get_unsigned, 4),
-    175   np.dtype(np.uint8): partial(ir.IntegerType.get_unsigned, 8),
-    176   np.dtype(np.uint16): partial(ir.IntegerType.get_unsigned, 16),
-    177   np.dtype(np.uint32): partial(ir.IntegerType.get_unsigned, 32),
-    178   np.dtype(np.uint64): partial(ir.IntegerType.get_unsigned, 64),
-    179   np.dtype(dtypes.float8_e4m3b11fnuz): ir.Float8E4M3B11FNUZType.get,
-    180   np.dtype(dtypes.float8_e4m3fn): ir.Float8E4M3FNType.get,
-    181   np.dtype(dtypes.float8_e4m3fnuz): ir.Float8E4M3FNUZType.get,
-    182   np.dtype(dtypes.float8_e5m2): ir.Float8E5M2Type.get,
-    183   np.dtype(dtypes.float8_e5m2fnuz): ir.Float8E5M2FNUZType.get,
-    184   np.dtype(dtypes.bfloat16): ir.BF16Type.get,
-    185   np.dtype(np.float16): ir.F16Type.get,
-    186   np.dtype(np.float32): ir.F32Type.get,
-    187   np.dtype(np.float64): ir.F64Type.get,
-    188   np.dtype(np.complex64): lambda: ir.ComplexType.get(ir.F32Type.get()),
-    189   np.dtype(np.complex128): lambda: ir.ComplexType.get(ir.F64Type.get()),
-    190   np.dtype(dtypes.int2): partial(ir.IntegerType.get_signless, 2),
-    191   np.dtype(dtypes.uint2): partial(ir.IntegerType.get_unsigned, 2),
---> 192   np.dtype(dtypes.float8_e3m4): ir.Float8E3M4Type.get,
-    193   np.dtype(dtypes.float8_e4m3): ir.Float8E4M3Type.get,
-    194   np.dtype(dtypes.float8_e8m0fnu): ir.Float8E8M0FNUType.get,
-    195   np.dtype(dtypes.float4_e2m1fn): ir.Float4E2M1FNType.get,
-    196 }
-    198 def dtype_to_ir_type(dtype: core.bint | np.dtype | np.generic) -> ir.Type:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lax/lax.py:559, in _convert_element_type(operand, new_dtype, weak_type)
+    537 def exp2(x: ArrayLike, accuracy=None) -> Array:
+    538   r"""Elementwise base-2 exponential: :math:`2^x`.
+    539 
+    540   This function is implemented in terms of the `stablehlo.exponential`_
+    541   and `stablehlo.multiply`_ operations.
+    542 
+    543   Args:
+    544     x: input array. Must have floating-point or complex type.
+    545     accuracy: Optional `lax.Tolerance` or `lax.AccuracyMode` object that
+    546       selects the implementation of the op based on the requested accuracy. If
+    547       the implementation cannot satisfy the requested tolerance, the
+    548       compiler will return an error. If mode is specified and there are no
+    549       multiple implementations available, the default implementation will be
+    550       used.
+    551 
+    552   Returns:
+    553     Array of the same shape and dtype as ``x`` containing the element-wise
+    554     base-2 exponential.
+    555 
+    556   See also:
+    557     - :func:`jax.lax.exp`: elementwise exponentional: :math:`e^x`.
+    558     - :func:`jax.lax.log`: elementwise natural logarithm: :math:`\mathrm{log}(x)`.
+--> 559 
+    560   .. _stablehlo.exponential: https://openxla.org/stablehlo/spec#exponential
+    561   .. _stablehlo.multiply: https://openxla.org/stablehlo/spec#multiply
+    562   """
+    563   return exp2_p.bind(x, accuracy=accuracy)
 
-AttributeError: module 'jaxlib.mlir.ir' has no attribute 'Float8E3M4Type'
-
-During handling of the above exception, another exception occurred:
-
-Exception                                 Traceback (most recent call last)
-Cell In[1], line 6
-      4 except:
-      5     get_ipython().run_line_magic('pip', 'install tensorflow_probability')
-----> 6     import tensorflow_probability.substrates.jax as tfp
-      8 tfd = tfp.distributions
-      9 import matplotlib.pyplot as plt
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:36
-     32     print('\n\nFailed to import JAX. '
-     33           'pip install jax jaxlib\n\n')
-     34     raise
----> 36 _ensure_jax_install()
-     37 del _ensure_jax_install  # Cleanup symbol to avoid polluting namespace.
-     39 from tensorflow_probability.python.version import __version__
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:29, in _ensure_jax_install()
-     23 """Attempt to import JAX.
-     24 
-     25 Raises:
-     26   ImportError: if JAX is not importable.
-     27 """
-     28 try:
----> 29   import jax
-     30   del jax
-     31 except ImportError:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:82
-     79 del _xc
-     81 from jax._src.core import typeof as typeof
----> 82 from jax._src.api import effects_barrier as effects_barrier
-     83 from jax._src.api import block_until_ready as block_until_ready
-     84 from jax._src.ad_checkpoint import checkpoint_wrapper as checkpoint  # noqa: F401
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/api.py:43
-     41 from jax._src import deprecations
-     42 from jax._src import linear_util as lu
----> 43 from jax._src import stages
-     44 from jax._src.tree_util import (
-     45     tree_map, tree_flatten, tree_unflatten, tree_structure, tree_transpose,
-     46     tree_leaves, Partial, PyTreeDef, all_leaves, keystr, broadcast_prefix,
-     47     prefix_errors, generate_key_paths, tree_flatten_with_path,
-     48     equality_errors_pytreedef)
-     49 from jax._src import config
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/stages.py:50
-     48 from jax._src.sharding_impls import UnspecifiedValue, AUTO
-     49 from jax._src.layout import Format, DeviceLocalLayout
----> 50 from jax._src.interpreters import mlir
-     51 from jax._src.lib.mlir import ir
-     52 from jax._src.lib import _jax
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:79
-     76 # mypy implicitly sets this variable to true when type checking.
-     77 MYPY = False
----> 79 _JAX_DUMP_IR_TO = config.string_flag(
-     80     'jax_dump_ir_to', os.getenv('JAX_DUMP_IR_TO', ''),
-     81     help="Path to which the IR that is emitted by JAX should be dumped as "
-     82          "text files. If omitted, JAX will not dump IR. "
-     83          "Supports the special value 'sponge' to pick the path from the "
-     84          "environment variable TEST_UNDECLARED_OUTPUTS_DIR.")
-     86 _JAX_INCLUDE_DEBUG_INFO_IN_DUMPS = config.string_flag(
-     87   'jax_include_debug_info_in_dumps',
-     88   os.getenv('JAX_INCLUDE_DEBUG_INFO_IN_DUMPS', "True"),
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/core.py:416, in bind(self, *args, **params)
+    399 def replace(
+    400     self,
+    401     invars: list[Atom] | None = None,
    (...)
-     91        "the IR dump. To avoid exposing source code and potentially sensitive "
-     92        "information, set to false")
-     93 lowerable_effects: effects_lib.EffectTypeSet = effects_lib.lowerable_effects
+    407     ctx: JaxprEqnContext | None = None
+    408 ):
+    409   return JaxprEqn(
+    410     self.invars if invars is None else invars,
+    411     self.outvars if outvars is None else outvars,
+    412     self.primitive if primitive is None else primitive,
+    413     self.params if params is None else params,
+    414     self.effects if effects is None else effects,
+    415     self.source_info if source_info is None else source_info,
+--> 416     self.ctx if ctx is None else ctx,
+    417   )
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:845, in string_flag(name, default, *args, **kwargs)
-    843 update_hook = kwargs.pop("update_hook", None)
-    844 holder = Flag(name, default, update_hook)
---> 845 config.add_option(name, holder, str, args, kwargs)
-    846 return holder
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/core.py:420, in bind_with_trace(self, trace, args, params)
+    399   def replace(
+    400       self,
+    401       invars: list[Atom] | None = None,
+   (...)
+    407       ctx: JaxprEqnContext | None = None
+    408   ):
+    409     return JaxprEqn(
+    410       self.invars if invars is None else invars,
+    411       self.outvars if outvars is None else outvars,
+   (...)
+    416       self.ctx if ctx is None else ctx,
+    417     )
+--> 420 # TODO(mattjj): call typecheck rules here, so we don't form bad eqns
+    421 def new_jaxpr_eqn(invars, outvars, primitive, params, effects, source_info=None,
+    422                   ctx=None) -> JaxprEqn:
+    423   source_info = source_info or source_info_util.new_source_info()
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:133, in Config.add_option(self, name, holder, opt_type, meta_args, meta_kwargs)
-    131 def add_option(self, name, holder, opt_type, meta_args, meta_kwargs):
-    132   if name in self._value_holders:
---> 133     raise Exception(f"Config option {name} already defined")
-    134   self._value_holders[name] = holder
-    135   self.meta[name] = (opt_type, meta_args, meta_kwargs)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/core.py:921, in process_primitive(self, primitive, tracers, params)
+      0 <Error retrieving source code with stack_data see ipython/ipython#13598>
 
-Exception: Config option jax_dump_ir_to already defined
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/dispatch.py:87, in apply_primitive(prim, *args, **params)
+     85 """Impl rule that compiles and runs a single primitive 'prim' using XLA."""
+     86 fun = xla_primitive_callable(prim, **params)
+---> 87 # TODO(yashkatariya): Investigate adding is_primitive to jit and never
+     88 # triggering the disable jit path instead of messing around with it here.
+     89 prev = lib.jax_jit.swap_thread_local_state_disable_jit(False)
+     90 try:
+
+    [... skipping hidden 6 frame]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/experimental/attrs.py:15
+      1 # Copyright 2024 The JAX Authors.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     12 # See the License for the specific language governing permissions and
+     13 # limitations under the License.
+---> 15 from jax._src.attrs import (
+     16     jax_setattr as jax_setattr,
+     17     jax_getattr as jax_getattr,
+     18     jax_appendattr as jax_appendattr,
+     19     Box as Box,
+     20     List as List,
+     21 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/attrs.py:40
+     37 PyTree = Any
+     38 PyTreeDef = Any
+---> 40 ReadWrite = pe.ReadWrite
+     41 Append = pe.Append
+     43 register = api_util.register_class_with_attrs
+
+AttributeError: module 'jax._src.interpreters.partial_eval' has no attribute 'ReadWrite'
