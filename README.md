@@ -1,6 +1,6 @@
 # ProbGuardX
 
-**ProbGuardX** is a machine learning, statistics, and data workflow project focused on probabilistic modeling, supervised and unsupervised learning, Bayesian methods, Gaussian processes, graphical models, decision trees, random forests, gradient boosting, deep learning, reinforcement learning, text mining, SQL analytics, MapReduce-style aggregation, and SAS-style analytical reporting.
+**ProbGuardX** is a machine learning, statistics, and data workflow project focused on probabilistic modeling, supervised and unsupervised learning, Bayesian methods, Gaussian processes, graphical models, decision trees, random forests, gradient boosting, deep learning, reinforcement learning, text mining, SQL analytics, MapReduce style aggregation, and SAS style analytical reporting.
 
 The project also includes a static **Project Outputs Dashboard** for viewing verified outputs from Python, R, SQL, SAS, MapReduce, SAS Logistic, and SAS Frequency workflows. The dashboard supports clickable output sections, separate datasets for Python/R/SQL/SAS, editable dashboard names, and local browser persistence.
 
