@@ -53,7 +53,6 @@ The project also includes a static **Project Outputs Dashboard** for viewing ver
 | Visualization        | Static Output Dashboard                   |
 | Package Management   | pip, requirements.txt                     |
 | Formatting           | Black Configuration                       |
-| License              | Custom Project License                    |
 
 ---
 
