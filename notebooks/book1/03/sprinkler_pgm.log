@@ -1,0 +1,54 @@
+An error occurred while executing the following cell:
+------------------
+try:
+    from causalgraphicalmodels import CausalGraphicalModel
+except ModuleNotFoundError:
+    %pip install -qq causalgraphicalmodels
+    from causalgraphicalmodels import CausalGraphicalModel
+try:
+    import pgmpy
+except ModuleNotFoundError:
+    %pip install -qq pgmpy
+    import pgmpy
+import numpy as np
+import pandas as pd
+------------------
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 2
+      1 try:
+----> 2     from causalgraphicalmodels import CausalGraphicalModel
+      3 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'causalgraphicalmodels'
+
+During handling of the above exception, another exception occurred:
+
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 5
+      3 except ModuleNotFoundError:
+      4     get_ipython().run_line_magic('pip', 'install -qq causalgraphicalmodels')
+----> 5     from causalgraphicalmodels import CausalGraphicalModel
+      6 try:
+      7     import pgmpy
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/causalgraphicalmodels/__init__.py:1
+----> 1 from causalgraphicalmodels.cgm import CausalGraphicalModel
+      2 from causalgraphicalmodels.csm import StructuralCausalModel
+      3 import causalgraphicalmodels.examples as examples
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/causalgraphicalmodels/cgm.py:4
+      2 import graphviz
+      3 from itertools import combinations, chain
+----> 4 from collections import Iterable
+      7 class CausalGraphicalModel:
+      8     """
+      9     Causal Graphical Models
+     10     """
+
+ImportError: cannot import name 'Iterable' from 'collections' (/github/home/miniconda3/envs/py310/lib/python3.10/collections/__init__.py)

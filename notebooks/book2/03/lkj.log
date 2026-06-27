@@ -1,0 +1,113 @@
+An error occurred while executing the following cell:
+------------------
+
+# We illustrate LKJ prior as discussed in fig 14.3 of
+# [Statistical Rethinking ed 2](https://xcelab.net/rm/statistical-rethinking/).
+# The numpyro code is from [Du Phan's site]
+#https://fehiepsi.github.io/rethinking-numpyro/14-adventures-in-covariance.html
+
+
+
+import numpy as np
+np.set_printoptions(precision=3)
+import matplotlib.pyplot as plt
+
+import jax
+print("jax version {}".format(jax.__version__))
+print("jax backend {}".format(jax.lib.xla_bridge.get_backend().platform))
+
+import jax.numpy as jnp
+from jax import random, vmap
+
+rng_key = random.PRNGKey(0)
+rng_key, rng_key_ = random.split(rng_key)
+
+try:
+    import numpyro
+except ModuleNotFoundError:
+    %pip install -qq numpyro
+    import numpyro
+import numpyro.distributions as dist
+
+try:
+    import arviz as az
+except ModuleNotFoundError:
+    %pip install -qq arviz
+    import arviz as az
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+eta_list = [1,2,4]
+colors = ['r', 'k', 'b']
+fig, ax = plt.subplots()
+for i, eta in enumerate(eta_list):
+  R = dist.LKJ(dimension=2, concentration=eta).sample(random.PRNGKey(0), (int(1e4),))
+  az.plot_kde(R[:, 0, 1], label=f"eta={eta}", plot_kwargs  ={'color': colors[i]})
+plt.legend()
+ax.set_xlabel('correlation')
+ax.set_ylabel('density')
+ax.set_ylim(0, 1.2)
+ax.set_xlim(-1.1, 1.1)
+pml.savefig('LKJ_1d_correlation.pdf', dpi=300)
+plt.show()
+
+
+------------------
+
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 12
+      9 np.set_printoptions(precision=3)
+     10 import matplotlib.pyplot as plt
+---> 12 import jax
+     13 print("jax version {}".format(jax.__version__))
+     14 print("jax backend {}".format(jax.lib.xla_bridge.get_backend().platform))
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:80
+     77 Device = _xc.Device
+     78 del _xc
+---> 80 from jax._src.api import effects_barrier as effects_barrier
+     81 from jax._src.api import block_until_ready as block_until_ready
+     82 from jax._src.ad_checkpoint import checkpoint_wrapper as checkpoint
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/api.py:39
+     36 from contextlib import contextmanager, ExitStack
+     38 from jax._src import linear_util as lu
+---> 39 from jax._src import stages
+     40 from jax._src.tree_util import (
+     41     tree_map, tree_flatten, tree_unflatten, tree_structure, tree_transpose,
+     42     tree_leaves, Partial, PyTreeDef, all_leaves, keystr, broadcast_prefix,
+     43     prefix_errors, generate_key_paths)
+     44 from jax._src import api_util
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/stages.py:50
+     48 from jax._src.sharding_impls import is_unspecified_or_auto
+     49 from jax._src.layout import Layout
+---> 50 from jax._src.interpreters import mlir
+     51 from jax._src.lib.mlir import ir
+     52 from jax._src.lib import xla_client as xc
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:53
+     51 from jax._src.lib import xla_client as xc
+     52 from jax._src.lib import xla_extension
+---> 53 from jax._src.lib.mlir import dialects
+     54 from jax._src.lib.mlir import ir
+     55 from jax._src.lib.mlir.dialects import func as func_dialect
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/mlir/__init__.py:18
+      1 # Copyright 2021 The JAX Authors.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     14 
+     15 # ruff: noqa: F401
+     17 import jaxlib.mlir.ir as ir
+---> 18 import jaxlib.mlir.passmanager as passmanager
+     19 from jaxlib.mlir._mlir_libs import register_jax_dialects
+
+ModuleNotFoundError: No module named 'jaxlib.mlir.passmanager'
