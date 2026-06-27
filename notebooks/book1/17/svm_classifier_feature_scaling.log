@@ -80,95 +80,124 @@ plt.axis([-2, 2, -2, 2])
 savefig("svm_classifier_feature_scaling.pdf", dpi=300)
 ------------------
 
+----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/arviz-0.23.4.dist-info/METADATA'
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
 
 ---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-Cell In[1], line 10
-      7 import matplotlib.pyplot as plt
-      9 try:
----> 10     from sklearn.svm import SVC
-     11 except ModuleNotFoundError:
-     12     get_ipython().run_line_magic('pip', 'install -qq scikit-learn')
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 53
+     50 svm_clf = SVC(kernel="linear", C=100)
+     51 svm_clf.fit(Xs, ys)
+---> 53 plt.figure(figsize=(9, 2.7))
+     54 plt.subplot(121)
+     55 plt.plot(Xs[:, 0][ys == 1], Xs[:, 1][ys == 1], "bo")
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/__init__.py:73
-     62 # `_distributor_init` allows distributors to run custom init code.
-     63 # For instance, for the Windows wheel, this is used to pre-load the
-     64 # vcomp shared library runtime for OpenMP embedded in the sklearn/.libs
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/pyplot.py:934, in figure(num, figsize, dpi, facecolor, edgecolor, frameon, FigureClass, clear, **kwargs)
+    924 if len(allnums) == max_open_warning >= 1:
+    925     _api.warn_external(
+    926         f"More than {max_open_warning} figures have been opened. "
+    927         f"Figures created through the pyplot interface "
    (...)
-     67 # later is linked to the OpenMP runtime to make it possible to introspect
-     68 # it and importing it first would fail if the OpenMP dll cannot be found.
-     69 from . import (  # noqa: F401 E402
-     70     __check_build,
-     71     _distributor_init,
-     72 )
----> 73 from .base import clone  # noqa: E402
-     74 from .utils._show_versions import show_versions  # noqa: E402
-     76 _submodules = [
-     77     "calibration",
-     78     "cluster",
+    931         f"Consider using `matplotlib.pyplot.close()`.",
+    932         RuntimeWarning)
+--> 934 manager = new_figure_manager(
+    935     num, figsize=figsize, dpi=dpi,
+    936     facecolor=facecolor, edgecolor=edgecolor, frameon=frameon,
+    937     FigureClass=FigureClass, **kwargs)
+    938 fig = manager.canvas.figure
+    939 if fig_label:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/pyplot.py:464, in new_figure_manager(*args, **kwargs)
+    462 def new_figure_manager(*args, **kwargs):
+    463     """Create a new figure manager instance."""
+--> 464     _warn_if_gui_out_of_main_thread()
+    465     return _get_backend_mod().new_figure_manager(*args, **kwargs)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/pyplot.py:441, in _warn_if_gui_out_of_main_thread()
+    439 def _warn_if_gui_out_of_main_thread() -> None:
+    440     warn = False
+--> 441     canvas_class = cast(type[FigureCanvasBase], _get_backend_mod().FigureCanvas)
+    442     if canvas_class.required_interactive_framework:
+    443         if hasattr(threading, 'get_native_id'):
+    444             # This compares native thread ids because even if Python-level
+    445             # Thread objects match, the underlying OS thread (which is what
+    446             # really matters) may be different on Python implementations with
+    447             # green threads.
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/pyplot.py:280, in _get_backend_mod()
+    271 """
+    272 Ensure that a backend is selected and return it.
+    273 
+    274 This is currently private, but may be made public in the future.
+    275 """
+    276 if _backend_mod is None:
+    277     # Use rcParams._get("backend") to avoid going through the fallback
+    278     # logic (which will (re)import pyplot and then call switch_backend if
+    279     # we need to resolve the auto sentinel)
+--> 280     switch_backend(rcParams._get("backend"))  # type: ignore[attr-defined]
+    281 return cast(type[matplotlib.backend_bases._Backend], _backend_mod)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/pyplot.py:342, in switch_backend(newbackend)
+    339 # have to escape the switch on access logic
+    340 old_backend = dict.__getitem__(rcParams, 'backend')
+--> 342 module = importlib.import_module(cbook._backend_module_name(newbackend))
+    343 canvas_class = module.FigureCanvas
+    345 required_framework = canvas_class.required_interactive_framework
+
+File ~/miniconda3/envs/py310/lib/python3.10/importlib/__init__.py:126, in import_module(name, package)
+    124             break
+    125         level += 1
+--> 126 return _bootstrap._gcd_import(name[level:], package, level)
+
+File <frozen importlib._bootstrap>:1050, in _gcd_import(name, package, level)
+
+File <frozen importlib._bootstrap>:1027, in _find_and_load(name, import_)
+
+File <frozen importlib._bootstrap>:992, in _find_and_load_unlocked(name, import_)
+
+File <frozen importlib._bootstrap>:241, in _call_with_frames_removed(f, *args, **kwds)
+
+File <frozen importlib._bootstrap>:1050, in _gcd_import(name, package, level)
+
+File <frozen importlib._bootstrap>:1027, in _find_and_load(name, import_)
+
+File <frozen importlib._bootstrap>:1006, in _find_and_load_unlocked(name, import_)
+
+File <frozen importlib._bootstrap>:688, in _load_unlocked(spec)
+
+File <frozen importlib._bootstrap_external>:883, in exec_module(self, module)
+
+File <frozen importlib._bootstrap>:241, in _call_with_frames_removed(f, *args, **kwds)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib_inline/__init__.py:1
+----> 1 from . import backend_inline, config  # noqa
+      3 __version__ = "0.2.2"
+      5 # we can't ''.join(...) otherwise finding the version number at build time requires
+      6 # import which introduces IPython and matplotlib at build time, and thus circular
+      7 # dependencies.
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib_inline/backend_inline.py:13
+     11 from matplotlib import colors
+     12 from matplotlib._pylab_helpers import Gcf
+---> 13 from matplotlib.backends import backend_agg
+     14 from matplotlib.backends.backend_agg import FigureCanvasAgg
+     15 from matplotlib.figure import Figure
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:39
+     37 from matplotlib.path import Path
+     38 from matplotlib.transforms import Bbox, BboxBase
+---> 39 from matplotlib.backends._backend_agg import RendererAgg as _RendererAgg
+     42 def get_hinting_flag():
+     43     mapping = {
+     44         'default': LOAD_DEFAULT,
+     45         'no_autohint': LOAD_NO_AUTOHINT,
    (...)
-    114     "compose",
-    115 ]
+     53         'none': LOAD_NO_HINTING,
+     54     }
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/base.py:19
-     17 from ._config import config_context, get_config
-     18 from .exceptions import InconsistentVersionWarning
----> 19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled
-     20 from .utils._missing import is_scalar_nan
-     21 from .utils._param_validation import validate_parameter_constraints
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/__init__.py:9
-      7 from . import metadata_routing
-      8 from ._bunch import Bunch
-----> 9 from ._chunking import gen_batches, gen_even_slices
-     11 # Make _safe_indexing importable from here for backward compat as this particular
-     12 # helper is considered semi-private and typically very useful for third-party
-     13 # libraries that want to comply with scikit-learn's estimator API. In particular,
-     14 # _safe_indexing was included in our public API documentation despite the leading
-     15 # `_` in its name.
-     16 from ._indexing import (
-     17     _safe_indexing,  # noqa: F401
-     18     resample,
-     19     shuffle,
-     20 )
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_chunking.py:11
-      8 import numpy as np
-     10 from .._config import get_config
----> 11 from ._param_validation import Interval, validate_params
-     14 def chunk_generator(gen, chunksize):
-     15     """Chunk generator, ``gen`` into lists of length ``chunksize``. The last
-     16     chunk may have a length less than ``chunksize``."""
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_validation.py:17
-     14 from scipy.sparse import csr_matrix, issparse
-     16 from .._config import config_context, get_config
----> 17 from .validation import _is_arraylike_not_scalar
-     20 class InvalidParameterError(ValueError, TypeError):
-     21     """Custom exception to be raised when the parameter of a class/method/function
-     22     does not have a valid type or value.
-     23     """
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/validation.py:21
-     19 from .. import get_config as _get_config
-     20 from ..exceptions import DataConversionWarning, NotFittedError, PositiveSpectrumWarning
----> 21 from ..utils._array_api import _asarray_with_order, _is_numpy_namespace, get_namespace
-     22 from ..utils.deprecation import _deprecate_force_all_finite
-     23 from ..utils.fixes import ComplexWarning, _preserve_dia_indices_dtype
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_array_api.py:20
-     18 from ..externals import array_api_extra as xpx
-     19 from ..externals.array_api_compat import numpy as np_compat
----> 20 from .fixes import parse_version
-     22 # TODO: complete __all__
-     23 __all__ = ["xpx"]  # we import xpx here just to re-export it, need this to appease ruff
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/fixes.py:37
-     33 sp_base_version = parse_version(sp_version.base_version)
-     35 # TODO: We can consider removing the containers and importing
-     36 # directly from SciPy when sparse matrices will be deprecated.
----> 37 CSR_CONTAINERS = [scipy.sparse.csr_matrix, scipy.sparse.csr_array]
-     38 CSC_CONTAINERS = [scipy.sparse.csc_matrix, scipy.sparse.csc_array]
-     39 COO_CONTAINERS = [scipy.sparse.coo_matrix, scipy.sparse.coo_array]
-
-AttributeError: module 'scipy.sparse' has no attribute 'csr_array'
+ImportError: numpy._core.multiarray failed to import
