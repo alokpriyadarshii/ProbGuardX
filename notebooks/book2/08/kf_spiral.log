@@ -1,0 +1,28 @@
+An error occurred while executing the following cell:
+------------------
+try:
+    import dynamax
+except ModuleNotFoundError:
+    print("installing dynamax")
+    %pip install -qq git+https://github.com/probml/dynamax.git
+    import dynamax
+
+from dynamax.linear_gaussian_ssm.models.linear_gaussian_ssm import LinearGaussianSSM
+from dynamax.plotting import plot_uncertainty_ellipses
+------------------
+
+----- stdout -----
+installing dynamax
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 8
+      5     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/dynamax.git')
+      6     import dynamax
+----> 8 from dynamax.linear_gaussian_ssm.models.linear_gaussian_ssm import LinearGaussianSSM
+      9 from dynamax.plotting import plot_uncertainty_ellipses
+
+ModuleNotFoundError: No module named 'dynamax.linear_gaussian_ssm.models.linear_gaussian_ssm'; 'dynamax.linear_gaussian_ssm.models' is not a package
