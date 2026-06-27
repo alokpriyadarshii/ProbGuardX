@@ -52,7 +52,6 @@ The project also includes a static **Project Outputs Dashboard** for viewing ver
 | ML Methods           | Logistic Scoring, Feature Engineering     |
 | Visualization        | Static Output Dashboard                   |
 | Package Management   | pip, requirements.txt                     |
-| Formatting           | Black Configuration                       |
 
 ---
 
