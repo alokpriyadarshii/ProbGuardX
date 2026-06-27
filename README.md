@@ -59,42 +59,64 @@ The project also includes a static **Project Outputs Dashboard** for viewing ver
 
 ```text
 ProbGuardX/
+├── .github/
+│   ├── scripts/
+│   └── workflows/
 ├── dashboard/
 │   ├── assets/
-│   │   └── probability-logo.svg
 │   ├── app.js
 │   ├── index.html
 │   └── styles.css
 ├── data_tools/
-│   ├── customer_activity.csv
 │   ├── mapreduce/
-│   │   ├── mapper.py
-│   │   ├── reducer.py
-│   │   └── run_mapreduce_local.py
 │   ├── python/
-│   │   ├── customer_feature_engineering.py
-│   │   └── python_customer_activity.csv
 │   ├── r/
-│   │   ├── customer_feature_engineering.R
-│   │   └── r_customer_activity.csv
 │   ├── sas/
-│   │   ├── customer_feature_engineering.sas
-│   │   ├── run_sas_workflow.py
-│   │   └── sas_customer_activity.csv
-│   └── sql/
-│       └── customer_feature_queries.sql
+│   ├── sql/
+│   └── customer_activity.csv
+├── deprecated/
+│   ├── gan/
+│   ├── notebooks/
+│   ├── scripts/
+│   └── vae/
 ├── images/
 │   ├── preview-1.png
 │   ├── preview-2.png
-│   ├── preview-3.png
+│   └── preview-3.png
+├── internal/
+│   ├── book1/
+│   ├── book2/
+│   ├── contributors/
+│   └── fig_height/
 ├── notebooks/
+│   ├── book1/
+│   ├── book2/
+│   ├── figures/
+│   ├── misc/
+│   └── tutorials/
 ├── scripts/
-├── LICENSE.txt
-├── pyproject.toml
+├── tests/
+│   ├── icons/
+│   ├── __init__.py
+│   ├── test_imports.py
+│   └── test_notebooks.py
+├── tikz/
+├── .gitattributes
+├── .gitignore
+├── .pre-commit-config.yaml
+├── CITATION.cff
+├── LICENSE
 ├── README.md
+├── __init__.py
+├── external_links.csv
+├── index.html
+├── pyproject.toml
+├── pytest.ini
 ├── requirements-bash.txt
 ├── requirements-dev.txt
-└── requirements.txt
+├── requirements.txt
+├── scratchpad.ipynb
+└── vercel.json
 ```
 
 ---
