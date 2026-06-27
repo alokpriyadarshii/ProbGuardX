@@ -1,0 +1,64 @@
+An error occurred while executing the following cell:
+------------------
+loss_mat = make_loss_fun()
+records = []
+records.append(("No COVID, young", loss_mat[0, 0], loss_mat[0, 1]))
+records.append(("COVID, young", loss_mat[1, 0], loss_mat[1, 1]))
+records.append(("No COVID, old", loss_mat[2, 0], loss_mat[2, 1]))
+records.append(("COVID, old", loss_mat[3, 0], loss_mat[3, 1]))
+
+df = pd.DataFrame.from_records(records, columns=["State", "Nothing", "Drugs"])
+display(df)
+------------------
+
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[3], line 8
+      5 records.append(("No COVID, old", loss_mat[2, 0], loss_mat[2, 1]))
+      6 records.append(("COVID, old", loss_mat[3, 0], loss_mat[3, 1]))
+----> 8 df = pd.DataFrame.from_records(records, columns=["State", "Nothing", "Drugs"])
+      9 display(df)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/core/frame.py:2433, in DataFrame.from_records(cls, data, index, exclude, columns, coerce_float, nrows)
+   2431 # Make a copy of the input columns so we can modify it
+   2432 if columns is not None:
+-> 2433     columns = ensure_index(columns)
+   2435 def maybe_reorder(
+   2436     arrays: list[ArrayLike], arr_columns: Index, columns: Index, index
+   2437 ) -> tuple[list[ArrayLike], Index, Index | None]:
+   2438     """
+   2439     If our desired 'columns' do not match the data's pre-existing 'arr_columns',
+   2440     we re-order our arrays.  This is like a pre-emptive (cheap) reindex.
+   2441     """
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/core/indexes/base.py:7713, in ensure_index(index_like, copy)
+   7711         return MultiIndex.from_arrays(index_like)
+   7712     else:
+-> 7713         return Index(index_like, copy=copy, tupleize_cols=False)
+   7714 else:
+   7715     return Index(index_like, copy=copy)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/core/indexes/base.py:566, in Index.__new__(cls, data, dtype, copy, name, tupleize_cols)
+    563         data = com.asarray_tuplesafe(data, dtype=_dtype_obj)
+    565 try:
+--> 566     arr = sanitize_array(data, None, dtype=dtype, copy=copy)
+    567 except ValueError as err:
+    568     if "index must be specified when data is not list-like" in str(err):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/core/construction.py:651, in sanitize_array(data, index, dtype, copy, allow_2d)
+    648     subarr = _try_cast(data, dtype, copy)
+    650 else:
+--> 651     subarr = maybe_convert_platform(data)
+    652     if subarr.dtype == object:
+    653         subarr = cast(np.ndarray, subarr)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/core/dtypes/cast.py:138, in maybe_convert_platform(values)
+    136 if arr.dtype == _dtype_obj:
+    137     arr = cast(np.ndarray, arr)
+--> 138     arr = lib.maybe_convert_objects(arr)
+    140 return arr
+
+File pandas/_libs/lib.pyx:2555, in pandas._libs.lib.maybe_convert_objects()
+
+TypeError: Cannot convert numpy.ndarray to numpy.ndarray

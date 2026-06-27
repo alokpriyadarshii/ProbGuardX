@@ -1,0 +1,189 @@
+An error occurred while executing the following cell:
+------------------
+# Gaussian discriminant analysis in 2d
+# Author: Duane Rich, heavily modified by alokpriyadarshii
+# Based on matlab code by alokpriyadarshii
+# https://github.com/probml/pmtk3/blob/master/demos/discrimAnalysisDboundariesDemo.m
+
+try:
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+except ModuleNotFoundError:
+    %pip install -qq scikit-learn
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+------------------
+
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[1], line 7
+      1 # Gaussian discriminant analysis in 2d
+      2 # Author: Duane Rich, heavily modified by alokpriyadarshii
+      3 # Based on matlab code by alokpriyadarshii
+      4 # https://github.com/probml/pmtk3/blob/master/demos/discrimAnalysisDboundariesDemo.m
+      6 try:
+----> 7     from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+      8 except ModuleNotFoundError:
+      9     get_ipython().run_line_magic('pip', 'install -qq scikit-learn')
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/__init__.py:73
+     62 # `_distributor_init` allows distributors to run custom init code.
+     63 # For instance, for the Windows wheel, this is used to pre-load the
+     64 # vcomp shared library runtime for OpenMP embedded in the sklearn/.libs
+   (...)
+     67 # later is linked to the OpenMP runtime to make it possible to introspect
+     68 # it and importing it first would fail if the OpenMP dll cannot be found.
+     69 from . import (  # noqa: F401 E402
+     70     __check_build,
+     71     _distributor_init,
+     72 )
+---> 73 from .base import clone  # noqa: E402
+     74 from .utils._show_versions import show_versions  # noqa: E402
+     76 _submodules = [
+     77     "calibration",
+     78     "cluster",
+   (...)
+    114     "compose",
+    115 ]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/base.py:19
+     17 from ._config import config_context, get_config
+     18 from .exceptions import InconsistentVersionWarning
+---> 19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled
+     20 from .utils._missing import is_scalar_nan
+     21 from .utils._param_validation import validate_parameter_constraints
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/__init__.py:9
+      7 from . import metadata_routing
+      8 from ._bunch import Bunch
+----> 9 from ._chunking import gen_batches, gen_even_slices
+     11 # Make _safe_indexing importable from here for backward compat as this particular
+     12 # helper is considered semi-private and typically very useful for third-party
+     13 # libraries that want to comply with scikit-learn's estimator API. In particular,
+     14 # _safe_indexing was included in our public API documentation despite the leading
+     15 # `_` in its name.
+     16 from ._indexing import (
+     17     _safe_indexing,  # noqa: F401
+     18     resample,
+     19     shuffle,
+     20 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_chunking.py:11
+      8 import numpy as np
+     10 from .._config import get_config
+---> 11 from ._param_validation import Interval, validate_params
+     14 def chunk_generator(gen, chunksize):
+     15     """Chunk generator, ``gen`` into lists of length ``chunksize``. The last
+     16     chunk may have a length less than ``chunksize``."""
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_validation.py:17
+     14 from scipy.sparse import csr_matrix, issparse
+     16 from .._config import config_context, get_config
+---> 17 from .validation import _is_arraylike_not_scalar
+     20 class InvalidParameterError(ValueError, TypeError):
+     21     """Custom exception to be raised when the parameter of a class/method/function
+     22     does not have a valid type or value.
+     23     """
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/validation.py:21
+     19 from .. import get_config as _get_config
+     20 from ..exceptions import DataConversionWarning, NotFittedError, PositiveSpectrumWarning
+---> 21 from ..utils._array_api import _asarray_with_order, _is_numpy_namespace, get_namespace
+     22 from ..utils.deprecation import _deprecate_force_all_finite
+     23 from ..utils.fixes import ComplexWarning, _preserve_dia_indices_dtype
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_array_api.py:20
+     18 from ..externals import array_api_extra as xpx
+     19 from ..externals.array_api_compat import numpy as np_compat
+---> 20 from .fixes import parse_version
+     22 # TODO: complete __all__
+     23 __all__ = ["xpx"]  # we import xpx here just to re-export it, need this to appease ruff
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/fixes.py:16
+     14 import scipy
+     15 import scipy.sparse.linalg
+---> 16 import scipy.stats
+     17 from scipy import optimize
+     19 try:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/__init__.py:606
+      1 """
+      2 .. _statsrefmanual:
+      3 
+   (...)
+    601 
+    602 """  # noqa: E501
+    604 from ._warnings_errors import (ConstantInputWarning, NearConstantInputWarning,
+    605                                DegenerateDataWarning, FitError)
+--> 606 from ._stats_py import *
+    607 from ._variation import variation
+    608 from .distributions import *
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/_stats_py.py:49
+     47 import scipy.special as special
+     48 from scipy import linalg
+---> 49 from . import distributions
+     50 from . import _mstats_basic as mstats_basic
+     51 from ._stats_mstats_common import (_find_repeats, linregress, theilslopes,
+     52                                    siegelslopes)
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/distributions.py:11
+      8 from ._distn_infrastructure import (rv_discrete, rv_continuous, rv_frozen)  # noqa: F401
+     10 from . import _continuous_distns
+---> 11 from . import _discrete_distns
+     13 from ._continuous_distns import *  # noqa: F403
+     14 from ._levy_stable import levy_stable
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/_discrete_distns.py:10
+      8 from scipy.special import entr, logsumexp, betaln, gammaln as gamln, zeta
+      9 from scipy._lib._util import _lazywhere, rng_integers
+---> 10 from scipy.interpolate import interp1d
+     12 from numpy import floor, ceil, log, exp, sqrt, log1p, expm1, tanh, cosh, sinh
+     14 import numpy as np
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/__init__.py:167
+      1 """
+      2 ========================================
+      3 Interpolation (:mod:`scipy.interpolate`)
+   (...)
+    165 (should not be used in new code).
+    166 """
+--> 167 from ._interpolate import *
+    168 from ._fitpack_py import *
+    170 # New interface to fitpack library:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:14
+     11 from scipy._lib._util import copy_if_needed
+     12 from scipy.special import comb
+---> 14 from . import _fitpack_py
+     15 from . import dfitpack
+     16 from ._polyint import _Interpolator1D
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_fitpack_py.py:8
+      5 import numpy as np
+      7 # These are in the API for fitpack even if not used in fitpack.py itself.
+----> 8 from ._fitpack_impl import bisplrep, bisplev, dblint  # noqa: F401
+      9 from . import _fitpack_impl as _impl
+     10 from ._bsplines import BSpline
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_fitpack_impl.py:103
+     52 _iermess = {
+     53     0: ["The spline has a residual sum of squares fp such that "
+     54         "abs(fp-s)/s<=0.001", None],
+   (...)
+     68     'unknown': ["An error occurred", TypeError]
+     69 }
+     71 _iermess2 = {
+     72     0: ["The spline has a residual sum of squares fp such that "
+     73         "abs(fp-s)/s<=0.001", None],
+   (...)
+     99     'unknown': ["An error occurred", TypeError]
+    100 }
+    102 _parcur_cache = {'t': array([], float), 'wrk': array([], float),
+--> 103                  'iwrk': array([], dfitpack_int), 'u': array([], float),
+    104                  'ub': 0, 'ue': 1}
+    107 def splprep(x, w=None, u=None, ub=None, ue=None, k=3, task=0, s=None, t=None,
+    108             full_output=0, nest=None, per=0, quiet=1):
+    109     # see the docstring of `_fitpack_py/splprep`
+    110     if task <= 0:
+
+TypeError: 

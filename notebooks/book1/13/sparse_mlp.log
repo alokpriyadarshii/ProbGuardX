@@ -1,0 +1,324 @@
+An error occurred while executing the following cell:
+------------------
+import itertools
+import numpy as np
+import matplotlib.pyplot as plt
+import numpy.random as npr
+
+import jax.numpy as jnp
+from jax import jit, grad, random
+from jax.experimental import stax
+from jax.experimental.stax import Dense, Softplus
+from jax.tree_util import tree_flatten, tree_unflatten
+from jax.flatten_util import ravel_pytree
+
+from graphviz import Digraph
+
+
+def generate_data(num_instances, num_vars, key):
+    subkeys = random.split(key, 4)
+    X = 10 * random.uniform(subkeys[0], shape=(num_instances, num_vars)) - 5
+    var = 0.1
+    n_points = 20
+    example_points = 10 * random.uniform(subkeys[1], shape=(n_points, num_vars)) - 5
+    targets = 10 * random.uniform(subkeys[2], shape=(n_points, 1)) - 5
+    y = np.zeros((num_instances, 1))
+    for i in range(num_instances):
+        dists = np.sum(np.abs(np.tile(X[i, :], (n_points, 1)) - example_points), axis=1)
+        lik = (1 / np.sqrt(2 * np.pi)) * np.exp(-dists / (2 * var))
+        lik = lik / np.sum(lik)
+        y[i, 0] = lik.T @ targets + random.normal(subkeys[3]) / 15
+    return X, y
+
+
+@jit
+def loss(params, batch):
+    inputs, targets = batch
+    preds = predict(params, inputs)
+    return jnp.sum((preds - targets) ** 2) / 2.0
+
+
+def data_stream(num_instances, batch_size):
+    rng = npr.RandomState(0)
+    num_batches = num_instances // batch_size
+    while True:
+        perm = rng.permutation(num_instances)
+        for i in range(num_batches):
+            batch_idx = perm[i * batch_size : (i + 1) * batch_size]
+            yield X[batch_idx], y[batch_idx]
+
+
+def pgd(alpha, lambd):
+    step_size = alpha
+
+    def init(w0):
+        return w0
+
+    def soft_thresholding(z, threshold):
+        return jnp.sign(z) * jnp.maximum(jnp.absolute(z) - threshold, 0.0)
+
+    def update(i, g, w):
+        g_flat, unflatten = ravel_pytree(g)
+        w_flat = ravel_pytree_jit(w)
+        updated_params = soft_thresholding(w_flat - step_size * g_flat, step_size * lambd)
+        return unflatten(updated_params)
+
+    def get_params(w):
+        return w
+
+    def set_step_size(lr):
+        step_size = lr
+
+    return init, update, get_params, soft_thresholding, set_step_size
+
+
+ravel_pytree_jit = jit(lambda tree: ravel_pytree(tree)[0])
+
+
+@jit
+def line_search(w, g, batch, beta):
+    lr_i = 1
+    g_flat, unflatten_g = ravel_pytree(g)
+    w_flat = ravel_pytree_jit(w)
+    z_flat = soft_thresholding(w_flat - lr_i * g_flat, lr_i * lambd)
+    z = unflatten_g(z_flat)
+    for i in range(20):
+        is_converged = loss(z, batch) > loss(w, batch) + g_flat @ (z_flat - w_flat) + np.sum((z_flat - w_flat) ** 2) / (
+            2 * lr_i
+        )
+        lr_i = jnp.where(is_converged, lr_i, beta * lr_i)
+    return lr_i
+
+
+@jit
+def update(i, opt_state, batch):
+    params = get_params(opt_state)
+    g = grad(loss)(params, batch)
+    lr_i = line_search(params, g, batch, 0.5)
+    set_step_size(lr_i)
+    return opt_update(i, g, opt_state)
+
+
+key = random.PRNGKey(3)
+num_epochs = 60000
+num_instances, num_vars = 200, 2
+batch_size = num_instances
+minim, maxim = -5, 5
+
+x, y = generate_data(num_instances, 1, key)
+X = np.c_[np.ones_like(x), x]
+batches = data_stream(num_instances, batch_size)
+
+init_random_params, predict = stax.serial(
+    Dense(5), Softplus, Dense(5), Softplus, Dense(5), Softplus, Dense(5), Softplus, Dense(1)
+)
+
+lambd, step_size = 0.6, 1e-4
+opt_init, opt_update, get_params, soft_thresholding, set_step_size = pgd(step_size, lambd)
+_, init_params = init_random_params(key, (-1, num_vars))
+opt_state = opt_init(init_params)
+itercount = itertools.count()
+
+for epoch in range(num_epochs):
+    opt_state = update(next(itercount), opt_state, next(batches))
+
+
+params = get_params(opt_state)
+weights, _ = tree_flatten(params)
+w = weights[::2]
+print(w)
+------------------
+
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[2], line 6
+      3 import matplotlib.pyplot as plt
+      4 import numpy.random as npr
+----> 6 import jax.numpy as jnp
+      7 from jax import jit, grad, random
+      8 from jax.experimental import stax
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:37
+     34 del _cloud_tpu_init
+     36 # Force early import, allowing use of `jax.core` after importing `jax`.
+---> 37 import jax.core as _core
+     38 del _core
+     40 # Note: import <name> as <name> is required for names to be exported.
+     41 # See PEP 484 & https://github.com/jax-ml/jax/issues/7570
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/core.py:18
+      1 # Copyright 2022 The JAX Authors.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     15 # Note: import <name> as <name> is required for names to be exported.
+     16 # See PEP 484 & https://github.com/jax-ml/jax/issues/7570
+---> 18 from jax._src.core import (
+     19   AbstractToken as AbstractToken,
+     20   AbstractValue as AbstractValue,
+     21   Atom as Atom,
+     22   CallPrimitive as CallPrimitive,
+     23   DebugInfo as DebugInfo,
+     24   DShapedArray as DShapedArray,
+     25   DropVar as DropVar,
+     26   Effect as Effect,
+     27   Effects as Effects,
+     28   get_opaque_trace_state as get_opaque_trace_state,
+     29   InconclusiveDimensionOperation as InconclusiveDimensionOperation,
+     30   JaxprPpContext as JaxprPpContext,
+     31   JaxprPpSettings as JaxprPpSettings,
+     32   JaxprTypeError as JaxprTypeError,
+     33   nonempty_axis_env as nonempty_axis_env_DO_NOT_USE,  # noqa: F401
+     34   OutputType as OutputType,
+     35   ParamDict as ParamDict,
+     36   ShapedArray as ShapedArray,
+     37   Trace as Trace,
+     38   Tracer as Tracer,
+     39   unsafe_am_i_under_a_jit as unsafe_am_i_under_a_jit_DO_NOT_USE,  # noqa: F401
+     40   unsafe_am_i_under_a_vmap as unsafe_am_i_under_a_vmap_DO_NOT_USE,  # noqa: F401
+     41   unsafe_get_axis_names as unsafe_get_axis_names_DO_NOT_USE,  # noqa: F401
+     42   UnshapedArray as UnshapedArray,
+     43   Value as Value,
+     44   abstract_token as abstract_token,
+     45   aval_mapping_handlers as aval_mapping_handlers,
+     46   call as call,
+     47   call_impl as call_impl,
+     48   check_jaxpr as check_jaxpr,
+     49   concrete_or_error as concrete_or_error,
+     50   concretization_function_error as concretization_function_error,
+     51   custom_typechecks as custom_typechecks,
+     52   ensure_compile_time_eval as ensure_compile_time_eval,
+     53   eval_context as eval_context,
+     54   eval_jaxpr as eval_jaxpr,
+     55   find_top_trace as find_top_trace,
+     56   gensym as gensym,
+     57   get_aval as get_aval,
+     58   is_concrete as is_concrete,
+     59   is_constant_dim as is_constant_dim,
+     60   is_constant_shape as is_constant_shape,
+     61   jaxprs_in_params as jaxprs_in_params,
+     62   literalable_types as literalable_types,
+     63   mapped_aval as mapped_aval,
+     64   max_dim as max_dim,
+     65   min_dim as min_dim,
+     66   new_jaxpr_eqn as new_jaxpr_eqn,
+     67   no_axis_name as no_axis_name,
+     68   no_effects as no_effects,
+     69   primal_dtype_to_tangent_dtype as primal_dtype_to_tangent_dtype,
+     70   pytype_aval_mappings as pytype_aval_mappings,
+     71   set_current_trace as set_current_trace,
+     72   subjaxprs as subjaxprs,
+     73   take_current_trace as take_current_trace,
+     74   trace_ctx as trace_ctx,
+     75   TraceTag as TraceTag,
+     76   traverse_jaxpr_params as traverse_jaxpr_params,
+     77   unmapped_aval as unmapped_aval,
+     78   valid_jaxtype as valid_jaxtype,
+     79 )
+     82 from jax._src import core as _src_core
+     83 _deprecations = {
+     84     # Added 2024-12-11
+     85     "axis_frame": ("jax.core.axis_frame is deprecated.", _src_core.axis_frame),
+   (...)
+    143     "used_axis_names_jaxpr": ("jax.core.used_axis_names_jaxpr was removed in JAX v0.6.0.", None),
+    144 }
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/core.py:38
+     35 import numpy as np
+     37 from jax._src import deprecations
+---> 38 from jax._src import dtypes
+     39 from jax._src import config
+     40 from jax._src import effects
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/dtypes.py:32
+     29 from typing import cast, overload, Any, Literal, Union
+     30 import warnings
+---> 32 import ml_dtypes
+     33 import numpy as np
+     35 from jax._src import config
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/__init__.py:40
+     16 __all__ = [
+     17     "__version__",
+     18     "bfloat16",
+   (...)
+     35     "uint4",
+     36 ]
+     38 from typing import Type
+---> 40 from ml_dtypes._finfo import finfo
+     41 from ml_dtypes._iinfo import iinfo
+     42 from ml_dtypes._ml_dtypes_ext import bfloat16
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:153
+    149     smallest_subnormal = float.fromhex("0x1p-127")
+    150     self.smallest_subnormal = float8_e8m0fnu(smallest_subnormal)
+--> 153 class finfo(np.finfo):  # pylint: disable=invalid-name,missing-class-docstring
+    154   __doc__ = np.finfo.__doc__
+    156   @staticmethod
+    157   def _bfloat16_finfo():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:699, in finfo()
+    684 _finfo_type_map = {
+    685     _bfloat16_dtype: _bfloat16_finfo,
+    686     _float4_e2m1fn_dtype: _float4_e2m1fn_finfo,
+   (...)
+    696     _float8_e8m0fnu_dtype: _float8_e8m0fnu_finfo,
+    697 }
+    698 _finfo_name_map = {t.name: t for t in _finfo_type_map}
+--> 699 _finfo_cache = {
+    700     t: init_fn.__func__()  # pytype: disable=attribute-error
+    701     for t, init_fn in _finfo_type_map.items()
+    702 }
+    704 def __new__(cls, dtype):
+    705   if isinstance(dtype, str):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:700, in <dictcomp>(.0)
+    684 _finfo_type_map = {
+    685     _bfloat16_dtype: _bfloat16_finfo,
+    686     _float4_e2m1fn_dtype: _float4_e2m1fn_finfo,
+   (...)
+    696     _float8_e8m0fnu_dtype: _float8_e8m0fnu_finfo,
+    697 }
+    698 _finfo_name_map = {t.name: t for t in _finfo_type_map}
+    699 _finfo_cache = {
+--> 700     t: init_fn.__func__()  # pytype: disable=attribute-error
+    701     for t, init_fn in _finfo_type_map.items()
+    702 }
+    704 def __new__(cls, dtype):
+    705   if isinstance(dtype, str):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:668, in finfo._float8_e8m0fnu_finfo()
+    666 # pylint: disable=protected-access
+    667 obj._machar = _Float8E8m0fnuMachArLike()
+--> 668 if not hasattr(obj, "tiny"):
+    669   obj.tiny = float8_e8m0fnu(tiny)
+    670 if not hasattr(obj, "smallest_normal"):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:627, in finfo.tiny(self)
+    612 @property
+    613 def tiny(self):
+    614     """Return the value for tiny, alias of smallest_normal.
+    615 
+    616     Returns
+   (...)
+    625         double-double.
+    626     """
+--> 627     return self.smallest_normal
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:606, in finfo.smallest_normal(self)
+    591 """Return the value for the smallest normal.
+    592 
+    593 Returns
+   (...)
+    602     double-double.
+    603 """
+    604 # This check is necessary because the value for smallest_normal is
+    605 # platform dependent for longdouble types.
+--> 606 if isnan(self._machar.smallest_normal.flat[0]):
+    607     warnings.warn(
+    608         'The value of smallest normal is undefined for double double',
+    609         UserWarning, stacklevel=2)
+    610 return self._machar.smallest_normal.flat[0]
+
+TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''

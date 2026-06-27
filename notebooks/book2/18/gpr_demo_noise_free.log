@@ -1,0 +1,70 @@
+An error occurred while executing the following cell:
+------------------
+def sample_from_posterior(key, data, save_name):
+    kernel = kernels.ExpSquared(scale=1.0)
+    gp = GaussianProcess(kernel, data["x_train"], diag=1e-8 + data["noise"])
+    pred_gp = gp.condition(data["y_train"], data["x_test"]).gp
+    samples = pred_gp.sample(key, shape=(data["n_samples"],))
+    mean = pred_gp.mean
+    std = pred_gp.variance**0.5
+
+    plt.figure()
+    plt.plot(data["x_test"], samples.T, color=c_0)
+    plt.scatter(data["x_train"], data["y_train"], color=c_1, zorder=10, s=5)
+    plt.fill_between(data["x_test"].flatten(), mean - 2 * std, mean + 2 * std, alpha=0.2)
+    plt.xlabel("$x$")
+    plt.ylabel("$f$")
+    #     plt.legend(["samples"], loc="lower left")
+    sns.despine()
+    if len(save_name) > 0:
+        savefig(save_name)
+
+
+key = jax.random.PRNGKey(0)
+x_train = jnp.array([[-4], [-3], [-2], [-1], [1]])
+y_train = jnp.sin(x_train).flatten()
+
+x_test = jnp.arange(-5, 5.2, 0.2)
+
+data = {"noise": 0.0, "n_samples": 3, "x_train": x_train, "y_train": y_train, "x_test": x_test}
+sample_from_posterior(key, data, "gprDemoNoiseFreePost")
+
+data = {"noise": 0.3, "n_samples": 3, "x_train": x_train, "y_train": y_train, "x_test": x_test}
+sample_from_posterior(key, data, "gprDemoNoisyPost")
+------------------
+
+
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[5], line 28
+     25 x_test = jnp.arange(-5, 5.2, 0.2)
+     27 data = {"noise": 0.0, "n_samples": 3, "x_train": x_train, "y_train": y_train, "x_test": x_test}
+---> 28 sample_from_posterior(key, data, "gprDemoNoiseFreePost")
+     30 data = {"noise": 0.3, "n_samples": 3, "x_train": x_train, "y_train": y_train, "x_test": x_test}
+     31 sample_from_posterior(key, data, "gprDemoNoisyPost")
+
+Cell In[5], line 4, in sample_from_posterior(key, data, save_name)
+      2 kernel = kernels.ExpSquared(scale=1.0)
+      3 gp = GaussianProcess(kernel, data["x_train"], diag=1e-8 + data["noise"])
+----> 4 pred_gp = gp.condition(data["y_train"], data["x_test"]).gp
+      5 samples = pred_gp.sample(key, shape=(data["n_samples"],))
+      6 mean = pred_gp.mean
+
+    [... skipping hidden 1 frame]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tinygp/gp.py:189, in GaussianProcess.condition(self, y, X_test, diag, noise, include_mean, kernel)
+    182     matches = jax.tree_util.tree_map(
+    183         lambda a, b: jnp.ndim(a) == jnp.ndim(b)
+    184         and jnp.shape(a)[1:] == jnp.shape(b)[1:],
+    185         self.X,
+    186         X_test,
+    187     )
+    188     if not jax.tree_util.tree_reduce(lambda a, b: a and b, matches):
+--> 189         raise ValueError(
+    190             "`X_test` must have the same tree structure as the input `X`, "
+    191             "and all but the leading dimension must have matching sizes"
+    192         )
+    194 alpha, log_prob, mean_value = self._condition(y, X_test, include_mean, kernel)
+    195 if kernel is None:
+
+ValueError: `X_test` must have the same tree structure as the input `X`, and all but the leading dimension must have matching sizes
