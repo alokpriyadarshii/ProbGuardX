@@ -62,56 +62,28 @@ savefig('heightWeightPCAstnd.pdf')
 
 
 ---------------------------------------------------------------------------
-FileNotFoundError                         Traceback (most recent call last)
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/io/matlab/_mio.py:39, in _open_file(file_like, appendmat, mode)
-     38 try:
----> 39     return open(file_like, mode), True
-     40 except OSError as e:
-     41     # Probably "not found"
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 7
+      5     get_ipython().run_line_magic('pip', 'install -qq pandas')
+      6     import pandas as pd
+----> 7 import matplotlib.pyplot as plt
+      8 try:
+      9     from sklearn.decomposition import PCA
 
-FileNotFoundError: [Errno 2] No such file or directory: '/__w/ProbGuardX/data/heightWeight/heightWeight.mat'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
 
-The above exception was the direct cause of the following exception:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
 
-OSError                                   Traceback (most recent call last)
-Cell In[1], line 20
-     18 # Get Data
-     19 data_dir = Path('.').absolute().parent / 'data' / 'heightWeight'
----> 20 data = scipy.io.loadmat(data_dir / "heightWeight.mat")['heightWeightData']
-     21 data = pd.DataFrame(data).rename(columns = {0:'gender', 1: 'height', 2: 'weight'})
-     23 # Function for plotting categorical scatter plot with 1D PCA line
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/io/matlab/_mio.py:225, in loadmat(file_name, mdict, appendmat, **kwargs)
-     88 """
-     89 Load MATLAB file.
-     90 
-   (...)
-    222     3.14159265+3.14159265j])
-    223 """
-    224 variable_names = kwargs.pop('variable_names', None)
---> 225 with _open_file_context(file_name, appendmat) as f:
-    226     MR, _ = mat_reader_factory(f, **kwargs)
-    227     matfile_dict = MR.get_variables(variable_names)
-
-File ~/miniconda3/envs/py310/lib/python3.10/contextlib.py:135, in _GeneratorContextManager.__enter__(self)
-    133 del self.args, self.kwds, self.func
-    134 try:
---> 135     return next(self.gen)
-    136 except StopIteration:
-    137     raise RuntimeError("generator didn't yield") from None
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/io/matlab/_mio.py:17, in _open_file_context(file_like, appendmat, mode)
-     15 @contextmanager
-     16 def _open_file_context(file_like, appendmat, mode='rb'):
----> 17     f, opened = _open_file(file_like, appendmat, mode)
-     18     try:
-     19         yield f
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/io/matlab/_mio.py:47, in _open_file(file_like, appendmat, mode)
-     45     return open(file_like, mode), True
-     46 else:
----> 47     raise OSError(
-     48         'Reader needs file name or open file-like object'
-     49     ) from e
-
-OSError: Reader needs file name or open file-like object
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4

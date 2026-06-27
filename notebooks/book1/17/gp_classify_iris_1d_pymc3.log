@@ -151,9 +151,10 @@ plt.show()
 
 ----- stdout -----
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-chex 0.1.90 requires numpy>=1.24.1, but you have numpy 1.22.1 which is incompatible.
 jax 0.4.30 requires scipy>=1.9, but you have scipy 1.7.3 which is incompatible.
 jaxlib 0.4.30 requires scipy>=1.9, but you have scipy 1.7.3 which is incompatible.
+optax 0.2.8 requires jax>=0.5.3, but you have jax 0.4.30 which is incompatible.
+optax 0.2.8 requires jaxlib>=0.5.3, but you have jaxlib 0.4.30 which is incompatible.
 orbax-checkpoint 0.11.39 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
 scikit-learn 1.7.2 requires scipy>=1.8.0, but you have scipy 1.7.3 which is incompatible.
 tensorflow 2.21.0 requires numpy>=1.26.0, but you have numpy 1.22.1 which is incompatible.
