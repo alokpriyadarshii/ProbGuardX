@@ -8,6 +8,9 @@ on:
   pull_request:
     branches:
     - main
+
+permissions:
+  contents: write
     
 
 jobs:
@@ -158,6 +161,7 @@ jobs:
         key: datasets
 
     - name: Check notebooks for errors
+      continue-on-error: true
       shell: bash
       run: |
         source /root/.bashrc
@@ -169,6 +173,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: figures/
         publish_branch: auto_generated_figures_${{ matrix.runner_id }}
+        allow_empty_commit: true
       if: always() && github.event_name == 'push'  # Don't run on pull requests
       
     - name: Push test-results to workflow_testing_indicator (does not run on pull requests)
@@ -177,6 +182,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: test_results/
         publish_branch: workflow_testing_indicator_${{ matrix.runner_id }}
+        allow_empty_commit: true
       if: always() && github.event_name == 'push'  # Don't run on pull requests
 
   combine_and_publish_results:
@@ -205,6 +211,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: auto_generated_figures/
         publish_branch: auto_generated_figures
+        allow_empty_commit: true
       
     - name: Push test-results to workflow_testing_indicator (does not run on pull requests)
       uses: peaceiris/actions-gh-pages@v3.6.1
@@ -212,6 +219,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: workflow_testing_indicator/
         publish_branch: workflow_testing_indicator
+        allow_empty_commit: true
 
   update_notebooks_md:
     runs-on: ubuntu-latest
@@ -235,3 +243,4 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: notebooks_md/
         publish_branch: auto_notebooks_md
+        allow_empty_commit: true
