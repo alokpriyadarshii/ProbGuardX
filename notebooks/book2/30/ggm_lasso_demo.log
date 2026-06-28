@@ -89,187 +89,139 @@ plt.show()
 
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:70: UserWarning: renaming figures/ggm_lasso0.pdf to figures/ggm_lasso0_latexified.pdf because LATEXIFY is True
+  warnings.warn(
+----- stdout -----
+saving image to figures/ggm_lasso0_latexified.pdf
+Figure size: [6.4 4.8]
 ------------------
 
 ---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 12
-     11 try:
----> 12     import cvxpy as cp
-     13 except ModuleNotFoundError:
+ValueError                                Traceback (most recent call last)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/formatters.py:402, in BaseFormatter.__call__(self, obj)
+    400     pass
+    401 else:
+--> 402     return printer(obj)
+    403 # Finally look for special method names
+    404 method = get_real_method(obj, self.print_method)
 
-ModuleNotFoundError: No module named 'cvxpy'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/pylabtools.py:170, in print_figure(fig, fmt, bbox_inches, base64, **kwargs)
+    167     from matplotlib.backend_bases import FigureCanvasBase
+    168     FigureCanvasBase(fig)
+--> 170 fig.canvas.print_figure(bytes_io, **kw)
+    171 data = bytes_io.getvalue()
+    172 if fmt == 'svg':
 
-During handling of the above exception, another exception occurred:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backend_bases.py:2193, in FigureCanvasBase.print_figure(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, pad_inches, bbox_extra_artists, backend, **kwargs)
+   2189 try:
+   2190     # _get_renderer may change the figure dpi (as vector formats
+   2191     # force the figure dpi to 72), so we need to set it again here.
+   2192     with cbook._setattr_cm(self.figure, dpi=dpi):
+-> 2193         result = print_method(
+   2194             filename,
+   2195             facecolor=facecolor,
+   2196             edgecolor=edgecolor,
+   2197             orientation=orientation,
+   2198             bbox_inches_restore=_bbox_inches_restore,
+   2199             **kwargs)
+   2200 finally:
+   2201     if bbox_inches and restore_bbox:
 
-TypeError                                 Traceback (most recent call last)
-Cell In[1], line 15
-     13 except ModuleNotFoundError:
-     14     get_ipython().run_line_magic('pip', 'install -qq cvxpy')
----> 15     import cvxpy as cp
-     16 try:
-     17     import networkx as nx
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backend_bases.py:2043, in FigureCanvasBase._switch_canvas_and_return_print_method.<locals>.<lambda>(*args, **kwargs)
+   2039     optional_kws = {  # Passed by print_figure for other renderers.
+   2040         "dpi", "facecolor", "edgecolor", "orientation",
+   2041         "bbox_inches_restore"}
+   2042     skip = optional_kws - {*inspect.signature(meth).parameters}
+-> 2043     print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+   2044         *args, **{k: v for k, v in kwargs.items() if k not in skip}))
+   2045 else:  # Let third-parties do as they see fit.
+   2046     print_method = meth
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/cvxpy/__init__.py:19
-      1 """
-      2 Copyright, the CVXPY authors
-      3 
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:497, in FigureCanvasAgg.print_png(self, filename_or_obj, metadata, pil_kwargs)
+    450 def print_png(self, filename_or_obj, *, metadata=None, pil_kwargs=None):
+    451     """
+    452     Write the figure to a PNG file.
+    453 
    (...)
-     14 limitations under the License.
-     15 """
-     16 from cvxpy.version import (
-     17     version as __version__,
-     18 )  # cvxpy/version.py is auto-generated
----> 19 from cvxpy.atoms import *
-     20 from cvxpy.constraints import (
-     21     Constraint as Constraint,
-     22     Cone as Cone,
-   (...)
-     33     FiniteSet as FiniteSet,
-     34 )
-     35 from cvxpy.error import (
-     36     DCPError as DCPError,
-     37     DGPError as DGPError,
-   (...)
-     42     warnings_enabled as warnings_enabled,
-     43 )
+    495         *metadata*, including the default 'Software' key.
+    496     """
+--> 497     self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/cvxpy/atoms/__init__.py:17
-      1 """
-      2 Copyright 2013 Steven Diamond
-      3 
-   (...)
-     14 limitations under the License.
-     15 """
----> 17 from cvxpy.atoms.affine.binary_operators import (matmul, multiply,
-     18                                                  vdot, scalar_product, outer,)
-     19 from cvxpy.atoms.affine.bmat import bmat
-     20 from cvxpy.atoms.affine.broadcast_to import broadcast_to
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:445, in FigureCanvasAgg._print_pil(self, filename_or_obj, fmt, pil_kwargs, metadata)
+    440 def _print_pil(self, filename_or_obj, fmt, pil_kwargs, metadata=None):
+    441     """
+    442     Draw the canvas, then save it using `.image.imsave` (to which
+    443     *pil_kwargs* and *metadata* are forwarded).
+    444     """
+--> 445     FigureCanvasAgg.draw(self)
+    446     mpl.image.imsave(
+    447         filename_or_obj, self.buffer_rgba(), format=fmt, origin="upper",
+    448         dpi=self.figure.dpi, metadata=metadata, pil_kwargs=pil_kwargs)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/cvxpy/atoms/affine/binary_operators.py:27
-     25 import cvxpy.lin_ops.lin_utils as lu
-     26 import cvxpy.utilities as u
----> 27 from cvxpy.atoms.affine.add_expr import AddExpression
-     28 from cvxpy.atoms.affine.affine_atom import AffAtom
-     29 from cvxpy.atoms.affine.conj import conj
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:388, in FigureCanvasAgg.draw(self)
+    385 # Acquire a lock on the shared font cache.
+    386 with (self.toolbar._wait_cursor_for_draw_cm() if self.toolbar
+    387       else nullcontext()):
+--> 388     self.figure.draw(self.renderer)
+    389     # A GUI class may be need to update a window using this draw, so
+    390     # don't forget to call the superclass.
+    391     super().draw()
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/cvxpy/atoms/affine/add_expr.py:23
-     21 import cvxpy.lin_ops.lin_utils as lu
-     22 import cvxpy.utilities as u
----> 23 from cvxpy.atoms.affine.affine_atom import AffAtom
-     24 from cvxpy.constraints.constraint import Constraint
-     25 from cvxpy.expressions.expression import Expression
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/artist.py:95, in _finalize_rasterization.<locals>.draw_wrapper(artist, renderer, *args, **kwargs)
+     93 @wraps(draw)
+     94 def draw_wrapper(artist, renderer, *args, **kwargs):
+---> 95     result = draw(artist, renderer, *args, **kwargs)
+     96     if renderer._rasterizing:
+     97         renderer.stop_rasterizing()
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/cvxpy/atoms/affine/affine_atom.py:24
-     22 import cvxpy.utilities as u
-     23 from cvxpy.atoms.atom import Atom
----> 24 from cvxpy.cvxcore.python import canonInterface
-     25 from cvxpy.expressions.constants import Constant
-     26 from cvxpy.utilities import performance_utils as perf
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/artist.py:72, in allow_rasterization.<locals>.draw_wrapper(artist, renderer)
+     69     if artist.get_agg_filter() is not None:
+     70         renderer.start_filter()
+---> 72     return draw(artist, renderer)
+     73 finally:
+     74     if artist.get_agg_filter() is not None:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/cvxpy/cvxcore/python/canonInterface.py:25
-     23 import cvxpy.settings as s
-     24 from cvxpy.lin_ops import lin_op as lo
----> 25 from cvxpy.lin_ops.canon_backend import CanonBackend
-     28 def get_parameter_vector(param_size,
-     29                          param_id_to_col,
-     30                          param_id_to_size,
-     31                          param_id_to_value_fn,
-     32                          zero_offset: bool = False):
-     33     """Returns a flattened parameter vector
-     34 
-     35     The flattened vector includes a constant offset (i.e, a 1).
-   (...)
-     48         A flattened NumPy array of parameter values, of length param_size + 1
-     49     """
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/figure.py:3153, in Figure.draw(self, renderer)
+   3150         pass
+   3151         # ValueError can occur when resizing a window.
+-> 3153 self.patch.draw(renderer)
+   3154 mimage._draw_list_compositing_images(
+   3155     renderer, self, artists, self.suppressComposite)
+   3157 for sfig in self.subfigs:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/cvxpy/lin_ops/canon_backend.py:25
-     23 import numpy as np
-     24 import scipy.sparse as sp
----> 25 from scipy.signal import convolve
-     27 import cvxpy.settings as s
-     28 from cvxpy.lin_ops import LinOp
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/artist.py:72, in allow_rasterization.<locals>.draw_wrapper(artist, renderer)
+     69     if artist.get_agg_filter() is not None:
+     70         renderer.start_filter()
+---> 72     return draw(artist, renderer)
+     73 finally:
+     74     if artist.get_agg_filter() is not None:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/signal/__init__.py:320
-    310 from ._upfirdn import upfirdn
-    312 from ._spline import (
-    313     cspline2d,
-    314     qspline2d,
-   (...)
-    317     symiirorder2,
-    318 )
---> 320 from ._bsplines import *
-    321 from ._filter_design import *
-    322 from ._fir_filter_design import *
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/patches.py:588, in Patch.draw(self, renderer)
+    586 tpath = transform.transform_path_non_affine(path)
+    587 affine = transform.get_affine()
+--> 588 self._draw_paths_with_artist_properties(
+    589     renderer,
+    590     [(tpath, affine,
+    591       # Work around a bug in the PDF and SVG renderers, which
+    592       # do not draw the hatches if the facecolor is fully
+    593       # transparent, but do if it is None.
+    594       self._facecolor if self._facecolor[3] else None)])
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/signal/_bsplines.py:7
-      5 # From splinemodule.c
-      6 from ._spline import cspline2d, sepfir2d
-----> 7 from ._signaltools import lfilter, sosfilt, lfiltic
-      9 from scipy.interpolate import BSpline
-     11 __all__ = ['spline_filter', 'gauss_spline',
-     12            'cspline1d', 'qspline1d', 'cspline1d_eval', 'qspline1d_eval']
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/patches.py:573, in Patch._draw_paths_with_artist_properties(self, renderer, draw_path_args_list)
+    570     renderer = PathEffectRenderer(self.get_path_effects(), renderer)
+    572 for draw_path_args in draw_path_args_list:
+--> 573     renderer.draw_path(gc, *draw_path_args)
+    575 gc.restore()
+    576 renderer.close_group('patch')
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/signal/_signaltools.py:12
-     10 from scipy.spatial import cKDTree
-     11 from . import _sigtools
----> 12 from ._ltisys import dlti
-     13 from ._upfirdn import upfirdn, _output_len, _upfirdn_modes
-     14 from scipy import linalg, fft as sp_fft
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:132, in RendererAgg.draw_path(self, gc, path, transform, rgbFace)
+    130 else:
+    131     try:
+--> 132         self._renderer.draw_path(gc, path, transform, rgbFace)
+    133     except OverflowError:
+    134         cant_chunk = ''
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/signal/_ltisys.py:29
-     27 from scipy.linalg import qr as s_qr
-     28 from scipy import linalg
----> 29 from scipy.interpolate import make_interp_spline
-     30 from ._filter_design import (tf2zpk, zpk2tf, normalize, freqs, freqz, freqs_zpk,
-     31                             freqz_zpk)
-     32 from ._lti_conversion import (tf2ss, abcd_normalize, ss2tf, zpk2ss, ss2zpk,
-     33                              cont2discrete, _atleast_2d_or_none)
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/__init__.py:167
-      1 """
-      2 ========================================
-      3 Interpolation (:mod:`scipy.interpolate`)
-   (...)
-    165 (should not be used in new code).
-    166 """
---> 167 from ._interpolate import *
-    168 from ._fitpack_py import *
-    170 # New interface to fitpack library:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:14
-     11 from scipy._lib._util import copy_if_needed
-     12 from scipy.special import comb
----> 14 from . import _fitpack_py
-     15 from . import dfitpack
-     16 from ._polyint import _Interpolator1D
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_fitpack_py.py:8
-      5 import numpy as np
-      7 # These are in the API for fitpack even if not used in fitpack.py itself.
-----> 8 from ._fitpack_impl import bisplrep, bisplev, dblint  # noqa: F401
-      9 from . import _fitpack_impl as _impl
-     10 from ._bsplines import BSpline
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/interpolate/_fitpack_impl.py:103
-     52 _iermess = {
-     53     0: ["The spline has a residual sum of squares fp such that "
-     54         "abs(fp-s)/s<=0.001", None],
-   (...)
-     68     'unknown': ["An error occurred", TypeError]
-     69 }
-     71 _iermess2 = {
-     72     0: ["The spline has a residual sum of squares fp such that "
-     73         "abs(fp-s)/s<=0.001", None],
-   (...)
-     99     'unknown': ["An error occurred", TypeError]
-    100 }
-    102 _parcur_cache = {'t': array([], float), 'wrk': array([], float),
---> 103                  'iwrk': array([], dfitpack_int), 'u': array([], float),
-    104                  'ub': 0, 'ue': 1}
-    107 def splprep(x, w=None, u=None, ub=None, ue=None, k=3, task=0, s=None, t=None,
-    108             full_output=0, nest=None, per=0, quiet=1):
-    109     # see the docstring of `_fitpack_py/splprep`
-    110     if task <= 0:
-
-TypeError: 
+ValueError: object __array__ method not producing an array

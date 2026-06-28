@@ -32,6 +32,14 @@ latexify(width_scale_factor=1.6, fig_height=1.0)
 ------------------
 
 ----- stdout -----
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+optax 0.2.8 requires jax>=0.5.3, but you have jax 0.4.30 which is incompatible.
+optax 0.2.8 requires jaxlib>=0.5.3, but you have jaxlib 0.4.30 which is incompatible.
+orbax-checkpoint 0.11.39 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
+tensorflow-cpu 2.21.0 requires numpy>=1.26.0, but you have numpy 1.22.4 which is incompatible.
+treescope 0.1.10 requires numpy>=1.25.2, but you have numpy 1.22.4 which is incompatible.
+
+----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ------------------
 
@@ -42,125 +50,51 @@ Cell In[1], line 6
 ----> 6     import distrax
       7 except:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/__init__.py:18
-     17 # Bijectors.
----> 18 from distrax._src.bijectors.bijector import Bijector
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/__init__.py:20
      19 from distrax._src.bijectors.bijector import BijectorLike
+---> 20 from distrax._src.bijectors.block import Block
+     21 from distrax._src.bijectors.chain import Chain
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/bijectors/bijector.py:26
-     23 from tensorflow_probability.substrates import jax as tfp
----> 26 tfb = tfp.bijectors
-     28 Array = jnp.ndarray
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/bijectors/block.py:20
+     19 from distrax._src.bijectors import bijector as base
+---> 20 from distrax._src.utils import conversion
+     21 from distrax._src.utils import math
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/lazy_loader.py:56, in LazyLoader.__getattr__(self, item)
-     55 def __getattr__(self, item):
----> 56   module = self._load()
-     57   return getattr(module, item)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/utils/conversion.py:19
+     17 from typing import Optional, Union
+---> 19 import chex
+     20 from distrax._src.bijectors import bijector
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/lazy_loader.py:43, in LazyLoader._load(self)
-     42 # Import the target module and insert it into the parent's namespace
----> 43 module = importlib.import_module(self.__name__)
-     44 if self._parent_module_globals is not None:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/__init__.py:17
+     15 """Chex: Testing made fun, in JAX!"""
+---> 17 from chex._src.asserts import assert_axis_dimension
+     18 from chex._src.asserts import assert_axis_dimension_comparator
 
-File ~/miniconda3/envs/py310/lib/python3.10/importlib/__init__.py:126, in import_module(name, package)
-    125         level += 1
---> 126 return _bootstrap._gcd_import(name[level:], package, level)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/asserts.py:26
+     24 from unittest import mock
+---> 26 from chex._src import asserts_internal as _ai
+     27 from chex._src import pytypes
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:42
-     40 # from tensorflow_probability.substrates.jax.google import autosts  # DisableOnExport  # pylint:disable=line-too-long
-     41 # from tensorflow_probability.substrates.jax.google import staging  # DisableOnExport  # pylint:disable=line-too-long
----> 42 from tensorflow_probability.substrates.jax import bijectors
-     43 from tensorflow_probability.substrates.jax import distributions
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/asserts_internal.py:34
+     33 from absl import logging
+---> 34 from chex._src import pytypes
+     35 import jax
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/bijectors/__init__.py:19
-     17 # pylint: disable=unused-import,wildcard-import,line-too-long,g-importing-member
----> 19 from tensorflow_probability.substrates.jax.bijectors.absolute_value import AbsoluteValue
-     20 from tensorflow_probability.substrates.jax.bijectors.ascending import Ascending
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/pytypes.py:53
+     52 Numeric = Union[Array, Scalar]
+---> 53 Shape = jax.core.Shape
+     54 PRNGKey = jax.random.KeyArray
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/bijectors/absolute_value.py:17
-     15 """AbsoluteValue bijector."""
----> 17 from tensorflow_probability.python.internal.backend.jax.compat import v2 as tf
-     19 from tensorflow_probability.substrates.jax.bijectors import bijector
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/deprecations.py:52, in deprecation_getattr.<locals>.getattr(name)
+     51 if fn is None:  # Is the deprecation accelerated?
+---> 52   raise AttributeError(message)
+     53 warnings.warn(message, DeprecationWarning, stacklevel=2)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/__init__.py:18
-     17 from tensorflow_probability.python.internal.backend.jax import __internal__
----> 18 from tensorflow_probability.python.internal.backend.jax import bitwise
-     19 from tensorflow_probability.python.internal.backend.jax import compat
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/bitwise.py:19
-     17 import numpy as onp; import jax.numpy as np
----> 19 from tensorflow_probability.python.internal.backend.jax import _utils as utils
-     21 __all__ = [
-     22     'bitwise_xor',
-     23     'left_shift',
-     24 ]
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/_utils.py:25
-     24 try:
----> 25   from tensorflow.python.ops import array_ops  # pylint: disable=g-direct-tensorflow-import,g-import-not-at-top,unused-import
-     26   from tensorflow.python.ops import random_ops  # pylint: disable=g-direct-tensorflow-import,g-import-not-at-top,unused-import
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/__init__.py:49
-     47 _tf2.enable()
----> 49 from tensorflow._api.v2 import __internal__
-     50 from tensorflow._api.v2 import __operators__
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/__internal__/__init__.py:8
-      6 import sys as _sys
-----> 8 from tensorflow._api.v2.__internal__ import autograph
-      9 from tensorflow._api.v2.__internal__ import decorator
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/__internal__/autograph/__init__.py:8
-      6 import sys as _sys
-----> 8 from tensorflow.python.autograph.core.ag_ctx import control_status_ctx # line: 34
-      9 from tensorflow.python.autograph.impl.api import tf_convert # line: 493
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/core/ag_ctx.py:21
-     19 import threading
----> 21 from tensorflow.python.autograph.utils import ag_logging
-     22 from tensorflow.python.util.tf_export import tf_export
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/utils/__init__.py:17
-     15 """Utility module that contains APIs usable in the generated code."""
----> 17 from tensorflow.python.autograph.utils.context_managers import control_dependency_on_returns
-     18 from tensorflow.python.autograph.utils.misc import alias_tensors
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/utils/context_managers.py:19
-     17 import contextlib
----> 19 from tensorflow.python.framework import ops
-     20 from tensorflow.python.ops import tensor_array_ops
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/ops.py:50
-     49 from tensorflow.python.client import pywrap_tf_session
----> 50 from tensorflow.python.eager import context
-     51 from tensorflow.python.eager import core
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/eager/context.py:38
-     37 from tensorflow.python.eager import cancellation
----> 38 from tensorflow.python.eager import execute
-     39 from tensorflow.python.eager import executor
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/eager/execute.py:21
-     20 from tensorflow.python.eager import core
----> 21 from tensorflow.python.framework import dtypes
-     22 from tensorflow.python.framework import tensor_conversion_registry
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/dtypes.py:786
-    783     _NP_TO_TF[pdt] = next(
-    784         _NP_TO_TF[dt] for dt in _NP_TO_TF if dt == pdt().dtype)  # pylint: disable=no-value-for-parameter
---> 786 if hasattr(np.dtypes, "StringDType"):
-    787   _NP_TO_TF[np.dtypes.StringDType()] = string
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py:315, in __getattr__(attr)
-    313     return Tester
---> 315 raise AttributeError("module {!r} has no attribute "
-    316                      "{!r}".format(__name__, attr))
-
-AttributeError: module 'numpy' has no attribute 'dtypes'
+AttributeError: jax.core.Shape is deprecated. Use Shape = Sequence[int | Any].
 
 During handling of the above exception, another exception occurred:
 
-ValueError                                Traceback (most recent call last)
+AttributeError                            Traceback (most recent call last)
 Cell In[1], line 9
       7 except:
       8     get_ipython().run_line_magic('pip', 'install -qq distrax')
@@ -168,199 +102,65 @@ Cell In[1], line 9
      10 try:
      11     import optax
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/__init__.py:18
-     15 """Distrax: Probability distributions in JAX."""
-     17 # Bijectors.
----> 18 from distrax._src.bijectors.bijector import Bijector
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/__init__.py:20
+     18 from distrax._src.bijectors.bijector import Bijector
      19 from distrax._src.bijectors.bijector import BijectorLike
-     20 from distrax._src.bijectors.block import Block
+---> 20 from distrax._src.bijectors.block import Block
+     21 from distrax._src.bijectors.chain import Chain
+     22 from distrax._src.bijectors.diag_linear import DiagLinear
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/bijectors/bijector.py:26
-     22 import jax.numpy as jnp
-     23 from tensorflow_probability.substrates import jax as tfp
----> 26 tfb = tfp.bijectors
-     28 Array = jnp.ndarray
-     31 class Bijector(jittable.Jittable, metaclass=abc.ABCMeta):
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/bijectors/block.py:20
+     17 from typing import Tuple
+     19 from distrax._src.bijectors import bijector as base
+---> 20 from distrax._src.utils import conversion
+     21 from distrax._src.utils import math
+     23 Array = base.Array
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/lazy_loader.py:56, in LazyLoader.__getattr__(self, item)
-     55 def __getattr__(self, item):
----> 56   module = self._load()
-     57   return getattr(module, item)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/distrax/_src/utils/conversion.py:19
+     15 """Utility functions for conversion between different types."""
+     17 from typing import Optional, Union
+---> 19 import chex
+     20 from distrax._src.bijectors import bijector
+     21 from distrax._src.bijectors import bijector_from_tfp
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/lazy_loader.py:43, in LazyLoader._load(self)
-     41   self._on_first_access = None
-     42 # Import the target module and insert it into the parent's namespace
----> 43 module = importlib.import_module(self.__name__)
-     44 if self._parent_module_globals is not None:
-     45   self._parent_module_globals[self._local_name] = module
-
-File ~/miniconda3/envs/py310/lib/python3.10/importlib/__init__.py:126, in import_module(name, package)
-    124             break
-    125         level += 1
---> 126 return _bootstrap._gcd_import(name[level:], package, level)
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:42
-     39 from tensorflow_probability.python.version import __version__
-     40 # from tensorflow_probability.substrates.jax.google import autosts  # DisableOnExport  # pylint:disable=line-too-long
-     41 # from tensorflow_probability.substrates.jax.google import staging  # DisableOnExport  # pylint:disable=line-too-long
----> 42 from tensorflow_probability.substrates.jax import bijectors
-     43 from tensorflow_probability.substrates.jax import distributions
-     44 from tensorflow_probability.substrates.jax import experimental
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/bijectors/__init__.py:19
-     15 """Bijective transformations."""
-     17 # pylint: disable=unused-import,wildcard-import,line-too-long,g-importing-member
----> 19 from tensorflow_probability.substrates.jax.bijectors.absolute_value import AbsoluteValue
-     20 from tensorflow_probability.substrates.jax.bijectors.ascending import Ascending
-     21 # from tensorflow_probability.substrates.jax.bijectors.batch_normalization import BatchNormalization
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/bijectors/absolute_value.py:17
-      1 # Copyright 2018 The TensorFlow Probability Authors.
-      2 #
-      3 # Licensed under the Apache License, Version 2.0 (the "License");
-   (...)
-     13 # limitations under the License.
-     14 # ============================================================================
-     15 """AbsoluteValue bijector."""
----> 17 from tensorflow_probability.python.internal.backend.jax.compat import v2 as tf
-     19 from tensorflow_probability.substrates.jax.bijectors import bijector
-     20 from tensorflow_probability.substrates.jax.internal import assert_util
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/__init__.py:18
-     15 """Experimental Numpy backend."""
-     17 from tensorflow_probability.python.internal.backend.jax import __internal__
----> 18 from tensorflow_probability.python.internal.backend.jax import bitwise
-     19 from tensorflow_probability.python.internal.backend.jax import compat
-     20 from tensorflow_probability.python.internal.backend.jax import config
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/bitwise.py:19
-     15 """Numpy bitwise ops."""
-     17 import numpy as onp; import jax.numpy as np
----> 19 from tensorflow_probability.python.internal.backend.jax import _utils as utils
-     21 __all__ = [
-     22     'bitwise_xor',
-     23     'left_shift',
-     24 ]
-     27 bitwise_xor = utils.copy_docstring(
-     28     'tf.bitwise.bitwise_xor',
-     29     lambda x, y, name=None: np.bitwise_xor(x, y))  # pylint: disable=unused-argument
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/_utils.py:25
-     22 from tensorflow_probability.python.internal.backend.jax import nest
-     24 try:
----> 25   from tensorflow.python.ops import array_ops  # pylint: disable=g-direct-tensorflow-import,g-import-not-at-top,unused-import
-     26   from tensorflow.python.ops import random_ops  # pylint: disable=g-direct-tensorflow-import,g-import-not-at-top,unused-import
-     27   import tensorflow.compat.v1 as tf1  # pylint: disable=g-import-not-at-top,unused-import
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/ops/array_ops.py:21
-     18 import numbers
-     19 import numpy as np
----> 21 from tensorflow.core.config import flags
-     22 from tensorflow.dtensor.python import api as d_api
-     23 from tensorflow.python.eager import context
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/core/config/flags.py:19
-     17 # pylint: disable=invalid-import-order, g-bad-import-order, unused-import
-     18 from tensorflow.python import pywrap_tensorflow
----> 19 from tensorflow.python import flags_pybind
-     22 FLAGS = None
-     25 def config():
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/__init__.py:49
-     46 from tensorflow.python import tf2 as _tf2
-     47 _tf2.enable()
----> 49 from tensorflow._api.v2 import __internal__
-     50 from tensorflow._api.v2 import __operators__
-     51 from tensorflow._api.v2 import audio
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/__internal__/__init__.py:8
-      3 """Public API for tf._api.v2.__internal__ namespace
-      4 """
-      6 import sys as _sys
-----> 8 from tensorflow._api.v2.__internal__ import autograph
-      9 from tensorflow._api.v2.__internal__ import decorator
-     10 from tensorflow._api.v2.__internal__ import dispatch
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/__internal__/autograph/__init__.py:8
-      3 """Public API for tf._api.v2.__internal__.autograph namespace
-      4 """
-      6 import sys as _sys
-----> 8 from tensorflow.python.autograph.core.ag_ctx import control_status_ctx # line: 34
-      9 from tensorflow.python.autograph.impl.api import tf_convert # line: 493
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/core/ag_ctx.py:21
-     18 import inspect
-     19 import threading
----> 21 from tensorflow.python.autograph.utils import ag_logging
-     22 from tensorflow.python.util.tf_export import tf_export
-     25 stacks = threading.local()
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/utils/__init__.py:17
-      1 # Copyright 2016 The TensorFlow Authors. All Rights Reserved.
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/__init__.py:17
+      1 # Copyright 2020 DeepMind Technologies Limited. All Rights Reserved.
       2 #
       3 # Licensed under the Apache License, Version 2.0 (the "License");
    (...)
      13 # limitations under the License.
      14 # ==============================================================================
-     15 """Utility module that contains APIs usable in the generated code."""
----> 17 from tensorflow.python.autograph.utils.context_managers import control_dependency_on_returns
-     18 from tensorflow.python.autograph.utils.misc import alias_tensors
-     19 from tensorflow.python.autograph.utils.tensor_list import dynamic_list_append
+     15 """Chex: Testing made fun, in JAX!"""
+---> 17 from chex._src.asserts import assert_axis_dimension
+     18 from chex._src.asserts import assert_axis_dimension_comparator
+     19 from chex._src.asserts import assert_axis_dimension_gt
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/utils/context_managers.py:19
-     15 """Various context managers."""
-     17 import contextlib
----> 19 from tensorflow.python.framework import ops
-     20 from tensorflow.python.ops import tensor_array_ops
-     23 def control_dependency_on_returns(return_value):
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/asserts.py:26
+     23 import unittest
+     24 from unittest import mock
+---> 26 from chex._src import asserts_internal as _ai
+     27 from chex._src import pytypes
+     28 import jax
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/ops.py:50
-     48 from tensorflow.python import tf2
-     49 from tensorflow.python.client import pywrap_tf_session
----> 50 from tensorflow.python.eager import context
-     51 from tensorflow.python.eager import core
-     52 from tensorflow.python.eager import monitoring
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/asserts_internal.py:34
+     31 from typing import Any, Sequence, Union, Callable, List, Optional, Set, Tuple, Type
+     33 from absl import logging
+---> 34 from chex._src import pytypes
+     35 import jax
+     36 from jax.experimental import checkify
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/eager/context.py:38
-     36 from tensorflow.python.client import pywrap_tf_session
-     37 from tensorflow.python.eager import cancellation
----> 38 from tensorflow.python.eager import execute
-     39 from tensorflow.python.eager import executor
-     40 from tensorflow.python.eager import monitoring
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/chex/_src/pytypes.py:53
+     51 Scalar = Union[float, int]
+     52 Numeric = Union[Array, Scalar]
+---> 53 Shape = jax.core.Shape
+     54 PRNGKey = jax.random.KeyArray
+     55 PyTreeDef = jax.tree_util.PyTreeDef
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/eager/execute.py:21
-     19 from tensorflow.python import pywrap_tfe
-     20 from tensorflow.python.eager import core
----> 21 from tensorflow.python.framework import dtypes
-     22 from tensorflow.python.framework import tensor_conversion_registry
-     23 from tensorflow.python.framework import tensor_shape
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/deprecations.py:52, in deprecation_getattr.<locals>.getattr(name)
+     50 message, fn = deprecations[name]
+     51 if fn is None:  # Is the deprecation accelerated?
+---> 52   raise AttributeError(message)
+     53 warnings.warn(message, DeprecationWarning, stacklevel=2)
+     54 return fn
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/dtypes.py:290
-    287   def __reduce__(self):
-    288     return as_dtype, (self.name,)
---> 290 trace_type.register_serializable(DType)
-    292 # Define data type range of numpy dtype
-    293 dtype_range = {
-    294     np.bool_: (False, True),
-    295     np.uint8: (0, 255),
-   (...)
-    304     np.float64: (-1, 1),
-    305 }
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/core/function/trace_type/serialization.py:58, in register_serializable(cls)
-     50 """Registers a Python class to support serialization.
-     51 
-     52 Only register standard TF types. Custom types should NOT be registered.
-   (...)
-     55   cls: Python class to register.
-     56 """
-     57 if cls.experimental_type_proto() in PROTO_CLASS_TO_PY_CLASS:
----> 58   raise ValueError(
-     59       "Existing Python class " +
-     60       PROTO_CLASS_TO_PY_CLASS[cls.experimental_type_proto()].__name__ +
-     61       " already has " + cls.experimental_type_proto().__name__ +
-     62       " as its associated proto representation. Please ensure " +
-     63       cls.__name__ + " has a unique proto representation.")
-     65 PROTO_CLASS_TO_PY_CLASS[cls.experimental_type_proto()] = cls
-
-ValueError: Existing Python class DType already has SerializedDType as its associated proto representation. Please ensure DType has a unique proto representation.
+AttributeError: jax.core.Shape is deprecated. Use Shape = Sequence[int | Any].

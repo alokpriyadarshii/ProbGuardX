@@ -1,25 +1,28 @@
 An error occurred while executing the following cell:
 ------------------
-import jax.numpy as jnp
-import seaborn as sns
+import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
+from jax import vmap
+import os
+import seaborn as sns
 
 try:
-    from probml_utils import latexify, savefig, is_latexify_enabled
+    import probml_utils as pml
 except ModuleNotFoundError:
     %pip install -qq git+https://github.com/probml/probml-utils.git
-    from probml_utils import latexify, savefig, is_latexify_enabled
-
-from sklearn.linear_model import LinearRegression
+    import probml_utils as pml
 ------------------
 
 
 ---------------------------------------------------------------------------
 AttributeError                            Traceback (most recent call last)
-Cell In[1], line 1
-----> 1 import jax.numpy as jnp
-      2 import seaborn as sns
-      3 import matplotlib.pyplot as plt
+Cell In[1], line 4
+      2 import matplotlib.pyplot as plt
+      3 from scipy.stats import multivariate_normal
+----> 4 from jax import vmap
+      5 import os
+      6 import seaborn as sns
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:37
      34 del _cloud_tpu_init

@@ -19,54 +19,31 @@ except ModuleNotFoundError:
 
 
 ---------------------------------------------------------------------------
-RuntimeError                              Traceback (most recent call last)
-Cell In[1], line 8
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 7
+      1 """
+      2 Author : alokpriyadarshii
+      3 Based on : https://github.com/probml/pmtk3/blob/master/demos/gibbsDemoIsing.m
+      4 """
       6 import numpy as np
-      7 import matplotlib.pyplot as plt
-----> 8 import jax
+----> 7 import matplotlib.pyplot as plt
+      8 import jax
       9 import jax.numpy as jnp
-     11 try:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:25
-     22 from jax.version import __version_info__ as __version_info__
-     24 # Set Cloud TPU env vars if necessary before transitively loading C++ backend
----> 25 from jax._src.cloud_tpu_init import cloud_tpu_init as _cloud_tpu_init
-     26 try:
-     27   _cloud_tpu_init()
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/cloud_tpu_init.py:17
-     15 import os
-     16 from jax import version
----> 17 from jax._src import config
-     18 from jax._src import hardware_utils
-     19 from typing import Optional
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:27
-     24 import threading
-     25 from typing import Any, Callable, Generic, NamedTuple, NoReturn, TypeVar, cast
----> 27 from jax._src import lib
-     28 from jax._src.lib import jax_jit
-     29 from jax._src.lib import transfer_guard_lib
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:75
-     71   return _jaxlib_version
-     74 version_str = jaxlib.version.__version__
----> 75 version = check_jaxlib_version(
-     76   jax_version=jax.version.__version__,
-     77   jaxlib_version=jaxlib.version.__version__,
-     78   minimum_jaxlib_version=jax.version._minimum_jaxlib_version)
-     80 # Before importing any C compiled modules from jaxlib, first import the CPU
-     81 # feature guard module to verify that jaxlib was compiled in a way that only
-     82 # uses instructions that are present on this machine.
-     83 import jaxlib.cpu_feature_guard as cpu_feature_guard
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:67, in check_jaxlib_version(jax_version, jaxlib_version, minimum_jaxlib_version)
-     64   raise RuntimeError(msg)
-     66 if _jaxlib_version > _jax_version:
----> 67   raise RuntimeError(
-     68       f'jaxlib version {jaxlib_version} is newer than and '
-     69       f'incompatible with jax version {jax_version}. Please '
-     70       'update your jax and/or jaxlib packages.')
-     71 return _jaxlib_version
-
-RuntimeError: jaxlib version 0.6.2 is newer than and incompatible with jax version 0.4.30. Please update your jax and/or jaxlib packages.
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4

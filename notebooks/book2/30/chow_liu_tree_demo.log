@@ -160,114 +160,106 @@ p.write_png("../figures/tree_structure.png")
 ----- stderr -----
 /github/home/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_validation.py:14: UserWarning: A NumPy version >=1.23.5 and <2.5.0 is required for this version of SciPy (detected version 1.22.4)
   from scipy.sparse import csr_matrix, issparse
------ stdout -----
-Note: you may need to restart the kernel to use updated packages.
------ stdout -----
-Note: you may need to restart the kernel to use updated packages.
 ------------------
 
 ---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 18
-     17 try:
----> 18     from pgmpy.estimators import TreeSearch
-     19 except ModuleNotFoundError:
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 10
+      1 # Chow-Liu algorithm
+      2 # Author: alokpriyadarshii
+      3 # Based on
+      4 # https://github.com/probml/pmtk3/blob/master/demos/chowliuTreeDemo.m
+      5 
+      6 #!pip install -qq pgmpy
+      9 import pandas as pd
+---> 10 from sklearn.datasets import fetch_20newsgroups
+     12 try:
+     13     import networkx as nx
 
-ModuleNotFoundError: No module named 'pgmpy'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/__init__.py:73
+     62 # `_distributor_init` allows distributors to run custom init code.
+     63 # For instance, for the Windows wheel, this is used to pre-load the
+     64 # vcomp shared library runtime for OpenMP embedded in the sklearn/.libs
+   (...)
+     67 # later is linked to the OpenMP runtime to make it possible to introspect
+     68 # it and importing it first would fail if the OpenMP dll cannot be found.
+     69 from . import (  # noqa: F401 E402
+     70     __check_build,
+     71     _distributor_init,
+     72 )
+---> 73 from .base import clone  # noqa: E402
+     74 from .utils._show_versions import show_versions  # noqa: E402
+     76 _submodules = [
+     77     "calibration",
+     78     "cluster",
+   (...)
+    114     "compose",
+    115 ]
 
-During handling of the above exception, another exception occurred:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/base.py:19
+     17 from ._config import config_context, get_config
+     18 from .exceptions import InconsistentVersionWarning
+---> 19 from .utils._metadata_requests import _MetadataRequester, _routing_enabled
+     20 from .utils._missing import is_scalar_nan
+     21 from .utils._param_validation import validate_parameter_constraints
 
-AttributeError                            Traceback (most recent call last)
-Cell In[1], line 21
-     19 except ModuleNotFoundError:
-     20     get_ipython().run_line_magic('pip', 'install -qq pgmpy')
----> 21     from pgmpy.estimators import TreeSearch
-     22 from sklearn.feature_extraction.text import CountVectorizer
-     24 try:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/__init__.py:9
+      7 from . import metadata_routing
+      8 from ._bunch import Bunch
+----> 9 from ._chunking import gen_batches, gen_even_slices
+     11 # Make _safe_indexing importable from here for backward compat as this particular
+     12 # helper is considered semi-private and typically very useful for third-party
+     13 # libraries that want to comply with scikit-learn's estimator API. In particular,
+     14 # _safe_indexing was included in our public API documentation despite the leading
+     15 # `_` in its name.
+     16 from ._indexing import (
+     17     _safe_indexing,  # noqa: F401
+     18     resample,
+     19     shuffle,
+     20 )
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/estimators/__init__.py:1
-----> 1 from .base import BaseEstimator, MarginalEstimator, ParameterEstimator, StructureEstimator
-      2 from .MLE import MaximumLikelihoodEstimator
-      3 from .BayesianEstimator import BayesianEstimator
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_chunking.py:11
+      8 import numpy as np
+     10 from .._config import get_config
+---> 11 from ._param_validation import Interval, validate_params
+     14 def chunk_generator(gen, chunksize):
+     15     """Chunk generator, ``gen`` into lists of length ``chunksize``. The last
+     16     chunk may have a length less than ``chunksize``."""
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/estimators/base.py:9
-      7 from pgmpy.factors import FactorDict
-      8 from pgmpy.factors.discrete import DiscreteFactor
-----> 9 from pgmpy.inference.ExactInference import BeliefPropagation
-     10 from pgmpy.utils import build_state_names, get_state_counts, preprocess_data
-     13 class BaseEstimator:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_validation.py:17
+     14 from scipy.sparse import csr_matrix, issparse
+     16 from .._config import config_context, get_config
+---> 17 from .validation import _is_arraylike_not_scalar
+     20 class InvalidParameterError(ValueError, TypeError):
+     21     """Custom exception to be raised when the parameter of a class/method/function
+     22     does not have a valid type or value.
+     23     """
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/inference/__init__.py:2
-      1 from .base import Inference  # isort: skip  # noqa: E402
-----> 2 from .CausalInference import CausalInference
-      3 from .ExactInference import BeliefPropagation, BeliefPropagationWithMessagePassing, VariableElimination
-      4 from .ApproxInference import ApproxInference
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/validation.py:21
+     19 from .. import get_config as _get_config
+     20 from ..exceptions import DataConversionWarning, NotFittedError, PositiveSpectrumWarning
+---> 21 from ..utils._array_api import _asarray_with_order, _is_numpy_namespace, get_namespace
+     22 from ..utils.deprecation import _deprecate_force_all_finite
+     23 from ..utils.fixes import ComplexWarning, _preserve_dia_indices_dtype
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/inference/CausalInference.py:12
-     10 from pgmpy import config, logger
-     11 from pgmpy.base import DAG
----> 12 from pgmpy.estimators.LinearModel import LinearEstimator
-     13 from pgmpy.factors.discrete import DiscreteFactor
-     14 from pgmpy.models import (
-     15     DiscreteBayesianNetwork,
-     16     FunctionalBayesianNetwork,
-     17     LinearGaussianBayesianNetwork,
-     18     SEMGraph,
-     19 )
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_array_api.py:20
+     18 from ..externals import array_api_extra as xpx
+     19 from ..externals.array_api_compat import numpy as np_compat
+---> 20 from .fixes import parse_version
+     22 # TODO: complete __all__
+     23 __all__ = ["xpx"]  # we import xpx here just to re-export it, need this to appease ruff
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pgmpy/estimators/LinearModel.py:1
-----> 1 import statsmodels.api as sm
-      2 from statsmodels.api import GLS, OLS, WLS
-      5 class LinearEstimator:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/fixes.py:16
+     14 import scipy
+     15 import scipy.sparse.linalg
+---> 16 import scipy.stats
+     17 from scipy import optimize
+     19 try:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/statsmodels/api.py:138
-    136 from .regression.recursive_ls import RecursiveLS
-    137 from .robust.robust_linear_model import RLM
---> 138 from .stats import api as stats
-    139 from .tools.print_version import show_versions
-    140 from .tools.tools import add_constant, categorical
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/__init__.py:624
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/statsmodels/stats/api.py:15
-     12 from ._lilliefors import lilliefors
-     14 from ._knockoff import RegressionFDR
----> 15 from . import multicomp
-     16 from .multitest import (multipletests, fdrcorrection, fdrcorrection_twostage,
-     17                         local_fdr, NullDistribution)
-     18 from .multicomp import tukeyhsd
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/_stats_py.py:52
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/statsmodels/stats/multicomp.py:7
-      1 """
-      2 
-      3 Created on Fri Mar 30 18:27:25 2012
-      4 Author: Josef Perktold
-      5 """
-----> 7 from statsmodels.sandbox.stats.multicomp import (  # noqa:F401
-      8     tukeyhsd, MultiComparison)
-     10 __all__ = ['tukeyhsd', 'MultiComparison']
-     13 def pairwise_tukeyhsd(endog, groups, alpha=0.05):
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/distributions.py:11
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/statsmodels/sandbox/stats/multicomp.py:72
-     69 import math
-     71 import numpy as np
----> 72 from numpy.testing import assert_almost_equal, assert_equal
-     73 from scipy import stats, interpolate
-     75 from statsmodels.iolib.table import SimpleTable
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/testing/__init__.py:11
-      8 from unittest import TestCase
-     10 from . import _private
----> 11 from ._private.utils import *
-     12 from ._private.utils import (_assert_valid_refcount, _gen_alignment_data)
-     13 from ._private import extbuild
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/testing/_private/utils.py:96
-     94 IS_PYSTON = hasattr(sys, "pyston_version_info")
-     95 HAS_REFCOUNT = getattr(sys, 'getrefcount', None) is not None and not IS_PYSTON
----> 96 HAS_LAPACK64 = numpy.linalg._umath_linalg._ilp64
-     98 IS_MUSL = False
-     99 # alternate way is
-    100 # from packaging.tags import sys_tags
-    101 #     _tags = list(sys_tags())
-    102 #     if 'musllinux' in _tags[0].platform:
-
-AttributeError: module 'numpy.linalg._umath_linalg' has no attribute '_ilp64'
+ImportError: cannot import name '_discrete_distns' from partially initialized module 'scipy.stats' (most likely due to a circular import) (/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/stats/__init__.py)

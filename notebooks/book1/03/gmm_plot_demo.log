@@ -114,25 +114,104 @@ plot_gaussian_mixture(Mu, Sigma, weights=weights)
 ------------------
 
 ----- stderr -----
-/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:70: UserWarning: renaming figures/mixgaussSurface.pdf to figures/mixgaussSurface_latexified.pdf because LATEXIFY is True
-  warnings.warn(
------ stdout -----
-saving image to figures/mixgaussSurface_latexified.pdf
-Figure size: [12.  7.]
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 2.2.6
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.6 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/github/home/miniconda3/envs/py310/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel_launcher.py", line 18, in <module>
+    app.launch_new_instance()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/traitlets/config/application.py", line 1082, in launch_instance
+    app.start()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/kernelapp.py", line 807, in start
+    self.io_loop.start()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/tornado/platform/asyncio.py", line 211, in start
+    self.asyncio_loop.run_forever()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/utils.py", line 71, in preserve_context
+    return await f(*args, **kwargs)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 621, in shell_main
+    await self.dispatch_shell(msg, subshell_id=subshell_id)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 478, in dispatch_shell
+    await result
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/ipkernel.py", line 372, in execute_request
+    await super().execute_request(stream, ident, parent)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/kernelbase.py", line 834, in execute_request
+    reply_content = await reply_content
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/ipkernel.py", line 460, in do_execute
+    res = shell.run_cell(
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/ipykernel/zmqshell.py", line 665, in run_cell
+    return super().run_cell(*args, **kwargs)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3077, in run_cell
+    result = self._run_cell(
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3132, in _run_cell
+    result = runner(coro)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/async_helpers.py", line 128, in _pseudo_sync_runner
+    coro.send(None)
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3336, in run_cell_async
+    has_raised = await self.run_ast_nodes(code_ast.body, cell_name,
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3519, in run_ast_nodes
+    if await self.run_code(code, result, async_=asy):
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py", line 3579, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "/tmp/ipykernel_3077/565645007.py", line 4, in <module>
+    from scipy import linalg
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/linalg/__init__.py", line 195, in <module>
+    from .misc import *
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/linalg/misc.py", line 3, in <module>
+    from .blas import get_blas_funcs
+  File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/linalg/blas.py", line 213, in <module>
+    from scipy.linalg import _fblas
 ------------------
 
 ---------------------------------------------------------------------------
-TypeError                                 Traceback (most recent call last)
-Cell In[1], line 111
-    107     plt.show()
-    110 weights = [0.5, 0.3, 0.2]
---> 111 plot_gaussian_mixture(Mu, Sigma, weights=weights)
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 4
+      2 import matplotlib.pyplot as plt
+      3 from matplotlib import style
+----> 4 from scipy import linalg
+      5 from scipy.stats import multivariate_normal
+      7 try:
 
-Cell In[1], line 100, in plot_gaussian_mixture(Mu, Sigma, weights, x, y)
-     97     Z = Z + weights[i] * multivariate_normal(Mu[i].ravel(), Sigma[i]).pdf(Pos)
-     99 fig = plt.figure(figsize=(12, 7))
---> 100 ax = fig.gca(projection="3d")
-    101 ax.plot_surface(X, Y, Z, cmap="copper", lw=0.5, rstride=1, cstride=1)
-    102 ax.set_xlabel("X axis")
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/linalg/__init__.py:195
+      1 """
+      2 ====================================
+      3 Linear algebra (:mod:`scipy.linalg`)
+   (...)
+    192 
+    193 """  # noqa: E501
+--> 195 from .misc import *
+    196 from .basic import *
+    197 from .decomp import *
 
-TypeError: FigureBase.gca() got an unexpected keyword argument 'projection'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/linalg/misc.py:3
+      1 import numpy as np
+      2 from numpy.linalg import LinAlgError
+----> 3 from .blas import get_blas_funcs
+      4 from .lapack import get_lapack_funcs
+      6 __all__ = ['LinAlgError', 'LinAlgWarning', 'norm']
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/linalg/blas.py:213
+    210 import numpy as _np
+    211 import functools
+--> 213 from scipy.linalg import _fblas
+    214 try:
+    215     from scipy.linalg import _cblas
+
+ImportError: numpy.core.multiarray failed to import

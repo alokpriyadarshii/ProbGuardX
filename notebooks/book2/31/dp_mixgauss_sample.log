@@ -1,25 +1,14 @@
 An error occurred while executing the following cell:
 ------------------
-import jax
-import jax.numpy as jnp
-import numpy as np
-import matplotlib
-import seaborn as sns
-import matplotlib.pyplot as plt
-from IPython import display
-
 try:
     import probml_utils as pml
-except:
+except ModuleNotFoundError:
     %pip install -qq git+https://github.com/probml/probml-utils.git
     import probml_utils as pml
-
-
-from mpl_toolkits.mplot3d import Axes3D
 ------------------
 
 ----- stdout -----
-ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/scipy-1.15.3.dist-info/'
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/contourpy-1.3.2.dist-info/METADATA'
 
 
 ----- stdout -----
@@ -28,20 +17,19 @@ Note: you may need to restart the kernel to use updated packages.
 
 ---------------------------------------------------------------------------
 ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 10
-      9 try:
----> 10     import probml_utils as pml
-     11 except:
+Cell In[1], line 2
+      1 try:
+----> 2     import probml_utils as pml
+      3 except ModuleNotFoundError:
 
 ModuleNotFoundError: No module named 'probml_utils'
 
 During handling of the above exception, another exception occurred:
 
 ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 13
-     11 except:
-     12     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
----> 13     import probml_utils as pml
-     16 from mpl_toolkits.mplot3d import Axes3D
+Cell In[1], line 5
+      3 except ModuleNotFoundError:
+      4     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
+----> 5     import probml_utils as pml
 
 ModuleNotFoundError: No module named 'probml_utils'
