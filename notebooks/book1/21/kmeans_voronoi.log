@@ -220,4 +220,4 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_param_v
     100     f" {constraints_str}. Got {param_val!r} instead."
     101 )
 
-InvalidParameterError: The 'algorithm' parameter of KMeans must be a str among {'lloyd', 'elkan'}. Got 'full' instead.
+InvalidParameterError: The 'algorithm' parameter of KMeans must be a str among {'elkan', 'lloyd'}. Got 'full' instead.

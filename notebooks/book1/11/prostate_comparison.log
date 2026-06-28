@@ -235,6 +235,9 @@ pml.savefig("prostate-subsets-CV.pdf")
 plt.show()
 ------------------
 
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
 
 ---------------------------------------------------------------------------
 AttributeError                            Traceback (most recent call last)
