@@ -20,11 +20,10 @@ Found existing installation: numpy 2.2.6
 ----- stdout -----
 Uninstalling numpy-2.2.6:
   Successfully uninstalled numpy-2.2.6
------ stdout -----
 WARNING: Skipping resampy as it is not installed.
-WARNING: Skipping librosa as it is not installed.
 
 ----- stdout -----
+WARNING: Skipping librosa as it is not installed.
 WARNING: Skipping kapre as it is not installed.
 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
 
@@ -32,8 +31,8 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 Note: you may need to restart the kernel to use updated packages.
 ----- stdout -----
 Collecting git+https://github.com/bambinos/bambi.git
-  Cloning https://github.com/bambinos/bambi.git to /tmp/pip-req-build-g4tp0fa6
-  Running command git clone --filter=blob:none --quiet https://github.com/bambinos/bambi.git /tmp/pip-req-build-g4tp0fa6
+  Cloning https://github.com/bambinos/bambi.git to /tmp/pip-req-build-3aiurh5m
+  Running command git clone --filter=blob:none --quiet https://github.com/bambinos/bambi.git /tmp/pip-req-build-3aiurh5m
 ----- stdout -----
   Resolved https://github.com/bambinos/bambi.git to commit de5cde3bcad1e1fb5db86e7737e1fca2c220203d
 ----- stdout -----
@@ -41,9 +40,7 @@ Collecting git+https://github.com/bambinos/bambi.git
 ----- stdout -----
  \
 ----- stdout -----
- |
------ stdout -----
- done
+ | done
 ----- stdout -----
   Getting requirements to build wheel ... -
 ----- stdout -----
