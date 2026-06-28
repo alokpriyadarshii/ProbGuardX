@@ -88,12 +88,8 @@ plt.show()
 ------------------
 
 ----- stdout -----
-ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-jax 0.6.2 requires numpy>=1.26, but you have numpy 1.22.1 which is incompatible.
-jax 0.6.2 requires scipy>=1.12, but you have scipy 1.7.3 which is incompatible.
-jaxlib 0.6.2 requires numpy>=1.26, but you have numpy 1.22.1 which is incompatible.
-jaxlib 0.6.2 requires scipy>=1.12, but you have scipy 1.7.3 which is incompatible.
-scikit-learn 1.7.2 requires scipy>=1.8.0, but you have scipy 1.7.3 which is incompatible.
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib-3.10.9.dist-info/METADATA'
+
 
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
@@ -118,51 +114,4 @@ Cell In[1], line 9
      10 import numpy as np
      11 import scipy.stats as stats
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pymc3/__init__.py:35
-     26 # Workaround for Theano bug that tries to access blas_opt_info;
-     27 #  must be done before importing theano.
-     28 # https://github.com/pymc-devs/pymc/issues/5310
-     29 # Copied from theano/link/c/cmodule.py: default_blas_ldflags()
-     30 if (
-     31     hasattr(numpy.distutils, "__config__")
-     32     and numpy.distutils.__config__
-     33     and not hasattr(numpy.distutils.__config__, "blas_opt_info")
-     34 ):
----> 35     import numpy.distutils.system_info  # noqa
-     37     # We need to catch warnings as in some cases NumPy print
-     38     # stuff that we don't want the user to see.
-     39     with warnings.catch_warnings(record=True):
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/system_info.py:196
-    191 from numpy.distutils.exec_command import (
-    192     find_executable, filepath_from_subprocess_output,
-    193     )
-    194 from numpy.distutils.misc_util import (is_sequence, is_string,
-    195                                        get_shared_lib_extension)
---> 196 from numpy.distutils.command.config import config as cmd_config
-    197 from numpy.distutils import customized_ccompiler as _customized_ccompiler
-    198 from numpy.distutils import _shell_utils
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/command/config.py:19
-     17 import distutils
-     18 from numpy.distutils.exec_command import filepath_from_subprocess_output
----> 19 from numpy.distutils.mingw32ccompiler import generate_manifest
-     20 from numpy.distutils.command.autodist import (check_gcc_function_attribute,
-     21                                               check_gcc_function_attribute_with_intrinsics,
-     22                                               check_gcc_variable_attribute,
-   (...)
-     25                                               check_restrict,
-     26                                               check_compiler_gcc)
-     28 LANG_EXT['f77'] = '.f'
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/distutils/mingw32ccompiler.py:28
-     26 import distutils.cygwinccompiler
-     27 from distutils.unixccompiler import UnixCCompiler
----> 28 from distutils.msvccompiler import get_build_version as get_build_msvc_version
-     29 from distutils.errors import UnknownFileError
-     30 from numpy.distutils.misc_util import (msvc_runtime_library,
-     31                                        msvc_runtime_version,
-     32                                        msvc_runtime_major,
-     33                                        get_build_architecture)
-
-ModuleNotFoundError: No module named 'distutils.msvccompiler'
+ModuleNotFoundError: No module named 'pymc3'
