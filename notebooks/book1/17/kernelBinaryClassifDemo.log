@@ -133,19 +133,20 @@ for (name, clf) in classifiers.items():
 ----- stdout -----
 SVM c=  14.81399539659665
 saving image to figures/kernelBinaryClassifDemologregL2_latexified.pdf
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1281: FutureWarning: 'multi_class' was deprecated in version 1.5 and will be removed in 1.8. Use OneVsRestClassifier(LogisticRegression(..)) instead. Leave it to its default value to avoid this warning.
+  warnings.warn(
+/tmp/ipykernel_2845/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
+  plt.scatter(X[row_ix, 0], X[row_ix, 1], cmap="Paired", marker="X", s=30)
+/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:70: UserWarning: renaming figures/kernelBinaryClassifDemologregL2.pdf to figures/kernelBinaryClassifDemologregL2_latexified.pdf because LATEXIFY is True
+  warnings.warn(
+----- stdout -----
 Figure size: [6.4 4.8]
 ----- stderr -----
 /github/home/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1281: FutureWarning: 'multi_class' was deprecated in version 1.5 and will be removed in 1.8. Use OneVsRestClassifier(LogisticRegression(..)) instead. Leave it to its default value to avoid this warning.
   warnings.warn(
-/tmp/ipykernel_2825/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
-  plt.scatter(X[row_ix, 0], X[row_ix, 1], cmap="Paired", marker="X", s=30)
-/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:70: UserWarning: renaming figures/kernelBinaryClassifDemologregL2.pdf to figures/kernelBinaryClassifDemologregL2_latexified.pdf because LATEXIFY is True
-  warnings.warn(
 ----- stderr -----
-/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1281: FutureWarning: 'multi_class' was deprecated in version 1.5 and will be removed in 1.8. Use OneVsRestClassifier(LogisticRegression(..)) instead. Leave it to its default value to avoid this warning.
-  warnings.warn(
------ stderr -----
-/tmp/ipykernel_2825/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
+/tmp/ipykernel_2845/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
   plt.scatter(X[row_ix, 0], X[row_ix, 1], cmap="Paired", marker="X", s=30)
 /github/home/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:70: UserWarning: renaming figures/kernelBinaryClassifDemologregL1.pdf to figures/kernelBinaryClassifDemologregL1_latexified.pdf because LATEXIFY is True
   warnings.warn(
@@ -153,7 +154,7 @@ Figure size: [6.4 4.8]
 saving image to figures/kernelBinaryClassifDemologregL1_latexified.pdf
 Figure size: [6.4 4.8]
 ----- stderr -----
-/tmp/ipykernel_2825/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
+/tmp/ipykernel_2845/2390654780.py:67: UserWarning: No data for colormapping provided via 'c'. Parameters 'cmap' will be ignored
   plt.scatter(X[row_ix, 0], X[row_ix, 1], cmap="Paired", marker="X", s=30)
 ------------------
 
