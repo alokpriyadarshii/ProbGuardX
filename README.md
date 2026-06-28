@@ -411,18 +411,3 @@ python3 -m http.server 8080
 | SAS     | `data_tools/sas/sas_customer_activity.csv`        |
 | MapReduce | `data_tools/customer_activity.csv`              |
 
----
-
-## License
-
-This project includes `LICENSE.txt`.
-
----
-
-## Author
-
-**Alok Priyadarshi**
-
-GitHub: [alokpriyadarshii](https://github.com/alokpriyadarshii)
-
-Email: `alokpriyadarshi618@gmail.com`
