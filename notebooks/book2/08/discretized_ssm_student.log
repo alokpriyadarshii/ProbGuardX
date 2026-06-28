@@ -30,9 +30,4 @@ Cell In[4], line 1
       2     def get_next_x_true(x_prev, k, v):
       3         x_true = f(x_prev, v[k - 1], k=k - 1)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/deprecations.py:55, in deprecation_getattr.<locals>.getattr(name)
-     53   warnings.warn(message, DeprecationWarning, stacklevel=2)
-     54   return fn
----> 55 raise AttributeError(f"module {module!r} has no attribute {name!r}")
-
 AttributeError: module 'jax.numpy' has no attribute 'DeviceArray'
