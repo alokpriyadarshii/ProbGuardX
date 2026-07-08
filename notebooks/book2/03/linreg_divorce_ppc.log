@@ -130,8 +130,19 @@ plt.show()
 ------------------
 
 ----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/jax-0.6.2.dist-info/METADATA'
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
 jax version 0.4.30
 jax backend cpu
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/pty.py:89: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  pid, fd = os.forkpty()
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
 ------------------
 
 ---------------------------------------------------------------------------

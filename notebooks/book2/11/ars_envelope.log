@@ -1,61 +1,38 @@
 An error occurred while executing the following cell:
 ------------------
-
+# -*- coding: utf-8 -*-
+# based on https://github.com/probml/pmtk3/blob/master/demos/arsEnvelope.m
+# author : alokpriyadarshii
 import numpy as np
-np.set_printoptions(precision=3)
 import matplotlib.pyplot as plt
-import pandas as pd
+import matplotlib
 
-import jax
-print("jax version {}".format(jax.__version__))
-print("jax backend {}".format(jax.lib.xla_bridge.get_backend().platform))
-
-import jax.numpy as jnp
-from jax import random
-
-rng_key = random.PRNGKey(0)
-rng_key, rng_key_ = random.split(rng_key)
+%matplotlib inline
 
 try:
-    import numpyro
+    from scipy.stats import norm
 except ModuleNotFoundError:
-    %pip install -qq numpyro
-    import numpyro
-
-
-import numpyro.distributions as dist
-from numpyro.diagnostics import hpdi, print_summary
-from numpyro.infer import Predictive
-from numpyro.infer import SVI, Trace_ELBO
-from numpyro.infer.autoguide import AutoLaplaceApproximation
-import numpyro.optim as optim
-
-
-try:
-    import arviz as az
-except ModuleNotFoundError:
-    %pip install -qq arviz
-    import arviz as az
+    %pip install -qq scipy.stats
+    from scipy.stats import norm
 
 try:
     from probml_utils import savefig, latexify
 except ModuleNotFoundError:
     %pip install -qq git+https://github.com/probml/probml-utils.git
     from probml_utils import savefig, latexify
-
-import seaborn as sns
-latexify(3, fig_height = 1.5)
 ------------------
 
 
 ---------------------------------------------------------------------------
 ImportError                               Traceback (most recent call last)
-Cell In[1], line 3
-      1 import numpy as np
-      2 np.set_printoptions(precision=3)
-----> 3 import matplotlib.pyplot as plt
-      4 import pandas as pd
-      6 import jax
+Cell In[1], line 5
+      1 # -*- coding: utf-8 -*-
+      2 # based on https://github.com/probml/pmtk3/blob/master/demos/arsEnvelope.m
+      3 # author : alokpriyadarshii
+      4 import numpy as np
+----> 5 import matplotlib.pyplot as plt
+      6 import matplotlib
+      8 get_ipython().run_line_magic('matplotlib', 'inline')
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
     259         if parse_version(module.__version__) < parse_version(minver):
