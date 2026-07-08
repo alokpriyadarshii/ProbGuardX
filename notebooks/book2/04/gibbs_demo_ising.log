@@ -1,49 +1,54 @@
 An error occurred while executing the following cell:
 ------------------
-"""
-Author : alokpriyadarshii
-Based on : https://github.com/probml/pmtk3/blob/master/demos/gibbsDemoIsing.m
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-import jax
-import jax.numpy as jnp
-
-try:
-    import probml_utils as pml
-except ModuleNotFoundError:
-    %pip install -qq git+https://github.com/probml/probml-utils.git
-    import probml_utils as pml
+J = 10
+sample_grid = gibbs_samples_jit(jax.random.PRNGKey(2), J, niter)
+plot_samples(J, sample_grid, 2)
 ------------------
 
 
 ---------------------------------------------------------------------------
-ImportError                               Traceback (most recent call last)
-Cell In[1], line 7
-      1 """
-      2 Author : alokpriyadarshii
-      3 Based on : https://github.com/probml/pmtk3/blob/master/demos/gibbsDemoIsing.m
-      4 """
-      6 import numpy as np
-----> 7 import matplotlib.pyplot as plt
-      8 import jax
-      9 import jax.numpy as jnp
+TypeError                                 Traceback (most recent call last)
+Cell In[8], line 2
+      1 J = 10
+----> 2 sample_grid = gibbs_samples_jit(jax.random.PRNGKey(2), J, niter)
+      3 plot_samples(J, sample_grid, 2)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
-    259         if parse_version(module.__version__) < parse_version(minver):
-    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
-    261                               f"you have {module.__version__}")
---> 264 _check_versions()
-    267 # The decorator ensures this always returns the same handler (and it is only
-    268 # attached once).
-    269 @functools.cache
-    270 def _ensure_handler():
+    [... skipping hidden 16 frame]
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
-    258 module = importlib.import_module(modname)
-    259 if parse_version(module.__version__) < parse_version(minver):
---> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
-    261                       f"you have {module.__version__}")
+Cell In[2], line 31, in gibbs_samples(rng_key, J, niter)
+     28     return grid, None
+     30 keys = jax.random.split(key=rng_key, num=niter)
+---> 31 grid, _ = jax.lax.scan(one_step, grid, keys)
+     32 return grid
 
-ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4
+    [... skipping hidden 24 frame]
+
+Cell In[2], line 25, in gibbs_samples.<locals>.one_step(grid, key)
+     23 iy = jax.random.choice(keys[1], a=pixels)  # pick random y pixel
+     24 e = energy(ix, iy, grid, J)  # calculate enerygy on (ix, iy)
+---> 25 p_ix_iy = jax.nn.sigmoid(e)  # probability
+     26 u = jax.random.uniform(key)
+     27 grid = grid.at[iy, ix].set(jax.lax.cond(u < p_ix_iy, lambda: 1, lambda: -1))
+
+    [... skipping hidden 14 frame]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/nn/functions.py:206, in sigmoid(x)
+    187 @partial(jax.jit, inline=True)
+    188 def sigmoid(x: ArrayLike) -> Array:
+    189   r"""Sigmoid activation function.
+    190 
+    191   Computes the element-wise function:
+   (...)
+    204 
+    205   """
+--> 206   return lax.logistic(x)
+
+    [... skipping hidden 9 frame]
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lax/lax.py:3888, in unop_dtype_rule(result_dtype, accepted_dtypes, name, aval, **kwargs)
+   3886   typename = dtype_to_string(aval.dtype)
+   3887   accepted_typenames = (t.__name__ for t in accepted_dtypes)
+-> 3888   raise TypeError(msg.format(name, typename, ', '.join(accepted_typenames)))
+   3889 return result_dtype(aval.dtype, **kwargs)
+
+TypeError: logistic does not accept dtype int32. Accepted dtypes are subtypes of floating, complexfloating.
