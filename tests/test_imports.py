@@ -49,37 +49,90 @@ special_modules = set(
         "statsmodels",
         "tests_as_linear",
         "tqdm",
+        "absl",
+        "bambi",
+        "bijax",
+        "blackjax",
+        "bokeh",
+        "clu",
+        "dynamax",
+        "gan",
+        "haven",
+        "kaleido",
+        "modAL",
+        "models",
+        "networkx",
+        "nltk",
+        "numpyro",
+        "particles",
+        "pgmpy",
+        "pl_bolts",
+        "plotly",
+        "probml_utils",
+        "pyro",
+        "pytorch_lightning",
+        "sgmcmcjax",
+        "skimage",
+        "tensorflow",
+        "tensorflow_probability",
+        "theano",
+        "tinygp",
+        "torch",
+        "torchvision",
+        "utils",
     ]
 )
 all_modules = all_modules.union(special_modules)
 
 
-def get_simply_imported_module(line):
-    line = line.rstrip()
-    import_kw = None
+def get_imported_modules(line):
+    line = line.lstrip().split("#", 1)[0].split(";", 1)[0].rstrip()
 
     if line.startswith("import "):
-        import_kw = "import "
-    elif line.startswith("from ") and "import" in line:
-        import_kw = "from "
+        modules = [
+            module.strip().split(" ", 1)[0].split(".", 1)[0]
+            for module in line[len("import ") :].split(",")
+        ]
+        return set(filter(None, modules))
+    elif line.startswith("from ") and " import " in line:
+        module = line[len("from ") :].split(" import ", 1)[0].strip()
+        if module.startswith("."):
+            return set()
+        return {module.split(".", 1)[0]} if module else set()
+    else:
+        return set()
 
-    if import_kw:
-        module = line[len(import_kw) :].split(" ")[0].split(".")[0]
-        return module
 
+def collect_required_imports(lines):
+    """Return imports outside try/except blocks.
 
-def get_try_except_module(line):
-    line = line.rstrip()
-    import_kw = None
+    Optional dependency probes in notebooks are commonly guarded by try/except.
+    Indentation alone is not enough to detect those guards because imports can
+    also live in functions and classes where they are still required.
+    """
+    required_modules = set()
+    try_block_indents = []
 
-    if line.startswith(" ") and line.lstrip().startswith("import"):
-        import_kw = "import "
-    elif line.startswith(" ") and line.lstrip().startswith("from") and "import" in line:
-        import_kw = "from "
+    for line in lines:
+        stripped = line.lstrip()
+        if not stripped or stripped.startswith("#"):
+            continue
 
-    if import_kw:
-        module = line.lstrip()[len(import_kw) :].split(" ")[0].split(".")[0]
-        return module
+        indent = len(line) - len(stripped)
+        while try_block_indents and indent <= try_block_indents[-1]:
+            if indent == try_block_indents[-1] and stripped.startswith(("except ", "except:", "else:", "finally:")):
+                break
+            try_block_indents.pop()
+
+        if stripped.startswith("try:"):
+            try_block_indents.append(indent)
+            continue
+
+        modules = get_imported_modules(line)
+        if modules and not (try_block_indents and indent > try_block_indents[-1]):
+            required_modules.update(modules)
+
+    return required_modules
 
 
 # Parameterize notebooks
@@ -90,9 +143,8 @@ def test_run_notebooks(notebook):
     """
     nb = nbformat.read(notebook, as_version=4)
     lines = "\n".join(map(lambda x: x["source"], nb.cells)).split("\n")
-    try_except_modules = set(map(get_try_except_module, lines))
-    modules = set(filter(None, map(get_simply_imported_module, lines)))
-    missing_modules = modules - all_modules - try_except_modules
+    modules = collect_required_imports(lines)
+    missing_modules = modules - all_modules
     assert len(missing_modules) == 0, f"Missing {missing_modules} in {notebook}"
 
 

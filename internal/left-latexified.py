@@ -6,7 +6,7 @@ bookv2_path = "../../bookv2"
 
 
 def to_latex_nb_name(notebook):
-    return notebook.replace("_", "\_").replace(".ipynb", "")
+    return notebook.replace("_", r"\_").replace(".ipynb", "")
 
 
 latexified_figs = glob("internal/figures/*/*_latexified.pdf")
@@ -17,10 +17,10 @@ bookv2_figs = set(map(lambda x: x.split("/")[-1], bookv2_figs))
 
 print(len(latexified_figs), len(bookv2_figs))
 ignored_nb = [
-    "gp\_deep\_kernel\_learning",
-    "simulated\_annealing\_2d\_demo",
-    "gp\_kernel\_opt",
-    "linreg\_height\_weight",
+    r"gp\_deep\_kernel\_learning",
+    r"simulated\_annealing\_2d\_demo",
+    r"gp\_kernel\_opt",
+    r"linreg\_height\_weight",
 ]
 for latexified_nb_path in latexified_figs:
     latexified_fig = latexified_nb_path.split("/")[-1]

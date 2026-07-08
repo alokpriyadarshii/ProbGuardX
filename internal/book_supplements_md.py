@@ -40,7 +40,7 @@ def extract_chapter_num(fullname):
   # return 22
   parts = fullname.split('/')
   fname = parts[-1]
-  x = re.findall('\d{1,2}', fname)
+  x = re.findall(r'\d{1,2}', fname)
   y=int(x[0])
   return y
 

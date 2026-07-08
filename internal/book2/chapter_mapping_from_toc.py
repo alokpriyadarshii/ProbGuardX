@@ -8,8 +8,8 @@ with open(lof_file_path) as fp:
     LoF_File_Contents = fp.read()
 soup = TexSoup(LoF_File_Contents)
 
-chap_no_pattern = "numberline{(\d*)?}"
-chap_name_pattern = "numberline{\d*?}(.*?})"
+chap_no_pattern = r"numberline{(\d*)?}"
+chap_name_pattern = r"numberline{\d*?}(.*?})"
 chap_no_to_name = {}
 
 for each in soup.find_all("contentsline")[2:-1]:
