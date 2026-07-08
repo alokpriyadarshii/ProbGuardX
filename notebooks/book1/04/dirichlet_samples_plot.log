@@ -1,46 +1,25 @@
 An error occurred while executing the following cell:
 ------------------
-%cd -q /ProbGuardX/scripts
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+import seaborn as sns
+
 try:
     import probml_utils as pml
 except ModuleNotFoundError:
     %pip install -qq git+https://github.com/probml/probml-utils.git
     import probml_utils as pml
-import numpy as np
-import matplotlib.pyplot as plt
 ------------------
 
------ stdout -----
-[Errno 2] No such file or directory: '/ProbGuardX/scripts'
------ stderr -----
-/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/magics/osm.py:393: UserWarning: This is now an optional IPython functionality, using bookmarks requires you to install the `pickleshare` library.
-  bkms = self.shell.db.get('bookmarks', {})
-------------------
 
 ---------------------------------------------------------------------------
 ImportError                               Traceback (most recent call last)
-Cell In[1], line 3
-      1 get_ipython().run_line_magic('cd', '-q /ProbGuardX/scripts')
-      2 try:
-----> 3     import probml_utils as pml
-      4 except ModuleNotFoundError:
-      5     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/__init__.py:2
-      1 #from ._version import version as __version__
-----> 2 from .plotting import savefig, latexify, _get_fig_name, is_latexify_enabled
-      3 from .pyprobml_utils import (
-      4     hinton_diagram,
-      5     plot_ellipse,
-   (...)
-      9     style3d,
-     10 )
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/probml_utils/plotting.py:2
-      1 import os
+Cell In[1], line 2
+      1 import numpy as np
 ----> 2 import matplotlib.pyplot as plt
-      3 import warnings
-      5 DEFAULT_WIDTH = 6.0
+      3 import os
+      4 import seaborn as sns
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:259
     254         if parse_version(module.__version__) < parse_version(minver):
