@@ -30,6 +30,9 @@ def load_features(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="") as handle:
         rows = list(csv.DictReader(handle))
 
+    if not rows:
+        raise ValueError(f"No customer activity rows found in {path}")
+
     features: list[dict[str, Any]] = []
     for row in rows:
         signup_dt = date.fromisoformat(row["signup_date"])

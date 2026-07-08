@@ -28,7 +28,13 @@ def load_and_clean(path: Path) -> list[dict[str, Any]]:
     with path.open(newline="") as handle:
         rows = list(csv.DictReader(handle))
 
+    if not rows:
+        raise ValueError(f"No customer activity rows found in {path}")
+
     spends = [float(row["spend"]) for row in rows if row["spend"]]
+    if not spends:
+        raise ValueError(f"No usable spend values found in {path}")
+
     median_spend = median(spends)
 
     cleaned: list[dict[str, Any]] = []
@@ -51,6 +57,9 @@ def load_and_clean(path: Path) -> list[dict[str, Any]]:
 
 
 def percentile(values: list[float], rank: float) -> float:
+    if not values:
+        raise ValueError("percentile requires at least one value")
+
     ordered = sorted(values)
     position = min(len(ordered) - 1, max(0, round((len(ordered) - 1) * rank)))
     return ordered[position]
@@ -104,6 +113,9 @@ def sigmoid(value: float) -> float:
 
 
 def supervised_baseline(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    if not rows:
+        raise ValueError("supervised_baseline requires at least one row")
+
     columns = ["spend", "sessions", "support_tickets", "clicked_offer", "tenure_days"]
     means = {column: mean(row[column] for row in rows) for column in columns}
     scales = {
