@@ -18,13 +18,13 @@ The project also includes a static **Project Outputs Dashboard** for viewing ver
 * R data manipulation, aggregation, and logistic modeling workflow
 * SQL data manipulation, feature engineering, and aggregation workflow
 * SAS PROC SQL, PROC MEANS, PROC FREQ, and PROC LOGISTIC style workflow
-* Local SAS-equivalent fallback when Base SAS is not installed
-* MapReduce-style mapper/reducer aggregation example
+* Local SAS equivalent fallback when Base SAS is not installed
+* MapReduce style mapper/reducer aggregation example
 * Separate datasets for Python, R, SQL, and SAS outputs
 * Static dashboard for viewing all project outputs
 * Clickable dashboard navigation for Python, R, SQL, SAS, MapReduce, SAS Logistic, and SAS Freq
 * Editable dashboard brand and profile names with browser persistence
-* Local-first execution with no backend server required for the dashboard
+* Local first execution with no backend server required for the dashboard
 
 ---
 
