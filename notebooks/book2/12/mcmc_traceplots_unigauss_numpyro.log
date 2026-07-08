@@ -112,7 +112,7 @@ plt.show()
 jax version 0.6.2
 jax backend cpu
 ----- stderr -----
-/tmp/ipykernel_2475/3193490529.py:17: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
+/tmp/ipykernel_2367/3193490529.py:17: DeprecationWarning: jax.lib.xla_bridge.get_backend is deprecated; use jax.extend.backend.get_backend.
   print("jax backend {}".format(jax.lib.xla_bridge.get_backend().platform))
 /github/home/miniconda3/envs/py310/lib/python3.10/pty.py:89: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
   pid, fd = os.forkpty()
