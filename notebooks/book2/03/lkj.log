@@ -58,73 +58,154 @@ plt.show()
 
 ------------------
 
+----- stdout -----
+jax version 0.4.30
+jax backend cpu
+----- stderr -----
+/github/home/miniconda3/envs/py310/lib/python3.10/pty.py:89: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  pid, fd = os.forkpty()
+----- stdout -----
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+arviz 0.17.1 requires numpy<2.0,>=1.22.0, but you have numpy 2.2.6 which is incompatible.
+distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
+optax 0.2.8 requires jax>=0.5.3, but you have jax 0.4.30 which is incompatible.
+optax 0.2.8 requires jaxlib>=0.5.3, but you have jaxlib 0.4.30 which is incompatible.
+orbax-checkpoint 0.11.39 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
 
 ---------------------------------------------------------------------------
-ImportError                               Traceback (most recent call last)
-Cell In[1], line 12
-      9 np.set_printoptions(precision=3)
-     10 import matplotlib.pyplot as plt
----> 12 import jax
-     13 print("jax version {}".format(jax.__version__))
-     14 print("jax backend {}".format(jax.lib.xla_bridge.get_backend().platform))
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 23
+     22 try:
+---> 23     import numpyro
+     24 except ModuleNotFoundError:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:25
-     22 from jax.version import __version_info__ as __version_info__
-     24 # Set Cloud TPU env vars if necessary before transitively loading C++ backend
----> 25 from jax._src.cloud_tpu_init import cloud_tpu_init as _cloud_tpu_init
-     26 try:
-     27   _cloud_tpu_init()
+ModuleNotFoundError: No module named 'numpyro'
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/cloud_tpu_init.py:17
-     15 import os
-     16 from jax import version
----> 17 from jax._src import config
-     18 from jax._src import hardware_utils
-     19 from typing import Optional
+During handling of the above exception, another exception occurred:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:27
-     24 import threading
-     25 from typing import Any, Callable, Generic, NamedTuple, NoReturn, TypeVar, cast
----> 27 from jax._src import lib
-     28 from jax._src.lib import jax_jit
-     29 from jax._src.lib import transfer_guard_lib
+TypeError                                 Traceback (most recent call last)
+Cell In[1], line 26
+     24 except ModuleNotFoundError:
+     25     get_ipython().run_line_magic('pip', 'install -qq numpyro')
+---> 26     import numpyro
+     27 import numpyro.distributions as dist
+     29 try:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:87
-     84 cpu_feature_guard.check_cpu_features()
-     86 import jaxlib.utils as utils
----> 87 import jaxlib.xla_client as xla_client
-     88 import jaxlib.lapack as lapack
-     90 xla_extension = xla_client._xla
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpyro/__init__.py:13
+      7 warnings.filterwarnings(
+      8     "ignore", message=".*Attempting to hash a tracer.*", category=FutureWarning
+      9 )
+     11 # ruff: noqa: E402
+---> 13 from numpyro import compat, diagnostics, distributions, handlers, infer, ops, optim
+     14 from numpyro.distributions.distribution import enable_validation, validation_enabled
+     15 from numpyro.infer.inspect import render_model
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jaxlib/xla_client.py:30
-     27 import threading
-     28 from typing import Any, Protocol, Union
----> 30 import ml_dtypes
-     31 import numpy as np
-     33 from . import xla_extension as _xla
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpyro/diagnostics.py:13
+     10 from typing import Union
+     12 import numpy as np
+---> 13 from numpy.typing import NDArray
+     15 import jax
+     16 from jax import device_get
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/__init__.py:40
-     16 __all__ = [
-     17     "__version__",
-     18     "bfloat16",
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/typing/__init__.py:158
+      1 """
+      2 ============================
+      3 Typing (:mod:`numpy.typing`)
    (...)
-     35     "uint4",
-     36 ]
-     38 from typing import Type
----> 40 from ml_dtypes._finfo import finfo
-     41 from ml_dtypes._iinfo import iinfo
-     42 from ml_dtypes._ml_dtypes_ext import bfloat16
+    153 
+    154 """
+    155 # NOTE: The API section will be appended with additional entries
+    156 # further down in this file
+--> 158 from numpy._typing import (
+    159     ArrayLike,
+    160     DTypeLike,
+    161     NBitBase,
+    162     NDArray,
+    163 )
+    165 __all__ = ["ArrayLike", "DTypeLike", "NBitBase", "NDArray"]
+    167 if __doc__ is not None:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:17
-      1 # Copyright 2023 The ml_dtypes Authors.
-      2 #
-      3 # Licensed under the Apache License, Version 2.0 (the "License");
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/__init__.py:102
+     86 from ._scalars import (
+     87     _CharLike_co as _CharLike_co,
+     88     _BoolLike_co as _BoolLike_co,
    (...)
-     12 # See the License for the specific language governing permissions and
-     13 # limitations under the License.
-     15 """Overload of numpy.finfo to handle dtypes defined in ml_dtypes."""
----> 17 from ml_dtypes._ml_dtypes_ext import bfloat16
-     18 from ml_dtypes._ml_dtypes_ext import float4_e2m1fn
-     19 from ml_dtypes._ml_dtypes_ext import float6_e2m3fn
+     96     _VoidLike_co as _VoidLike_co,
+     97 )
+     98 from ._shape import (
+     99     _Shape as _Shape,
+    100     _ShapeLike as _ShapeLike,
+    101 )
+--> 102 from ._dtype_like import (
+    103     DTypeLike as DTypeLike,
+    104     _DTypeLike as _DTypeLike,
+    105     _SupportsDType as _SupportsDType,
+    106     _VoidDTypeLike as _VoidDTypeLike,
+    107     _DTypeLikeBool as _DTypeLikeBool,
+    108     _DTypeLikeUInt as _DTypeLikeUInt,
+    109     _DTypeLikeInt as _DTypeLikeInt,
+    110     _DTypeLikeFloat as _DTypeLikeFloat,
+    111     _DTypeLikeComplex as _DTypeLikeComplex,
+    112     _DTypeLikeTD64 as _DTypeLikeTD64,
+    113     _DTypeLikeDT64 as _DTypeLikeDT64,
+    114     _DTypeLikeObject as _DTypeLikeObject,
+    115     _DTypeLikeVoid as _DTypeLikeVoid,
+    116     _DTypeLikeStr as _DTypeLikeStr,
+    117     _DTypeLikeBytes as _DTypeLikeBytes,
+    118     _DTypeLikeComplex_co as _DTypeLikeComplex_co,
+    119 )
+    120 from ._array_like import (
+    121     NDArray as NDArray,
+    122     ArrayLike as ArrayLike,
+   (...)
+    145     _UnknownType as _UnknownType,
+    146 )
+    148 from ._ufunc import (
+    149     _UFunc_Nin1_Nout1 as _UFunc_Nin1_Nout1,
+    150     _UFunc_Nin2_Nout1 as _UFunc_Nin2_Nout1,
+   (...)
+    153     _GUFunc_Nin2_Nout1 as _GUFunc_Nin2_Nout1,
+    154 )
 
-ImportError: numpy._core.umath failed to import
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/_dtype_like.py:194
+    162 _DTypeLikeInt: TypeAlias = (
+    163     type[int]
+    164     | type[np.signedinteger[Any]]
+   (...)
+    177     | _IntCodes
+    178 )
+    179 _DTypeLikeFloat: TypeAlias = (
+    180     type[float]
+    181     | type[np.floating[Any]]
+   (...)
+    190     | _LongDoubleCodes
+    191 )
+    192 _DTypeLikeComplex: TypeAlias = (
+    193     type[complex]
+--> 194     | type[np.complexfloating[Any]]
+    195     | np.dtype[np.complexfloating[Any]]
+    196     | _SupportsDType[np.dtype[np.complexfloating[Any]]]
+    197     | _Complex64Codes
+    198     | _Complex128Codes
+    199     | _CSingleCodes
+    200     | _CDoubleCodes
+    201     | _CLongDoubleCodes
+    202 )
+    203 _DTypeLikeDT64: TypeAlias = (
+    204     type[np.timedelta64]
+    205     | np.dtype[np.timedelta64]
+    206     | _SupportsDType[np.dtype[np.timedelta64]]
+    207     | _TD64Codes
+    208 )
+    209 _DTypeLikeTD64: TypeAlias = (
+    210     type[np.datetime64]
+    211     | np.dtype[np.datetime64]
+    212     | _SupportsDType[np.dtype[np.datetime64]]
+    213     | _DT64Codes
+    214 )
+
+TypeError: Too few arguments for numpy.complexfloating
