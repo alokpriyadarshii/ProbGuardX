@@ -99,6 +99,7 @@ plt.show()
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
 pynndescent 0.6.0 requires numba>=0.55.0, which is not installed.
 umap-learn 0.5.7 requires numba>=0.51.2, which is not installed.
+----- stdout -----
 chex 0.1.90 requires numpy>=1.24.1, but you have numpy 1.22.1 which is incompatible.
 jax 0.6.2 requires numpy>=1.26, but you have numpy 1.22.1 which is incompatible.
 jax 0.6.2 requires scipy>=1.12, but you have scipy 1.7.3 which is incompatible.

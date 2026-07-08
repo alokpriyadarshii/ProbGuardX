@@ -52,18 +52,14 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:25
      27   _cloud_tpu_init()
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/cloud_tpu_init.py:20
-     18 import warnings
-     19 from jax import version
----> 20 from jax._src import config
-     21 from jax._src import hardware_utils
-     23 running_in_cloud_tpu_vm: bool = False
+      0 <Error retrieving source code with stack_data see ipython/ipython#13598>
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:27
-     24 import sys
-     25 from typing import Any, Generic, NoReturn, Optional, Protocol, TypeVar, cast
----> 27 from jax._src.lib import guard_lib
+     24 import threading
+     25 from typing import Any, Callable, Generic, NamedTuple, NoReturn, TypeVar, cast
+---> 27 from jax._src import lib
      28 from jax._src.lib import jax_jit
-     29 from jax._src.lib import xla_client
+     29 from jax._src.lib import transfer_guard_lib
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:75
      71   return _jaxlib_version
@@ -72,7 +68,7 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.
      76   jax_version=jax.version.__version__,
      77   jaxlib_version=jaxlib.version.__version__,
      78   minimum_jaxlib_version=jax.version._minimum_jaxlib_version)
-     80 # Before importing any C compiled modules, first import the CPU
+     80 # Before importing any C compiled modules from jaxlib, first import the CPU
      81 # feature guard module to verify that jaxlib was compiled in a way that only
      82 # uses instructions that are present on this machine.
      83 import jaxlib.cpu_feature_guard as cpu_feature_guard

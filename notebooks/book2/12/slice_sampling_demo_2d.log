@@ -1,28 +1,37 @@
 An error occurred while executing the following cell:
 ------------------
+# -*- coding: utf-8 -*-
+"""
+Author : alokpriyadarshii
+
+This code is based on https://github.com/probml/pmtk3/blob/master/demos/sliceSamplingDemo2d.m
+"""
+
+
 import numpy as np
-import scipy.io as scio
+from scipy.stats import norm
+from scipy.stats import binom
+from matplotlib import cm
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-import pylab
 
-%matplotlib inline
-pylab.rcParams["figure.figsize"] = (15, 10)
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+from probml_utils.mcmc_utils import slice_sample
 ------------------
 
------ stderr -----
-/tmp/ipykernel_2445/4176873278.py:2: UserWarning: A NumPy version >=1.23.5 and <2.5.0 is required for this version of SciPy (detected version 1.22.4)
-  import scipy.io as scio
-------------------
 
 ---------------------------------------------------------------------------
 ImportError                               Traceback (most recent call last)
-Cell In[1], line 3
-      1 import numpy as np
-      2 import scipy.io as scio
-----> 3 import matplotlib.pyplot as plt
-      4 from matplotlib.lines import Line2D
-      5 import pylab
+Cell In[1], line 12
+     10 from scipy.stats import norm
+     11 from scipy.stats import binom
+---> 12 from matplotlib import cm
+     13 import matplotlib.pyplot as plt
+     15 try:
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
     259         if parse_version(module.__version__) < parse_version(minver):

@@ -1,0 +1,88 @@
+An error occurred while executing the following cell:
+------------------
+# Imports
+%matplotlib inline
+import functools
+from typing import Any, Callable, Dict, List, Optional, Tuple
+import matplotlib.pyplot as plt
+import pickle
+import jax
+import jax.numpy as jnp
+import jax.tree_util as tree
+
+try:
+    import jraph
+except ModuleNotFoundError:
+    %pip install -qq -U git+https://github.com/deepmind/jraph.git
+    import jraph
+
+try:
+    import haiku as hk
+except ModuleNotFoundError:
+    %pip install -qq -U dm-haiku
+    import haiku as hk
+
+try:
+    import optax
+except ModuleNotFoundError:
+    %pip install -qq -U optax
+    import optax
+
+try:
+    import networkx as nx
+except ModuleNotFoundError:
+    %pip install -qq -U networkx
+    import networkx as nx
+------------------
+
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 7
+      5 import matplotlib.pyplot as plt
+      6 import pickle
+----> 7 import jax
+      8 import jax.numpy as jnp
+      9 import jax.tree_util as tree
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:80
+     77 Device = _xc.Device
+     78 del _xc
+---> 80 from jax._src.api import effects_barrier as effects_barrier
+     81 from jax._src.api import block_until_ready as block_until_ready
+     82 from jax._src.ad_checkpoint import checkpoint_wrapper as checkpoint
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/api.py:39
+     36 from contextlib import contextmanager, ExitStack
+     38 from jax._src import linear_util as lu
+---> 39 from jax._src import stages
+     40 from jax._src.tree_util import (
+     41     tree_map, tree_flatten, tree_unflatten, tree_structure, tree_transpose,
+     42     tree_leaves, Partial, PyTreeDef, all_leaves, keystr, broadcast_prefix,
+     43     prefix_errors, generate_key_paths)
+     44 from jax._src import api_util
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/stages.py:50
+     48 from jax._src.sharding_impls import is_unspecified_or_auto
+     49 from jax._src.layout import Layout
+---> 50 from jax._src.interpreters import mlir
+     51 from jax._src.lib.mlir import ir
+     52 from jax._src.lib import xla_client as xc
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/interpreters/mlir.py:53
+     51 from jax._src.lib import xla_client as xc
+     52 from jax._src.lib import xla_extension
+---> 53 from jax._src.lib.mlir import dialects
+     54 from jax._src.lib.mlir import ir
+     55 from jax._src.lib.mlir.dialects import func as func_dialect
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/mlir/dialects/__init__.py:21
+     19 import jaxlib.mlir.dialects.math as math
+     20 import jaxlib.mlir.dialects.memref as memref
+---> 21 import jaxlib.mlir.dialects.mhlo as mhlo
+     22 import jaxlib.mlir.dialects.func as func
+     23 import jaxlib.mlir.dialects.scf as scf
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jaxlib/mlir/dialects/mhlo.py:20
+
+ModuleNotFoundError: No module named 'jaxlib.mlir._mlir_libs._mlirHlo'

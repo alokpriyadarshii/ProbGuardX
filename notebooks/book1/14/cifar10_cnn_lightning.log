@@ -1,35 +1,8 @@
-An error occurred while executing the following cell:
-------------------
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def imshow(img):
-    img = img / 2 + 0.5  # unnormalize
-    npimg = img.numpy()
-    plt.figure(figsize=(10, 10))
-    plt.imshow(np.transpose(npimg, (1, 2, 0)))
-    plt.show()
-
-
-# get some random training images
-dataiter = iter(dm.train_dataloader())
-images, labels = dataiter.next()
-
-# show images
-imshow(torchvision.utils.make_grid(images))
-label_names = [classes[labels[j]] for j in range(BATCH_SIZE)]
-print(label_names)
-------------------
-
-
----------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-Cell In[7], line 15
-     13 # get some random training images
-     14 dataiter = iter(dm.train_dataloader())
----> 15 images, labels = dataiter.next()
-     17 # show images
-     18 imshow(torchvision.utils.make_grid(images))
-
-AttributeError: '_MultiProcessingDataLoaderIter' object has no attribute 'next'
+A cell timed out while it was being executed, after 1200 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['if DATA_AUG_TYPE == "rnd":', '    # https://pytorch-lightning.readthedocs.io/en/latest/notebooks/lightning_examples/cifar10-baseline.html#', '    train_transforms = torchvision.transforms.Compose(', '        [', '            torchvision.transforms.RandomCrop(32, padding=4),']
+...
+['', 'dm.prepare_data()  # force download now', 'dm.setup(stage="fit")  # force make data loaders now', '', 'classes = ("plane", "car", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck")']
+-------------------

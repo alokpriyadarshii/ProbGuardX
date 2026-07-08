@@ -33,7 +33,10 @@ jax 0.6.2 requires numpy>=1.26, but you have numpy 1.22.1 which is incompatible.
 jax 0.6.2 requires scipy>=1.12, but you have scipy 1.7.3 which is incompatible.
 jaxlib 0.6.2 requires numpy>=1.26, but you have numpy 1.22.1 which is incompatible.
 jaxlib 0.6.2 requires scipy>=1.12, but you have scipy 1.7.3 which is incompatible.
+pymc 5.25.1 requires arviz>=0.13.0, but you have arviz 0.12.1 which is incompatible.
+pymc 5.25.1 requires numpy>=1.25.0, but you have numpy 1.22.1 which is incompatible.
 scikit-learn 1.7.2 requires scipy>=1.8.0, but you have scipy 1.7.3 which is incompatible.
+tensorflow 2.21.0 requires numpy>=1.26.0, but you have numpy 1.22.1 which is incompatible.
 
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.

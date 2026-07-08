@@ -1,0 +1,73 @@
+An error occurred while executing the following cell:
+------------------
+import os
+import seaborn as sns
+
+try:
+    import particles
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/nchopin/particles.git
+    import particles
+import particles.state_space_models as ssm
+import particles.distributions as dists
+
+%matplotlib inline
+from matplotlib import pyplot as plt
+import seaborn as sb
+import numpy as np
+from scipy import stats
+
+try:
+    import particles
+except ModuleNotFoundError:
+    %pip install -qq particles
+    import particles
+from particles import smc_samplers as ssp
+from particles import distributions as dists
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 2
+      1 import os
+----> 2 import seaborn as sns
+      4 try:
+      5     import particles
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/__init__.py:2
+      1 # Import seaborn objects
+----> 2 from .rcmod import *  # noqa: F401,F403
+      3 from .utils import *  # noqa: F401,F403
+      4 from .palettes import *  # noqa: F401,F403
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/seaborn/rcmod.py:3
+      1 """Control plot style and scaling using the matplotlib rcParams interface."""
+      2 import functools
+----> 3 import matplotlib as mpl
+      4 from cycler import cycler
+      5 from . import palettes
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
+
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4

@@ -35,40 +35,35 @@ import arviz as az
 tfd = tfp.distributions
 ------------------
 
------ stderr -----
-Matplotlib is building the font cache; this may take a moment.
 ----- stdout -----
 Requirement already satisfied: jaxopt in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (0.8.5)
 ----- stdout -----
 Collecting blackjax
------ stdout -----
   Downloading blackjax-1.3-py3-none-any.whl.metadata (6.5 kB)
------ stdout -----
 Requirement already satisfied: jax>=0.2.18 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jaxopt) (0.4.30)
 Requirement already satisfied: jaxlib>=0.1.69 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jaxopt) (0.4.30)
-Requirement already satisfied: numpy>=1.18.4 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jaxopt) (1.22.4)
-Requirement already satisfied: scipy>=1.0.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jaxopt) (1.13.1)
+Requirement already satisfied: numpy>=1.18.4 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jaxopt) (2.2.6)
 ----- stdout -----
+Requirement already satisfied: scipy>=1.0.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jaxopt) (1.13.1)
 Collecting fastprogress>=1.0.0 (from blackjax)
   Downloading fastprogress-1.1.6-py3-none-any.whl.metadata (4.9 kB)
 ----- stdout -----
 Collecting jaxopt
   Downloading jaxopt-0.8.3-py3-none-any.whl.metadata (2.6 kB)
------ stdout -----
 Requirement already satisfied: optax>=0.1.7 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from blackjax) (0.2.8)
-Requirement already satisfied: typing-extensions>=4.4.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from blackjax) (4.15.0)
+Requirement already satisfied: typing-extensions>=4.4.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from blackjax) (4.16.0)
 ----- stdout -----
 Collecting fastcore>=1.10.0 (from fastprogress>=1.0.0->blackjax)
-  Downloading fastcore-1.13.7-py3-none-any.whl.metadata (3.4 kB)
+  Downloading fastcore-1.14.5-py3-none-any.whl.metadata (3.4 kB)
 ----- stdout -----
 Collecting python-fasthtml>=0.12.34 (from fastprogress>=1.0.0->blackjax)
   Downloading python_fasthtml-0.14.4-py3-none-any.whl.metadata (9.0 kB)
 ----- stdout -----
 Requirement already satisfied: ml-dtypes>=0.2.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jax>=0.2.18->jaxopt) (0.5.4)
 Requirement already satisfied: opt-einsum in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from jax>=0.2.18->jaxopt) (3.4.0)
-Requirement already satisfied: absl-py>=0.7.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from optax>=0.1.7->blackjax) (2.4.0)
------ stdout -----
+Requirement already satisfied: absl-py>=0.7.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from optax>=0.1.7->blackjax) (2.5.0)
 Collecting jax>=0.4.16 (from blackjax)
+----- stdout -----
   Downloading jax-0.6.2-py3-none-any.whl.metadata (13 kB)
 ----- stdout -----
 INFO: pip is looking at multiple versions of optax to determine which version is compatible with other requirements. This could take a while.
@@ -79,43 +74,45 @@ Collecting optax>=0.1.7 (from blackjax)
 Collecting chex>=0.1.87 (from optax>=0.1.7->blackjax)
   Using cached chex-0.1.90-py3-none-any.whl.metadata (18 kB)
 Collecting optax>=0.1.7 (from blackjax)
-  Downloading optax-0.2.5-py3-none-any.whl.metadata (7.5 kB)
 ----- stdout -----
-Collecting numpy>=1.18.4 (from jaxopt)
-  Using cached numpy-2.2.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)
+  Downloading optax-0.2.5-py3-none-any.whl.metadata (7.5 kB)
 Requirement already satisfied: toolz>=0.9.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from chex>=0.1.87->optax>=0.1.7->blackjax) (1.1.0)
 Requirement already satisfied: python-dateutil in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (2.9.0.post0)
 Collecting starlette>=1.0.1 (from python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
+----- stdout -----
   Downloading starlette-1.3.1-py3-none-any.whl.metadata (6.4 kB)
 Collecting oauthlib (from python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
------ stdout -----
   Downloading oauthlib-3.3.1-py3-none-any.whl.metadata (7.9 kB)
+----- stdout -----
 Collecting itsdangerous (from python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+----- stdout -----
 Collecting uvicorn>=0.30 (from uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
-  Downloading uvicorn-0.49.0-py3-none-any.whl.metadata (6.7 kB)
+  Downloading uvicorn-0.51.0-py3-none-any.whl.metadata (6.6 kB)
 Collecting httpx2 (from python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
 ----- stdout -----
   Downloading httpx2-2.5.0-py3-none-any.whl.metadata (8.3 kB)
 Collecting fastlite>=0.1.1 (from python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
   Downloading fastlite-0.2.4-py3-none-any.whl.metadata (12 kB)
+----- stdout -----
 Collecting python-multipart (from python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
   Downloading python_multipart-0.0.32-py3-none-any.whl.metadata (2.1 kB)
 Requirement already satisfied: beautifulsoup4 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (4.15.0)
+----- stdout -----
 Collecting apswutils>=0.1.2 (from fastlite>=0.1.1->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
   Downloading apswutils-0.1.2-py3-none-any.whl.metadata (9.1 kB)
 ----- stdout -----
 Collecting apsw (from apswutils>=0.1.2->fastlite>=0.1.1->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
-  Downloading apsw-3.53.2.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+  Downloading apsw-3.53.3.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (4.4 kB)
+----- stdout -----
 Requirement already satisfied: anyio<5,>=3.6.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from starlette>=1.0.1->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (4.14.1)
 Requirement already satisfied: exceptiongroup>=1.0.2 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from anyio<5,>=3.6.2->starlette>=1.0.1->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (1.3.1)
 Requirement already satisfied: idna>=2.8 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from anyio<5,>=3.6.2->starlette>=1.0.1->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (3.18)
 Requirement already satisfied: click>=7.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from uvicorn>=0.30->uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (8.4.2)
 Requirement already satisfied: h11>=0.8 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from uvicorn>=0.30->uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (0.16.0)
------ stdout -----
 Collecting httptools>=0.8.0 (from uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
-  Downloading httptools-0.8.0-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
 ----- stdout -----
+  Downloading httptools-0.8.0-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
 Collecting python-dotenv>=0.13 (from uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
   Downloading python_dotenv-1.2.2-py3-none-any.whl.metadata (27 kB)
 ----- stdout -----
@@ -123,162 +120,104 @@ Requirement already satisfied: pyyaml>=5.1 in /github/home/miniconda3/envs/py310
 Requirement already satisfied: uvloop>=0.15.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (0.22.1)
 Requirement already satisfied: watchfiles>=0.20 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (1.2.0)
 ----- stdout -----
-Collecting websockets>=10.4 (from uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
+Collecting websockets>=13.0 (from uvicorn[standard]>=0.30->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
+----- stdout -----
   Downloading websockets-16.0-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.8 kB)
------ stdout -----
 Requirement already satisfied: soupsieve>=1.6.1 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from beautifulsoup4->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (2.8.4)
------ stdout -----
 Collecting httpcore2==2.5.0 (from httpx2->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
-  Downloading httpcore2-2.5.0-py3-none-any.whl.metadata (24 kB)
 ----- stdout -----
+  Downloading httpcore2-2.5.0-py3-none-any.whl.metadata (24 kB)
 Collecting truststore>=0.10 (from httpx2->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax)
   Downloading truststore-0.10.4-py3-none-any.whl.metadata (4.4 kB)
 ----- stdout -----
 Requirement already satisfied: six>=1.5 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from python-dateutil->python-fasthtml>=0.12.34->fastprogress>=1.0.0->blackjax) (1.17.0)
------ stdout -----
 Downloading blackjax-1.3-py3-none-any.whl (4.7 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/4.7 MB ? eta -:--:--
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━ 4.5/4.7 MB 262.3 MB/s eta 0:00:01
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━ 4.5/4.7 MB 262.3 MB/s eta 0:00:01   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 11.0 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 58.5 MB/s  0:00:00
 Downloading jaxopt-0.8.3-py3-none-any.whl (172 kB)
------ stdout -----
 Downloading fastprogress-1.1.6-py3-none-any.whl (14 kB)
 ----- stdout -----
-Downloading fastcore-1.13.7-py3-none-any.whl (105 kB)
------ stdout -----
+Downloading fastcore-1.14.5-py3-none-any.whl (108 kB)
 Downloading optax-0.2.5-py3-none-any.whl (354 kB)
------ stdout -----
 Downloading chex-0.1.90-py3-none-any.whl (101 kB)
------ stdout -----
-Using cached numpy-2.2.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.8 MB)
------ stdout -----
 Downloading python_fasthtml-0.14.4-py3-none-any.whl (80 kB)
-Downloading fastlite-0.2.4-py3-none-any.whl (17 kB)
 ----- stdout -----
+Downloading fastlite-0.2.4-py3-none-any.whl (17 kB)
 Downloading apswutils-0.1.2-py3-none-any.whl (48 kB)
 Downloading starlette-1.3.1-py3-none-any.whl (73 kB)
 ----- stdout -----
-Downloading uvicorn-0.49.0-py3-none-any.whl (71 kB)
------ stdout -----
+Downloading uvicorn-0.51.0-py3-none-any.whl (73 kB)
 Downloading httptools-0.8.0-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (450 kB)
 ----- stdout -----
 Downloading python_dotenv-1.2.2-py3-none-any.whl (22 kB)
 ----- stdout -----
 Downloading websockets-16.0-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (183 kB)
 ----- stdout -----
-Downloading apsw-3.53.2.0-cp310-cp310-manylinux_2_28_x86_64.whl (3.7 MB)
+Downloading apsw-3.53.3.0-cp310-cp310-manylinux_2_28_x86_64.whl (3.7 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/3.7 MB ? eta -:--:--
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 50.5 MB/s  0:00:00
-
------ stdout -----
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 134.3 MB/s  0:00:00
 Downloading httpx2-2.5.0-py3-none-any.whl (76 kB)
------ stdout -----
 Downloading httpcore2-2.5.0-py3-none-any.whl (80 kB)
------ stdout -----
 Downloading truststore-0.10.4-py3-none-any.whl (18 kB)
 ----- stdout -----
 Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
------ stdout -----
 Downloading oauthlib-3.3.1-py3-none-any.whl (160 kB)
 Downloading python_multipart-0.0.32-py3-none-any.whl (30 kB)
 ----- stdout -----
-Installing collected packages: websockets, uvicorn, truststore, python-multipart, python-dotenv, oauthlib, numpy, itsdangerous, httptools, fastcore, apsw, httpcore2, apswutils, starlette, httpx2, fastlite, python-fasthtml, jaxopt, chex, optax, fastprogress, blackjax
+Installing collected packages: websockets, uvicorn, truststore, python-multipart, python-dotenv, oauthlib, itsdangerous, httptools, fastcore, apsw, httpcore2, apswutils, starlette, httpx2, fastlite, jaxopt, chex, python-fasthtml, optax, fastprogress, blackjax
 
 ----- stdout -----
-   ━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  3/22 [python-multipart]
+   ━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  5/21 [oauthlib]
 ----- stdout -----
-  Attempting uninstall: numpy
-   ━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  3/22 [python-multipart]    Found existing installation: numpy 1.22.4
-   ━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  3/22 [python-multipart]
+   ━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━  9/21 [apsw]
 ----- stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]    Uninstalling numpy-1.22.4:
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
+   ━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━  9/21 [apsw]
 ----- stdout -----
-      Successfully uninstalled numpy-1.22.4
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
+   ━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━ 13/21 [httpx2]
 ----- stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
+   ━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━ 13/21 [httpx2]
 ----- stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━ 14/21 [fastlite]
 ----- stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
------ stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
------ stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
------ stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
------ stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
------ stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
------ stdout -----
-   ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  6/22 [numpy]
------ stdout -----
-   ━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━  9/22 [fastcore]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━ 10/22 [apsw]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━ 10/22 [apsw]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━ 11/22 [httpcore2]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━ 13/22 [starlette]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━ 13/22 [starlette]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━ 14/22 [httpx2]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━ 15/22 [fastlite]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━ 16/22 [python-fasthtml]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━ 16/22 [python-fasthtml]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━ 14/21 [fastlite]
 ----- stdout -----
   Attempting uninstall: jaxopt
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━ 16/22 [python-fasthtml]   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━ 14/21 [fastlite]    Found existing installation: jaxopt 0.8.5
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━ 14/21 [fastlite]
 ----- stdout -----
-    Found existing installation: jaxopt 0.8.5
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]    Uninstalling jaxopt-0.8.5:
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]      Successfully uninstalled jaxopt-0.8.5
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]
+    Uninstalling jaxopt-0.8.5:
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━ 14/21 [fastlite]      Successfully uninstalled jaxopt-0.8.5
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━ 14/21 [fastlite]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 15/21 [jaxopt]
 ----- stdout -----
-  Attempting uninstall: chex
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]    Found existing installation: chex 0.1.7
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]    Uninstalling chex-0.1.7:
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]      Successfully uninstalled chex-0.1.7
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 15/21 [jaxopt]
 ----- stdout -----
-  Attempting uninstall: optax
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]    Found existing installation: optax 0.2.8
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 15/21 [jaxopt]  Attempting uninstall: chex
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 15/21 [jaxopt]    Found existing installation: chex 0.1.7
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 15/21 [jaxopt]
 ----- stdout -----
-    Uninstalling optax-0.2.8:
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]      Successfully uninstalled optax-0.2.8
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━ 17/22 [jaxopt]   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━ 19/22 [optax]
+    Uninstalling chex-0.1.7:
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 15/21 [jaxopt]      Successfully uninstalled chex-0.1.7
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━ 15/21 [jaxopt]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━ 19/22 [optax]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 17/21 [python-fasthtml]  Attempting uninstall: optax
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 17/21 [python-fasthtml]    Found existing installation: optax 0.2.8
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 17/21 [python-fasthtml]    Uninstalling optax-0.2.8:
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 17/21 [python-fasthtml]      Successfully uninstalled optax-0.2.8
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━ 17/21 [python-fasthtml]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━━━ 19/22 [optax]
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━ 18/21 [optax]
 ----- stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━ 21/22 [blackjax]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━ 21/22 [blackjax]
------ stdout -----
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 22/22 [blackjax]
-ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-arviz 0.17.1 requires numpy<2.0,>=1.22.0, but you have numpy 2.2.6 which is incompatible.
-distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
-flax 0.10.7 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
-orbax-checkpoint 0.11.39 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 21/21 [blackjax]
 
 ----- stdout -----
-Successfully installed apsw-3.53.2.0 apswutils-0.1.2 blackjax-1.3 chex-0.1.90 fastcore-1.13.7 fastlite-0.2.4 fastprogress-1.1.6 httpcore2-2.5.0 httptools-0.8.0 httpx2-2.5.0 itsdangerous-2.2.0 jaxopt-0.8.3 numpy-2.2.6 oauthlib-3.3.1 optax-0.2.5 python-dotenv-1.2.2 python-fasthtml-0.14.4 python-multipart-0.0.32 starlette-1.3.1 truststore-0.10.4 uvicorn-0.49.0 websockets-16.0
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
+flax 0.10.7 requires jax>=0.6.0, but you have jax 0.4.30 which is incompatible.
+Successfully installed apsw-3.53.3.0 apswutils-0.1.2 blackjax-1.3 chex-0.1.90 fastcore-1.14.5 fastlite-0.2.4 fastprogress-1.1.6 httpcore2-2.5.0 httptools-0.8.0 httpx2-2.5.0 itsdangerous-2.2.0 jaxopt-0.8.3 oauthlib-3.3.1 optax-0.2.5 python-dotenv-1.2.2 python-fasthtml-0.14.4 python-multipart-0.0.32 starlette-1.3.1 truststore-0.10.4 uvicorn-0.51.0 websockets-16.0
 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
 
 ----- stdout -----
