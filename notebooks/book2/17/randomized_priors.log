@@ -42,215 +42,66 @@ except:
     import seaborn as sns
 ------------------
 
------ stdout -----
-ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-arviz 0.17.1 requires numpy<2.0,>=1.22.0, but you have numpy 2.2.6 which is incompatible.
-distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
-
------ stdout -----
-Note: you may need to restart the kernel to use updated packages.
-------------------
 
 ---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 9
-      8 try:
-----> 9     import optax
-     10 except ModuleNotFoundError:
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 1
+----> 1 get_ipython().run_line_magic('matplotlib', 'inline')
+      3 from functools import partial
+      5 import matplotlib.pyplot as plt
 
-ModuleNotFoundError: No module named 'optax'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py:2482, in InteractiveShell.run_line_magic(self, magic_name, line, _stack_depth)
+   2480     kwargs['local_ns'] = self.get_local_scope(stack_depth)
+   2481 with self.builtin_trap:
+-> 2482     result = fn(*args, **kwargs)
+   2484 # The code below prevents the output from being displayed
+   2485 # when using magics with decorator @output_can_be_silenced
+   2486 # when the last Python token in the expression is a ';'.
+   2487 if getattr(fn, magic.MAGIC_OUTPUT_CAN_BE_SILENCED, False):
 
-During handling of the above exception, another exception occurred:
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/magics/pylab.py:103, in PylabMagics.matplotlib(self, line)
+     98     print(
+     99         "Available matplotlib backends: %s"
+    100         % _list_matplotlib_backends_and_gui_loops()
+    101     )
+    102 else:
+--> 103     gui, backend = self.shell.enable_matplotlib(args.gui)
+    104     self._show_matplotlib_backend(args.gui, backend)
 
-TypeError                                 Traceback (most recent call last)
-Cell In[1], line 12
-     10 except ModuleNotFoundError:
-     11     get_ipython().run_line_magic('pip', 'install -qq optax')
----> 12     import optax
-     13 import jax
-     14 import jax.numpy as jnp
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/interactiveshell.py:3667, in InteractiveShell.enable_matplotlib(self, gui)
+   3664     import matplotlib_inline.backend_inline
+   3666 from IPython.core import pylabtools as pt
+-> 3667 gui, backend = pt.find_gui_and_backend(gui, self.pylab_gui_select)
+   3669 if gui != None:
+   3670     # If we have our first gui selection, store it
+   3671     if self.pylab_gui_select is None:
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/optax/__init__.py:22
-     17 # pylint: disable=wrong-import-position
-     18 # pylint: disable=g-importing-member
-     20 import typing as _typing
----> 22 from optax import assignment
-     23 from optax import contrib
-     24 from optax import experimental
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/optax/assignment/__init__.py:19
-     15 """The assignment sub-package."""
-     17 # pylint:disable=g-importing-member
----> 19 from optax.assignment._hungarian_algorithm import base_hungarian_algorithm
-     20 from optax.assignment._hungarian_algorithm import hungarian_algorithm
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/optax/assignment/_hungarian_algorithm.py:19
-     15 """The Hungarian algorithm for the linear assignment problem."""
-     17 import functools
----> 19 import jax
-     20 from jax import lax
-     21 import jax.numpy as jnp
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:37
-     34 del _cloud_tpu_init
-     36 # Force early import, allowing use of `jax.core` after importing `jax`.
----> 37 import jax.core as _core
-     38 del _core
-     40 # Note: import <name> as <name> is required for names to be exported.
-     41 # See PEP 484 & https://github.com/jax-ml/jax/issues/7570
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/core.py:18
-      1 # Copyright 2022 The JAX Authors.
-      2 #
-      3 # Licensed under the Apache License, Version 2.0 (the "License");
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/IPython/core/pylabtools.py:338, in find_gui_and_backend(gui, gui_select)
+    321 def find_gui_and_backend(gui=None, gui_select=None):
+    322     """Given a gui string return the gui and mpl backend.
+    323 
+    324     Parameters
    (...)
-     15 # Note: import <name> as <name> is required for names to be exported.
-     16 # See PEP 484 & https://github.com/jax-ml/jax/issues/7570
----> 18 from jax._src.core import (
-     19   AbstractToken as AbstractToken,
-     20   AbstractValue as AbstractValue,
-     21   Atom as Atom,
-     22   CallPrimitive as CallPrimitive,
-     23   DebugInfo as DebugInfo,
-     24   DShapedArray as DShapedArray,
-     25   DropVar as DropVar,
-     26   Effect as Effect,
-     27   Effects as Effects,
-     28   get_opaque_trace_state as get_opaque_trace_state,
-     29   InconclusiveDimensionOperation as InconclusiveDimensionOperation,
-     30   JaxprPpContext as JaxprPpContext,
-     31   JaxprPpSettings as JaxprPpSettings,
-     32   JaxprTypeError as JaxprTypeError,
-     33   nonempty_axis_env as nonempty_axis_env_DO_NOT_USE,  # noqa: F401
-     34   OutputType as OutputType,
-     35   ParamDict as ParamDict,
-     36   ShapedArray as ShapedArray,
-     37   Trace as Trace,
-     38   Tracer as Tracer,
-     39   unsafe_am_i_under_a_jit as unsafe_am_i_under_a_jit_DO_NOT_USE,  # noqa: F401
-     40   unsafe_am_i_under_a_vmap as unsafe_am_i_under_a_vmap_DO_NOT_USE,  # noqa: F401
-     41   unsafe_get_axis_names as unsafe_get_axis_names_DO_NOT_USE,  # noqa: F401
-     42   UnshapedArray as UnshapedArray,
-     43   Value as Value,
-     44   abstract_token as abstract_token,
-     45   aval_mapping_handlers as aval_mapping_handlers,
-     46   call as call,
-     47   call_impl as call_impl,
-     48   check_jaxpr as check_jaxpr,
-     49   concrete_or_error as concrete_or_error,
-     50   concretization_function_error as concretization_function_error,
-     51   custom_typechecks as custom_typechecks,
-     52   ensure_compile_time_eval as ensure_compile_time_eval,
-     53   eval_context as eval_context,
-     54   eval_jaxpr as eval_jaxpr,
-     55   find_top_trace as find_top_trace,
-     56   gensym as gensym,
-     57   get_aval as get_aval,
-     58   is_concrete as is_concrete,
-     59   is_constant_dim as is_constant_dim,
-     60   is_constant_shape as is_constant_shape,
-     61   jaxprs_in_params as jaxprs_in_params,
-     62   literalable_types as literalable_types,
-     63   mapped_aval as mapped_aval,
-     64   max_dim as max_dim,
-     65   min_dim as min_dim,
-     66   new_jaxpr_eqn as new_jaxpr_eqn,
-     67   no_axis_name as no_axis_name,
-     68   no_effects as no_effects,
-     69   primal_dtype_to_tangent_dtype as primal_dtype_to_tangent_dtype,
-     70   pytype_aval_mappings as pytype_aval_mappings,
-     71   set_current_trace as set_current_trace,
-     72   subjaxprs as subjaxprs,
-     73   take_current_trace as take_current_trace,
-     74   trace_ctx as trace_ctx,
-     75   TraceTag as TraceTag,
-     76   traverse_jaxpr_params as traverse_jaxpr_params,
-     77   unmapped_aval as unmapped_aval,
-     78   valid_jaxtype as valid_jaxtype,
-     79 )
-     82 from jax._src import core as _src_core
-     83 _deprecations = {
-     84     # Added 2024-12-11
-     85     "axis_frame": ("jax.core.axis_frame is deprecated.", _src_core.axis_frame),
-   (...)
-    143     "used_axis_names_jaxpr": ("jax.core.used_axis_names_jaxpr was removed in JAX v0.6.0.", None),
-    144 }
+    335     'WXAgg','Qt4Agg','module://matplotlib_inline.backend_inline','agg').
+    336     """
+--> 338     import matplotlib
+    340     if _matplotlib_manages_backends():
+    341         backend_registry = matplotlib.backends.registry.backend_registry
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/core.py:38
-     35 import numpy as np
-     37 from jax._src import deprecations
----> 38 from jax._src import dtypes
-     39 from jax._src import config
-     40 from jax._src import effects
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
+    259         if parse_version(module.__version__) < parse_version(minver):
+    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                               f"you have {module.__version__}")
+--> 264 _check_versions()
+    267 # The decorator ensures this always returns the same handler (and it is only
+    268 # attached once).
+    269 @functools.cache
+    270 def _ensure_handler():
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/dtypes.py:32
-     29 from typing import cast, overload, Any, Literal, Union
-     30 import warnings
----> 32 import ml_dtypes
-     33 import numpy as np
-     35 from jax._src import config
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
+    258 module = importlib.import_module(modname)
+    259 if parse_version(module.__version__) < parse_version(minver):
+--> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    261                       f"you have {module.__version__}")
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/__init__.py:40
-     16 __all__ = [
-     17     "__version__",
-     18     "bfloat16",
-   (...)
-     35     "uint4",
-     36 ]
-     38 from typing import Type
----> 40 from ml_dtypes._finfo import finfo
-     41 from ml_dtypes._iinfo import iinfo
-     42 from ml_dtypes._ml_dtypes_ext import bfloat16
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:153
-    149     smallest_subnormal = float.fromhex("0x1p-127")
-    150     self.smallest_subnormal = float8_e8m0fnu(smallest_subnormal)
---> 153 class finfo(np.finfo):  # pylint: disable=invalid-name,missing-class-docstring
-    154   __doc__ = np.finfo.__doc__
-    156   @staticmethod
-    157   def _bfloat16_finfo():
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:699, in finfo()
-    684 _finfo_type_map = {
-    685     _bfloat16_dtype: _bfloat16_finfo,
-    686     _float4_e2m1fn_dtype: _float4_e2m1fn_finfo,
-   (...)
-    696     _float8_e8m0fnu_dtype: _float8_e8m0fnu_finfo,
-    697 }
-    698 _finfo_name_map = {t.name: t for t in _finfo_type_map}
---> 699 _finfo_cache = {
-    700     t: init_fn.__func__()  # pytype: disable=attribute-error
-    701     for t, init_fn in _finfo_type_map.items()
-    702 }
-    704 def __new__(cls, dtype):
-    705   if isinstance(dtype, str):
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:700, in <dictcomp>(.0)
-    684 _finfo_type_map = {
-    685     _bfloat16_dtype: _bfloat16_finfo,
-    686     _float4_e2m1fn_dtype: _float4_e2m1fn_finfo,
-   (...)
-    696     _float8_e8m0fnu_dtype: _float8_e8m0fnu_finfo,
-    697 }
-    698 _finfo_name_map = {t.name: t for t in _finfo_type_map}
-    699 _finfo_cache = {
---> 700     t: init_fn.__func__()  # pytype: disable=attribute-error
-    701     for t, init_fn in _finfo_type_map.items()
-    702 }
-    704 def __new__(cls, dtype):
-    705   if isinstance(dtype, str):
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/ml_dtypes/_finfo.py:668, in finfo._float8_e8m0fnu_finfo()
-    666 # pylint: disable=protected-access
-    667 obj._machar = _Float8E8m0fnuMachArLike()
---> 668 if not hasattr(obj, "tiny"):
-    669   obj.tiny = float8_e8m0fnu(tiny)
-    670 if not hasattr(obj, "smallest_normal"):
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:577, in tiny(self)
-      0 <Error retrieving source code with stack_data see ipython/ipython#13598>
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/core/getlimits.py:556, in smallest_normal(self)
-      0 <Error retrieving source code with stack_data see ipython/ipython#13598>
-
-TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4
