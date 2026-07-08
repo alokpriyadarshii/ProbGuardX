@@ -13,7 +13,7 @@ Cell In[8], line 2
 ----> 2 sample_grid = gibbs_samples_jit(jax.random.PRNGKey(2), J, niter)
       3 plot_samples(J, sample_grid, 2)
 
-    [... skipping hidden 16 frame]
+    [... skipping hidden 11 frame]
 
 Cell In[2], line 31, in gibbs_samples(rng_key, J, niter)
      28     return grid, None
@@ -21,7 +21,7 @@ Cell In[2], line 31, in gibbs_samples(rng_key, J, niter)
 ---> 31 grid, _ = jax.lax.scan(one_step, grid, keys)
      32 return grid
 
-    [... skipping hidden 24 frame]
+    [... skipping hidden 20 frame]
 
 Cell In[2], line 25, in gibbs_samples.<locals>.one_step(grid, key)
      23 iy = jax.random.choice(keys[1], a=pixels)  # pick random y pixel
@@ -30,25 +30,60 @@ Cell In[2], line 25, in gibbs_samples.<locals>.one_step(grid, key)
      26 u = jax.random.uniform(key)
      27 grid = grid.at[iy, ix].set(jax.lax.cond(u < p_ix_iy, lambda: 1, lambda: -1))
 
-    [... skipping hidden 14 frame]
+    [... skipping hidden 11 frame]
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/nn/functions.py:206, in sigmoid(x)
-    187 @partial(jax.jit, inline=True)
-    188 def sigmoid(x: ArrayLike) -> Array:
-    189   r"""Sigmoid activation function.
-    190 
-    191   Computes the element-wise function:
-   (...)
-    204 
-    205   """
---> 206   return lax.logistic(x)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/nn/functions.py:181, in sigmoid(x)
+    171 @jax.jit
+    172 def soft_sign(x: ArrayLike) -> Array:
+    173   r"""Soft-sign activation function.
+    174 
+    175   Computes the element-wise function
+    176 
+    177   .. math::
+    178     \mathrm{soft\_sign}(x) = \frac{x}{|x| + 1}
+    179 
+    180   Args:
+--> 181     x : input array
+    182   """
+    183   numpy_util.check_arraylike("soft_sign", x)
+    184   x_arr = jnp.asarray(x)
 
-    [... skipping hidden 9 frame]
+    [... skipping hidden 7 frame]
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lax/lax.py:3888, in unop_dtype_rule(result_dtype, accepted_dtypes, name, aval, **kwargs)
-   3886   typename = dtype_to_string(aval.dtype)
-   3887   accepted_typenames = (t.__name__ for t in accepted_dtypes)
--> 3888   raise TypeError(msg.format(name, typename, ', '.join(accepted_typenames)))
-   3889 return result_dtype(aval.dtype, **kwargs)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lax/lax.py:1642, in unop_dtype_rule(result_dtype, accepted_dtypes, name, aval, **kwargs)
+   1622 @export
+   1623 def convert_element_type(operand: ArrayLike,
+   1624                          new_dtype: DTypeLike | dtypes.ExtendedDType) -> Array:
+   1625   """Elementwise cast.
+   1626 
+   1627   This function lowers directly to the `stablehlo.convert`_ operation, which
+   1628   performs an elementwise conversion from one type to another, similar to a
+   1629   C++ ``static_cast``.
+   1630 
+   1631   Args:
+   1632     operand: an array or scalar value to be cast.
+   1633     new_dtype: a dtype-like object (e.g. a :class:`numpy.dtype`, a scalar type,
+   1634       or a valid dtype name) representing the target dtype.
+   1635 
+   1636   Returns:
+   1637     An array with the same shape as ``operand``, cast elementwise to ``new_dtype``.
+   1638 
+   1639   .. note::
+   1640 
+   1641      If ``new_dtype`` is a 64-bit type and `x64 mode`_ is not enabled,
+-> 1642      the appropriate 32-bit type will be used in its place.
+   1643 
+   1644      If the input is a JAX array and the input dtype and output dtype match, then
+   1645      the input array will be returned unmodified.
+   1646 
+   1647   See also:
+   1648     - :func:`jax.numpy.astype`: NumPy-style dtype casting API.
+   1649     - :meth:`jax.Array.astype`: dtype casting as an array method.
+   1650     - :func:`jax.lax.bitcast_convert_type`: cast bits directly to a new dtype.
+   1651 
+   1652   .. _stablehlo.convert: https://openxla.org/stablehlo/spec#convert
+   1653   .. _x64 mode: https://docs.jax.dev/en/latest/notebooks/Common_Gotchas_in_JAX.html#double-64bit-precision
+   1654   """
+   1655   return _convert_element_type(operand, new_dtype, weak_type=False)
 
 TypeError: logistic does not accept dtype int32. Accepted dtypes are subtypes of floating, complexfloating.

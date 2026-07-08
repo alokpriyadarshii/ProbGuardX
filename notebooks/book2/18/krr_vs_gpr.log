@@ -35,7 +35,7 @@ print("Time for GPR prediction with standard-deviation: %.3f" % (time.time() - s
 ------------------
 
 ----- stdout -----
-Time for KRR prediction: 0.106
+Time for KRR prediction: 0.112
 ------------------
 
 ---------------------------------------------------------------------------
