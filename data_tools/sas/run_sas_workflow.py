@@ -112,6 +112,13 @@ def print_means(rows: list[dict[str, Any]]) -> None:
     for (region, channel), members in sorted(groups.items()):
         for variable in variables:
             values = [float(row[variable]) for row in members if row[variable] is not None]
+            if not values:
+                print(
+                    f"{region:<6}  {channel:<7}  {variable:<18}  {0:>2}  "
+                    f"{'.':>8}  {'.':>8}  {'.':>8}  {'.':>8}  {'.':>8}"
+                )
+                continue
+
             count, avg, med, std, low, high = describe(values)
             print(
                 f"{region:<6}  {channel:<7}  {variable:<18}  {count:>2}  "
@@ -139,16 +146,20 @@ def sigmoid(value: float) -> float:
 
 def print_logistic_scores(rows: list[dict[str, Any]]) -> None:
     columns = ["support_tickets", "clicked_offer", "spend_per_session", "tenure_days"]
-    means = {column: mean(float(row[column]) for row in rows) for column in columns}
+    model_rows = [row for row in rows if all(row[column] is not None for column in columns)]
+    if not model_rows:
+        raise ValueError("PROC LOGISTIC fallback requires at least one complete row")
+
+    means = {column: mean(float(row[column]) for row in model_rows) for column in columns}
     scales = {
-        column: math.sqrt(mean((float(row[column]) - means[column]) ** 2 for row in rows)) or 1.0
+        column: math.sqrt(mean((float(row[column]) - means[column]) ** 2 for row in model_rows)) or 1.0
         for column in columns
     }
     matrix = [
         [1.0] + [(float(row[column]) - means[column]) / scales[column] for column in columns]
-        for row in rows
+        for row in model_rows
     ]
-    labels = [row["churned"] for row in rows]
+    labels = [row["churned"] for row in model_rows]
     weights = [0.0 for _ in matrix[0]]
     learning_rate = 0.08
 
@@ -159,10 +170,10 @@ def print_logistic_scores(rows: list[dict[str, Any]]) -> None:
             for index, value in enumerate(features):
                 gradients[index] += (prediction - label) * value
         for index in range(len(weights)):
-            weights[index] -= learning_rate * gradients[index] / len(rows)
+            weights[index] -= learning_rate * gradients[index] / len(model_rows)
 
     scored = []
-    for row, features in zip(rows, matrix):
+    for row, features in zip(model_rows, matrix):
         scored.append(
             {
                 "customer_id": row["customer_id"],

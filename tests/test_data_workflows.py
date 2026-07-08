@@ -1,10 +1,12 @@
 import csv
+import io
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 
 from data_tools.python.customer_feature_engineering import load_and_clean, supervised_baseline
-from data_tools.sas.run_sas_workflow import load_features
+from data_tools.sas.run_sas_workflow import load_features, print_logistic_scores, print_means
 
 
 FIELDNAMES = [
@@ -79,6 +81,58 @@ class DataWorkflowInputTests(unittest.TestCase):
                 load_features(path)
         finally:
             path.unlink()
+
+    def test_sas_means_handles_all_missing_group_values(self):
+        rows = [
+            {
+                "customer_id": "S001",
+                "region": "North",
+                "channel": "web",
+                "spend": 25.0,
+                "sessions": 0,
+                "support_tickets": 1,
+                "tenure_days": 10,
+                "spend_per_session": None,
+            }
+        ]
+
+        output = io.StringIO()
+        with redirect_stdout(output):
+            print_means(rows)
+
+        self.assertIn("spend_per_session", output.getvalue())
+        self.assertIn("spend_per_session    0         .         .         .         .         .", output.getvalue())
+
+    def test_sas_logistic_skips_incomplete_rows(self):
+        rows = [
+            {
+                "customer_id": "S001",
+                "region": "North",
+                "channel": "web",
+                "support_tickets": 1,
+                "clicked_offer": 0,
+                "spend_per_session": None,
+                "tenure_days": 10,
+                "churned": 0,
+            },
+            {
+                "customer_id": "S002",
+                "region": "South",
+                "channel": "app",
+                "support_tickets": 2,
+                "clicked_offer": 1,
+                "spend_per_session": 12.5,
+                "tenure_days": 20,
+                "churned": 1,
+            },
+        ]
+
+        output = io.StringIO()
+        with redirect_stdout(output):
+            print_logistic_scores(rows)
+
+        self.assertIn("S002", output.getvalue())
+        self.assertNotIn("S001", output.getvalue())
 
 
 if __name__ == "__main__":
