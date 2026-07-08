@@ -28,7 +28,7 @@ plt.rc("ytick", labelsize=12)  # fontsize of the tyick labels
 
 
 ---------------------------------------------------------------------------
-ImportError                               Traceback (most recent call last)
+ModuleNotFoundError                       Traceback (most recent call last)
 Cell In[1], line 1
 ----> 1 import arviz as az
       2 import jax
@@ -41,20 +41,4 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/arviz/__init__.py:9
      10 from matplotlib.pyplot import style
      11 import matplotlib as mpl
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
-    259         if parse_version(module.__version__) < parse_version(minver):
-    260             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
-    261                               f"you have {module.__version__}")
---> 264 _check_versions()
-    267 # The decorator ensures this always returns the same handler (and it is only
-    268 # attached once).
-    269 @functools.cache
-    270 def _ensure_handler():
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:260, in _check_versions()
-    258 module = importlib.import_module(modname)
-    259 if parse_version(module.__version__) < parse_version(minver):
---> 260     raise ImportError(f"Matplotlib requires {modname}>={minver}; "
-    261                       f"you have {module.__version__}")
-
-ImportError: Matplotlib requires numpy>=1.23; you have 1.22.4
+ModuleNotFoundError: No module named 'matplotlib'
