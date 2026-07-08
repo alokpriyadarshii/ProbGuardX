@@ -1,162 +1,76 @@
 An error occurred while executing the following cell:
 ------------------
-# Code is based on Aurélien Geron's code
-# https://github.com/ageron/handson-ml2/blob/master/04_training_linear_models.ipynb
+########################
+# Fig 2.11
+# Initially use 1 feature, 2 classes
 
-import jax
-import jax.numpy as jnp
-import seaborn as sns
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
-from sklearn import datasets
-from sklearn.metrics import zero_one_loss
-from sklearn.model_selection import train_test_split
+x = iris["data"][:, 3:]  # petal width
+y = (iris["target"] == 2).astype(jnp.int32)  # 1 if Iris-Virginica, else 0'
 
-from ipywidgets import interact, FloatSlider, fixed
+parameters = lr.fit(x, y, lambd=1)
 
-try:
-    import optax
-except ModuleNotFoundError:
-    %pip install -qq optax
-    import optax
+x_new = jnp.linspace(0, 3, 1000).reshape(-1, 1)
+y_prob = lr.predict_proba(parameters[0], x_new)
+decision_boundary = x_new[y_prob > 0.5][0]
 
-try:
-    from probml_utils import latexify, savefig, is_latexify_enabled
-except ModuleNotFoundError:
-    %pip install -qq git+https://github.com/probml/probml-utils.git
-    from probml_utils import latexify, savefig, is_latexify_enabled
+plt.figure()
+plt.scatter(x[y == 0], y[y == 0], s=SCATTER_SIZE, c="b", marker="s")
+plt.scatter(x[y == 1], y[y == 1], s=SCATTER_SIZE, c="g", marker="^")
+plt.plot(
+    [decision_boundary, decision_boundary],
+    [-1, 2],
+    color="black",
+    linestyle="-.",
+    label="Decision boundary",
+)
+plt.plot(x_new, y_prob, "g-", label="Iris-Virginica")
+plt.plot(x_new, 1 - y_prob, "b--", label="Not Iris-Virginica")
 
-# from probml_utils import LogisticRegression as lr
-import probml_utils.LogisticRegression as lr
+plt.arrow(decision_boundary, 0.08, -0.3, 0, head_width=0.05, head_length=0.1, fc="b", ec="b")
+plt.arrow(decision_boundary, 0.92, 0.3, 0, head_width=0.05, head_length=0.1, fc="g", ec="g")
 
-# Load datset
-iris = datasets.load_iris()
+plt.xlabel("Petal width (cm)")
+plt.ylabel("Probability")
+plt.legend(bbox_to_anchor=(1, 1))
+plt.axis([0, 3, -0.02, 1.02])
+sns.despine()
+savefig("iris-logreg-1d.pdf")
 ------------------
 
 
 ---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-Cell In[1], line 4
-      1 # Code is based on Aurélien Geron's code
-      2 # https://github.com/ageron/handson-ml2/blob/master/04_training_linear_models.ipynb
-----> 4 import jax
-      5 import jax.numpy as jnp
-      6 import seaborn as sns
+ValueError                                Traceback (most recent call last)
+Cell In[3], line 27
+     24 plt.plot(x_new, y_prob, "g-", label="Iris-Virginica")
+     25 plt.plot(x_new, 1 - y_prob, "b--", label="Not Iris-Virginica")
+---> 27 plt.arrow(decision_boundary, 0.08, -0.3, 0, head_width=0.05, head_length=0.1, fc="b", ec="b")
+     28 plt.arrow(decision_boundary, 0.92, 0.3, 0, head_width=0.05, head_length=0.1, fc="g", ec="g")
+     30 plt.xlabel("Petal width (cm)")
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:37
-     34 del _cloud_tpu_init
-     36 # Force early import, allowing use of `jax.core` after importing `jax`.
----> 37 import jax.core as _core
-     38 del _core
-     40 # Note: import <name> as <name> is required for names to be exported.
-     41 # See PEP 484 & https://github.com/jax-ml/jax/issues/7570
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/pyplot.py:2677, in arrow(x, y, dx, dy, **kwargs)
+   2675 @_copy_docstring_and_deprecators(Axes.arrow)
+   2676 def arrow(x: float, y: float, dx: float, dy: float, **kwargs) -> FancyArrow:
+-> 2677     return gca().arrow(x, y, dx, dy, **kwargs)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/core.py:18
-      1 # Copyright 2022 The JAX Authors.
-      2 #
-      3 # Licensed under the Apache License, Version 2.0 (the "License");
-   (...)
-     15 # Note: import <name> as <name> is required for names to be exported.
-     16 # See PEP 484 & https://github.com/jax-ml/jax/issues/7570
----> 18 from jax._src.core import (
-     19   AbstractToken as AbstractToken,
-     20   AbstractValue as AbstractValue,
-     21   Atom as Atom,
-     22   CallPrimitive as CallPrimitive,
-     23   DebugInfo as DebugInfo,
-     24   DShapedArray as DShapedArray,
-     25   DropVar as DropVar,
-     26   Effect as Effect,
-     27   Effects as Effects,
-     28   get_opaque_trace_state as get_opaque_trace_state,
-     29   InconclusiveDimensionOperation as InconclusiveDimensionOperation,
-     30   JaxprPpContext as JaxprPpContext,
-     31   JaxprPpSettings as JaxprPpSettings,
-     32   JaxprTypeError as JaxprTypeError,
-     33   nonempty_axis_env as nonempty_axis_env_DO_NOT_USE,  # noqa: F401
-     34   OutputType as OutputType,
-     35   ParamDict as ParamDict,
-     36   ShapedArray as ShapedArray,
-     37   Trace as Trace,
-     38   Tracer as Tracer,
-     39   unsafe_am_i_under_a_jit as unsafe_am_i_under_a_jit_DO_NOT_USE,  # noqa: F401
-     40   unsafe_am_i_under_a_vmap as unsafe_am_i_under_a_vmap_DO_NOT_USE,  # noqa: F401
-     41   unsafe_get_axis_names as unsafe_get_axis_names_DO_NOT_USE,  # noqa: F401
-     42   UnshapedArray as UnshapedArray,
-     43   Value as Value,
-     44   abstract_token as abstract_token,
-     45   aval_mapping_handlers as aval_mapping_handlers,
-     46   call as call,
-     47   call_impl as call_impl,
-     48   check_jaxpr as check_jaxpr,
-     49   concrete_or_error as concrete_or_error,
-     50   concretization_function_error as concretization_function_error,
-     51   custom_typechecks as custom_typechecks,
-     52   ensure_compile_time_eval as ensure_compile_time_eval,
-     53   eval_context as eval_context,
-     54   eval_jaxpr as eval_jaxpr,
-     55   find_top_trace as find_top_trace,
-     56   gensym as gensym,
-     57   get_aval as get_aval,
-     58   is_concrete as is_concrete,
-     59   is_constant_dim as is_constant_dim,
-     60   is_constant_shape as is_constant_shape,
-     61   jaxprs_in_params as jaxprs_in_params,
-     62   literalable_types as literalable_types,
-     63   mapped_aval as mapped_aval,
-     64   max_dim as max_dim,
-     65   min_dim as min_dim,
-     66   new_jaxpr_eqn as new_jaxpr_eqn,
-     67   no_axis_name as no_axis_name,
-     68   no_effects as no_effects,
-     69   primal_dtype_to_tangent_dtype as primal_dtype_to_tangent_dtype,
-     70   pytype_aval_mappings as pytype_aval_mappings,
-     71   set_current_trace as set_current_trace,
-     72   subjaxprs as subjaxprs,
-     73   take_current_trace as take_current_trace,
-     74   trace_ctx as trace_ctx,
-     75   TraceTag as TraceTag,
-     76   traverse_jaxpr_params as traverse_jaxpr_params,
-     77   unmapped_aval as unmapped_aval,
-     78   valid_jaxtype as valid_jaxtype,
-     79 )
-     82 from jax._src import core as _src_core
-     83 _deprecations = {
-     84     # Added 2024-12-11
-     85     "axis_frame": ("jax.core.axis_frame is deprecated.", _src_core.axis_frame),
-   (...)
-    143     "used_axis_names_jaxpr": ("jax.core.used_axis_names_jaxpr was removed in JAX v0.6.0.", None),
-    144 }
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/axes/_axes.py:5217, in Axes.arrow(self, x, y, dx, dy, **kwargs)
+   5214 dx = self.convert_xunits(dx)
+   5215 dy = self.convert_yunits(dy)
+-> 5217 a = mpatches.FancyArrow(x, y, dx, dy, **kwargs)
+   5218 self.add_patch(a)
+   5219 self._request_autoscale_view()
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/core.py:38
-     35 import numpy as np
-     37 from jax._src import deprecations
----> 38 from jax._src import dtypes
-     39 from jax._src import config
-     40 from jax._src import effects
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/patches.py:1377, in FancyArrow.__init__(self, x, y, dx, dy, width, length_includes_head, head_width, head_length, shape, overhang, head_starts_at_zero, **kwargs)
+   1375 self._overhang = overhang
+   1376 self._head_starts_at_zero = head_starts_at_zero
+-> 1377 self._make_verts()
+   1378 super().__init__(self.verts, closed=True, **kwargs)
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/dtypes.py:518
-    511 # We add the StringDType only to `_jax_dtype_set` but not to `_jax_types` and
-    512 # `_dtype_kinds`. This is because, in spite of a very similar sounding name,
-    513 # `_jax_types` is only meant for the promotion related logic, and StringDType
-    514 # does not participate in promotions at the moment. Similarly, `_dtype_kinds` is
-    515 # only meant for the `jnp.isdtype` and we want to be conservative and not allow
-    516 # StringDType to be used in there.
-    517 _string_types: list[JAXType] = []
---> 518 if hasattr(np.dtypes, 'StringDType'):
-    519   _string_types: list[JAXType] = [np.dtypes.StringDType()]  # type: ignore
-    521 _jax_dtype_set = {
-    522     float0,
-    523     *_bool_types,
-   (...)
-    527     *_string_types,
-    528 }
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/patches.py:1477, in FancyArrow._make_verts(self)
+   1475     cx, sx = 0, 1
+   1476 M = [[cx, sx], [-sx, cx]]
+-> 1477 self.verts = np.dot(coords, M) + [
+   1478     self._x + self._dx,
+   1479     self._y + self._dy,
+   1480 ]
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py:315, in __getattr__(attr)
-    312     from .testing import Tester
-    313     return Tester
---> 315 raise AttributeError("module {!r} has no attribute "
-    316                      "{!r}".format(__name__, attr))
-
-AttributeError: module 'numpy' has no attribute 'dtypes'
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (2,) + inhomogeneous part.
