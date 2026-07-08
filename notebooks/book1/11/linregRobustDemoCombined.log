@@ -111,7 +111,7 @@ plt.show()
 
 
 ---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
+ValueError                                Traceback (most recent call last)
 Cell In[1], line 8
       6 import matplotlib.pyplot as plt 
       7 try:
@@ -192,12 +192,89 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/_array_a
      22 # TODO: complete __all__
      23 __all__ = ["xpx"]  # we import xpx here just to re-export it, need this to appease ruff
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/fixes.py:37
-     33 sp_base_version = parse_version(sp_version.base_version)
-     35 # TODO: We can consider removing the containers and importing
-     36 # directly from SciPy when sparse matrices will be deprecated.
----> 37 CSR_CONTAINERS = [scipy.sparse.csr_matrix, scipy.sparse.csr_array]
-     38 CSC_CONTAINERS = [scipy.sparse.csc_matrix, scipy.sparse.csc_array]
-     39 COO_CONTAINERS = [scipy.sparse.coo_matrix, scipy.sparse.coo_array]
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/sklearn/utils/fixes.py:20
+     17 from scipy import optimize
+     19 try:
+---> 20     import pandas as pd
+     21 except ImportError:
+     22     pd = None
 
-AttributeError: module 'scipy.sparse' has no attribute 'csr_array'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/__init__.py:22
+     19 del _hard_dependencies, _dependency, _missing_dependencies
+     21 # numpy compat
+---> 22 from pandas.compat import is_numpy_dev as _is_numpy_dev  # pyright: ignore # noqa:F401
+     24 try:
+     25     from pandas._libs import hashtable as _hashtable, lib as _lib, tslib as _tslib
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/__init__.py:25
+     17 from pandas.compat._constants import (
+     18     IS64,
+     19     PY39,
+   (...)
+     22     PYPY,
+     23 )
+     24 import pandas.compat.compressors
+---> 25 from pandas.compat.numpy import (
+     26     is_numpy_dev,
+     27     np_version_under1p21,
+     28 )
+     29 from pandas.compat.pyarrow import (
+     30     pa_version_under7p0,
+     31     pa_version_under8p0,
+     32     pa_version_under9p0,
+     33     pa_version_under11p0,
+     34 )
+     37 def set_function_name(f: F, name: str, cls) -> F:
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/compat/numpy/__init__.py:4
+      1 """ support numpy compatibility across versions """
+      2 import numpy as np
+----> 4 from pandas.util.version import Version
+      6 # numpy versioning
+      7 _np_version = np.__version__
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/__init__.py:2
+      1 # pyright: reportUnusedImport = false
+----> 2 from pandas.util._decorators import (  # noqa:F401
+      3     Appender,
+      4     Substitution,
+      5     cache_readonly,
+      6 )
+      8 from pandas.core.util.hashing import (  # noqa:F401
+      9     hash_array,
+     10     hash_pandas_object,
+     11 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/util/_decorators.py:14
+      6 from typing import (
+      7     Any,
+      8     Callable,
+      9     Mapping,
+     10     cast,
+     11 )
+     12 import warnings
+---> 14 from pandas._libs.properties import cache_readonly
+     15 from pandas._typing import (
+     16     F,
+     17     T,
+     18 )
+     19 from pandas.util._exceptions import find_stack_level
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/__init__.py:13
+      1 __all__ = [
+      2     "NaT",
+      3     "NaTType",
+   (...)
+      9     "Interval",
+     10 ]
+---> 13 from pandas._libs.interval import Interval
+     14 from pandas._libs.tslibs import (
+     15     NaT,
+     16     NaTType,
+   (...)
+     21     iNaT,
+     22 )
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/pandas/_libs/interval.pyx:1, in init pandas._libs.interval()
+
+ValueError: numpy.dtype size changed, may indicate binary incompatibility. Expected 96 from C header, got 88 from PyObject
