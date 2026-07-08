@@ -42,7 +42,6 @@ distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is in
 Note: you may need to restart the kernel to use updated packages.
 ----- stdout -----
 Requirement already satisfied: tensorflow_probability in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (0.25.0)
------ stdout -----
 Requirement already satisfied: absl-py in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (2.5.0)
 Requirement already satisfied: six>=1.10.0 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (1.17.0)
 Requirement already satisfied: numpy>=1.13.3 in /github/home/miniconda3/envs/py310/lib/python3.10/site-packages (from tensorflow_probability) (2.2.6)

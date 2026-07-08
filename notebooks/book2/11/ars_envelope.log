@@ -1,37 +1,38 @@
 An error occurred while executing the following cell:
 ------------------
 # -*- coding: utf-8 -*-
-"""
-Author : alokpriyadarshii
-
-This code is based on https://github.com/probml/pmtk3/blob/master/demos/sliceSamplingDemo2d.m
-"""
-
-
+# based on https://github.com/probml/pmtk3/blob/master/demos/arsEnvelope.m
+# author : alokpriyadarshii
 import numpy as np
-from scipy.stats import norm
-from scipy.stats import binom
-from matplotlib import cm
 import matplotlib.pyplot as plt
+import matplotlib
+
+%matplotlib inline
 
 try:
-    import probml_utils as pml
+    from scipy.stats import norm
+except ModuleNotFoundError:
+    %pip install -qq scipy.stats
+    from scipy.stats import norm
+
+try:
+    from probml_utils import savefig, latexify
 except ModuleNotFoundError:
     %pip install -qq git+https://github.com/probml/probml-utils.git
-    import probml_utils as pml
-
-from probml_utils.mcmc_utils import slice_sample
+    from probml_utils import savefig, latexify
 ------------------
 
 
 ---------------------------------------------------------------------------
 ImportError                               Traceback (most recent call last)
-Cell In[1], line 12
-     10 from scipy.stats import norm
-     11 from scipy.stats import binom
----> 12 from matplotlib import cm
-     13 import matplotlib.pyplot as plt
-     15 try:
+Cell In[1], line 5
+      1 # -*- coding: utf-8 -*-
+      2 # based on https://github.com/probml/pmtk3/blob/master/demos/arsEnvelope.m
+      3 # author : alokpriyadarshii
+      4 import numpy as np
+----> 5 import matplotlib.pyplot as plt
+      6 import matplotlib
+      8 get_ipython().run_line_magic('matplotlib', 'inline')
 
 File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:264
     259         if parse_version(module.__version__) < parse_version(minver):

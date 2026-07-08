@@ -1,0 +1,21 @@
+An error occurred while executing the following cell:
+------------------
+import numpy as np
+import scipy.io as scio
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+import pylab
+
+%matplotlib inline
+pylab.rcParams["figure.figsize"] = (15, 10)
+------------------
+
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 1
+----> 1 import numpy as np
+      2 import scipy.io as scio
+      3 import matplotlib.pyplot as plt
+
+ModuleNotFoundError: No module named 'numpy'

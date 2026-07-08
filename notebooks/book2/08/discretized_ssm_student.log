@@ -1,38 +1,71 @@
 An error occurred while executing the following cell:
 ------------------
-def generate_x_true(rng_key: jnp.DeviceArray, max_iter: int, x0_rvs: Callable, v_rvs: Callable, f: Callable):
-    def get_next_x_true(x_prev, k, v):
-        x_true = f(x_prev, v[k - 1], k=k - 1)
-        return x_true, x_true
+from typing import Callable
+import functools
 
-    rng_keys = random.split(rng_key, num=2)
-    x0 = x0_rvs(rng_keys[0], shape=())
-    v = v_rvs(rng_keys[1], shape=(max_iter + 1,))
+import jax
+from jax import lax
+from jax import numpy as jnp
+from jax import scipy as jsp
+from jax import random
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-    get_next_x_true_func = functools.partial(get_next_x_true, v=v)
-    _, x_true = lax.scan(get_next_x_true_func, init=x0, xs=jnp.arange(1, max_iter + 1))
-    return jnp.array([x0, *x_true])
-
-
-def generate_y(rng_key: jnp.DeviceArray, x_true: jnp.DeviceArray, e_rvs: Callable, h: Callable):
-    shape = x_true.shape
-    e = e_rvs(rng_key, shape=shape)
-    y = h(x_true, e)
-    # y = y.at[0].set(jnp.inf)
-    return y
+plt.rcParams.update({"font.size": 16})
 ------------------
 
 
 ---------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-Cell In[4], line 1
-----> 1 def generate_x_true(rng_key: jnp.DeviceArray, max_iter: int, x0_rvs: Callable, v_rvs: Callable, f: Callable):
-      2     def get_next_x_true(x_prev, k, v):
-      3         x_true = f(x_prev, v[k - 1], k=k - 1)
+RuntimeError                              Traceback (most recent call last)
+Cell In[1], line 4
+      1 from typing import Callable
+      2 import functools
+----> 4 import jax
+      5 from jax import lax
+      6 from jax import numpy as jnp
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/deprecations.py:55, in deprecation_getattr.<locals>.getattr(name)
-     53   warnings.warn(message, DeprecationWarning, stacklevel=2)
-     54   return fn
----> 55 raise AttributeError(f"module {module!r} has no attribute {name!r}")
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/__init__.py:25
+     22 from jax.version import __version_info__ as __version_info__
+     24 # Set Cloud TPU env vars if necessary before transitively loading C++ backend
+---> 25 from jax._src.cloud_tpu_init import cloud_tpu_init as _cloud_tpu_init
+     26 try:
+     27   _cloud_tpu_init()
 
-AttributeError: module 'jax.numpy' has no attribute 'DeviceArray'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/cloud_tpu_init.py:20
+     18 import warnings
+     19 from jax import version
+---> 20 from jax._src import config
+     21 from jax._src import hardware_utils
+     23 running_in_cloud_tpu_vm: bool = False
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/config.py:27
+     24 import sys
+     25 from typing import Any, Generic, NoReturn, Optional, Protocol, TypeVar, cast
+---> 27 from jax._src.lib import guard_lib
+     28 from jax._src.lib import jax_jit
+     29 from jax._src.lib import xla_client
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:75
+     71   return _jaxlib_version
+     74 version_str = jaxlib.version.__version__
+---> 75 version = check_jaxlib_version(
+     76   jax_version=jax.version.__version__,
+     77   jaxlib_version=jaxlib.version.__version__,
+     78   minimum_jaxlib_version=jax.version._minimum_jaxlib_version)
+     80 # Before importing any C compiled modules, first import the CPU
+     81 # feature guard module to verify that jaxlib was compiled in a way that only
+     82 # uses instructions that are present on this machine.
+     83 import jaxlib.cpu_feature_guard as cpu_feature_guard
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/jax/_src/lib/__init__.py:64, in check_jaxlib_version(jax_version, jaxlib_version, minimum_jaxlib_version)
+     61 if _jaxlib_version < _minimum_jaxlib_version:
+     62   msg = (f'jaxlib is version {jaxlib_version}, but this version '
+     63          f'of jax requires version >= {minimum_jaxlib_version}.')
+---> 64   raise RuntimeError(msg)
+     66 if _jaxlib_version > _jax_version:
+     67   raise RuntimeError(
+     68       f'jaxlib version {jaxlib_version} is newer than and '
+     69       f'incompatible with jax version {jax_version}. Please '
+     70       'update your jax and/or jaxlib packages.')
+
+RuntimeError: jaxlib is version 0.4.30, but this version of jax requires version >= 0.6.2.

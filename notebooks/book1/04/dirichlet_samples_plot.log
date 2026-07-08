@@ -1,0 +1,48 @@
+An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+import seaborn as sns
+
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+------------------
+
+
+---------------------------------------------------------------------------
+ImportError                               Traceback (most recent call last)
+Cell In[1], line 2
+      1 import numpy as np
+----> 2 import matplotlib.pyplot as plt
+      3 import os
+      4 import seaborn as sns
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:259
+    254         if parse_version(module.__version__) < parse_version(minver):
+    255             raise ImportError(f"Matplotlib requires {modname}>={minver}; "
+    256                               f"you have {module.__version__}")
+--> 259 _check_versions()
+    262 # The decorator ensures this always returns the same handler (and it is only
+    263 # attached once).
+    264 @functools.cache
+    265 def _ensure_handler():
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:244, in _check_versions()
+    240 def _check_versions():
+    241 
+    242     # Quickfix to ensure Microsoft Visual C++ redistributable
+    243     # DLLs are loaded before importing kiwisolver
+--> 244     from . import ft2font
+    246     for modname, minver in [
+    247             ("cycler", "0.10"),
+    248             ("dateutil", "2.7"),
+   (...)
+    251             ("pyparsing", "2.3.1"),
+    252     ]:
+    253         module = importlib.import_module(modname)
+
+ImportError: numpy._core.multiarray failed to import

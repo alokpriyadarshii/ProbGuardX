@@ -1,0 +1,43 @@
+An error occurred while executing the following cell:
+------------------
+# Example from section 29.4 & 29.6 (Fig 29.14 & 29.15) of https://www.inference.org.uk/itprnn/book.pdf
+try:
+    import probml_utils as pml
+except ModuleNotFoundError:
+    %pip install -qq git+https://github.com/probml/probml-utils.git
+    import probml_utils as pml
+
+import matplotlib.pyplot as plt
+import jax.numpy as jnp
+import seaborn as sns
+import os
+------------------
+
+----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: '/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/jax-0.6.2.dist-info/METADATA'
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 3
+      2 try:
+----> 3     import probml_utils as pml
+      4 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'probml_utils'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 6
+      4 except ModuleNotFoundError:
+      5     get_ipython().run_line_magic('pip', 'install -qq git+https://github.com/probml/probml-utils.git')
+----> 6     import probml_utils as pml
+      8 import matplotlib.pyplot as plt
+      9 import jax.numpy as jnp
+
+ModuleNotFoundError: No module named 'probml_utils'

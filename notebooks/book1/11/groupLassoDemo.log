@@ -193,176 +193,120 @@ if __name__ == "__main__":
 ------------------
 
 ----- stdout -----
-ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-distrax 0.1.3 requires numpy<1.23,>=1.18.0, but you have numpy 2.2.6 which is incompatible.
-pymc3 3.11.6 requires numpy<1.22.2,>=1.15.0, but you have numpy 2.2.6 which is incompatible.
-pymc3 3.11.6 requires scipy<1.8.0,>=1.7.3, but you have scipy 1.15.3 which is incompatible.
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+  error: subprocess-exited-with-error
+  
+  × Building wheel for spams (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [78 lines of output]
+      running bdist_wheel
+      running build
+      running build_py
+      creating build/lib.linux-x86_64-cpython-310/spams_wrap
+      copying spams_wrap/__init__.py -> build/lib.linux-x86_64-cpython-310/spams_wrap
+      copying spams_wrap/spams_wrap.py -> build/lib.linux-x86_64-cpython-310/spams_wrap
+      creating build/lib.linux-x86_64-cpython-310/spams
+      copying spams/__init__.py -> build/lib.linux-x86_64-cpython-310/spams
+      copying spams/spams.py -> build/lib.linux-x86_64-cpython-310/spams
+      creating build/lib.linux-x86_64-cpython-310/spams/tests
+      copying spams/tests/test_decomp.py -> build/lib.linux-x86_64-cpython-310/spams/tests
+      copying spams/tests/test_spams.py -> build/lib.linux-x86_64-cpython-310/spams/tests
+      copying spams/tests/run.py -> build/lib.linux-x86_64-cpython-310/spams/tests
+      copying spams/tests/__init__.py -> build/lib.linux-x86_64-cpython-310/spams/tests
+      copying spams/tests/test_prox.py -> build/lib.linux-x86_64-cpython-310/spams/tests
+      copying spams/tests/test_utils.py -> build/lib.linux-x86_64-cpython-310/spams/tests
+      copying spams/tests/test_dictLearn.py -> build/lib.linux-x86_64-cpython-310/spams/tests
+      copying spams/tests/test_linalg.py -> build/lib.linux-x86_64-cpython-310/spams/tests
+      creating build/lib.linux-x86_64-cpython-310/spams/data
+      copying spams/data/boat.png -> build/lib.linux-x86_64-cpython-310/spams/data
+      copying spams/data/lena.png -> build/lib.linux-x86_64-cpython-310/spams/data
+      copying spams/version -> build/lib.linux-x86_64-cpython-310/spams
+      running build_ext
+      Traceback (most recent call last):
+        File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 389, in <module>
+          main()
+        File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 373, in main
+          json_out["return_val"] = hook(**hook_input["kwargs"])
+        File "/github/home/miniconda3/envs/py310/lib/python3.10/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 280, in build_wheel
+          return _build_backend().build_wheel(
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 441, in build_wheel
+          return _build(['bdist_wheel', '--dist-info-dir', str(metadata_directory)])
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 429, in _build
+          return self._build_with_temp_dir(
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 410, in _build_with_temp_dir
+          self.run_setup()
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 520, in run_setup
+          super().run_setup(setup_script=setup_script)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/build_meta.py", line 317, in run_setup
+          exec(code, locals())
+        File "<string>", line 208, in <module>
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/__init__.py", line 117, in setup
+          return distutils.core.setup(**attrs)  # type: ignore[return-value]
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/core.py", line 186, in setup
+          return run_commands(dist)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/core.py", line 202, in run_commands
+          dist.run_commands()
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/dist.py", line 1001, in run_commands
+          self.run_command(cmd)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/dist.py", line 1107, in run_command
+          super().run_command(command)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/dist.py", line 1020, in run_command
+          cmd_obj.run()
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/command/bdist_wheel.py", line 370, in run
+          self.run_command("build")
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/cmd.py", line 341, in run_command
+          self.distribution.run_command(command)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/dist.py", line 1107, in run_command
+          super().run_command(command)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/dist.py", line 1020, in run_command
+          cmd_obj.run()
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/command/build.py", line 135, in run
+          self.run_command(cmd_name)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/cmd.py", line 341, in run_command
+          self.distribution.run_command(command)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/dist.py", line 1107, in run_command
+          super().run_command(command)
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/setuptools/_distutils/dist.py", line 1020, in run_command
+          cmd_obj.run()
+        File "<string>", line 144, in run
+        File "<string>", line 49, in get_config
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/numpy/distutils/system_info.py", line 196, in <module>
+          from numpy.distutils.command.config import config as cmd_config
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/numpy/distutils/command/config.py", line 19, in <module>
+          from numpy.distutils.mingw32ccompiler import generate_manifest
+        File "/tmp/pip-build-env-grsp4ifo/overlay/lib/python3.10/site-packages/numpy/distutils/mingw32ccompiler.py", line 29, in <module>
+          from distutils.msvccompiler import get_build_version as get_build_msvc_version
+      ModuleNotFoundError: No module named 'distutils.msvccompiler'
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+  ERROR: Failed building wheel for spams
+error: failed-wheel-build-for-install
 
+× Failed to build installable wheels for some pyproject.toml based projects
+╰─> spams
 ----- stdout -----
 Note: you may need to restart the kernel to use updated packages.
 ------------------
 
 ---------------------------------------------------------------------------
 ModuleNotFoundError                       Traceback (most recent call last)
-Cell In[1], line 34
-     33 try:
----> 34     from group_lasso import GroupLasso
-     35 except ModuleNotFoundError:
+Cell In[1], line 46
+     45 try:
+---> 46     import spams
+     47 except ModuleNotFoundError:
 
-ModuleNotFoundError: No module named 'group_lasso'
+ModuleNotFoundError: No module named 'spams'
 
 During handling of the above exception, another exception occurred:
 
-TypeError                                 Traceback (most recent call last)
-Cell In[1], line 37
-     35 except ModuleNotFoundError:
-     36     get_ipython().run_line_magic('pip', 'install -qq group_lasso')
----> 37     from group_lasso import GroupLasso
-     38 try:
-     39     from sklearn import linear_model
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 49
+     47 except ModuleNotFoundError:
+     48     get_ipython().run_line_magic('pip', 'install -qq spams')
+---> 49     import spams
+     50 from scipy.linalg import lstsq
+     51 import warnings
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/group_lasso/__init__.py:10
-      6 __author__ = "Yngve Mardal Moe"
-      7 __email__ = "yngve.m.moe@gmail.com"
----> 10 from group_lasso._group_lasso import (BaseGroupLasso, GroupLasso,
-     11                                       LogisticGroupLasso)
-     13 MultinomialGroupLasso = LogisticGroupLasso
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/group_lasso/_group_lasso.py:9
-      7 import numpy.linalg as la
-      8 from scipy import sparse
-----> 9 from scipy.special import logsumexp
-     10 from sklearn.base import (BaseEstimator, ClassifierMixin, RegressorMixin,
-     11                           TransformerMixin)
-     12 from sklearn.preprocessing import LabelBinarizer
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/special/__init__.py:821
-    818 from ._ufuncs import *
-    820 # Replace some function definitions from _ufuncs to add Array API support
---> 821 from ._support_alternative_backends import (
-    822     log_ndtr, ndtr, ndtri, erf, erfc, i0, i0e, i1, i1e, gammaln,
-    823     gammainc, gammaincc, logit, expit, entr, rel_entr, xlogy,
-    824     chdtr, chdtrc, betainc, betaincc, stdtr)
-    826 from . import _basic
-    827 from ._basic import *
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/special/_support_alternative_backends.py:6
-      3 import functools
-      5 import numpy as np
-----> 6 from scipy._lib._array_api import (
-      7     array_namespace, scipy_namespace_for, is_numpy
-      8 )
-      9 from . import _ufuncs
-     10 # These don't really need to be imported, but otherwise IDEs might not realize
-     11 # that these are defined in this file / report an error in __init__.py
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/_lib/_array_api.py:15
-     12 from typing import Any, Literal, TypeAlias
-     14 import numpy as np
----> 15 import numpy.typing as npt
-     17 from scipy._lib import array_api_compat
-     18 from scipy._lib.array_api_compat import (
-     19     is_array_api_obj,
-     20     size as xp_size,
-   (...)
-     27     is_array_api_strict_namespace as is_array_api_strict
-     28 )
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/typing/__init__.py:158
-      1 """
-      2 ============================
-      3 Typing (:mod:`numpy.typing`)
-   (...)
-    153 
-    154 """
-    155 # NOTE: The API section will be appended with additional entries
-    156 # further down in this file
---> 158 from numpy._typing import (
-    159     ArrayLike,
-    160     DTypeLike,
-    161     NBitBase,
-    162     NDArray,
-    163 )
-    165 __all__ = ["ArrayLike", "DTypeLike", "NBitBase", "NDArray"]
-    167 if __doc__ is not None:
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/__init__.py:102
-     86 from ._scalars import (
-     87     _CharLike_co as _CharLike_co,
-     88     _BoolLike_co as _BoolLike_co,
-   (...)
-     96     _VoidLike_co as _VoidLike_co,
-     97 )
-     98 from ._shape import (
-     99     _Shape as _Shape,
-    100     _ShapeLike as _ShapeLike,
-    101 )
---> 102 from ._dtype_like import (
-    103     DTypeLike as DTypeLike,
-    104     _DTypeLike as _DTypeLike,
-    105     _SupportsDType as _SupportsDType,
-    106     _VoidDTypeLike as _VoidDTypeLike,
-    107     _DTypeLikeBool as _DTypeLikeBool,
-    108     _DTypeLikeUInt as _DTypeLikeUInt,
-    109     _DTypeLikeInt as _DTypeLikeInt,
-    110     _DTypeLikeFloat as _DTypeLikeFloat,
-    111     _DTypeLikeComplex as _DTypeLikeComplex,
-    112     _DTypeLikeTD64 as _DTypeLikeTD64,
-    113     _DTypeLikeDT64 as _DTypeLikeDT64,
-    114     _DTypeLikeObject as _DTypeLikeObject,
-    115     _DTypeLikeVoid as _DTypeLikeVoid,
-    116     _DTypeLikeStr as _DTypeLikeStr,
-    117     _DTypeLikeBytes as _DTypeLikeBytes,
-    118     _DTypeLikeComplex_co as _DTypeLikeComplex_co,
-    119 )
-    120 from ._array_like import (
-    121     NDArray as NDArray,
-    122     ArrayLike as ArrayLike,
-   (...)
-    145     _UnknownType as _UnknownType,
-    146 )
-    148 from ._ufunc import (
-    149     _UFunc_Nin1_Nout1 as _UFunc_Nin1_Nout1,
-    150     _UFunc_Nin2_Nout1 as _UFunc_Nin2_Nout1,
-   (...)
-    153     _GUFunc_Nin2_Nout1 as _GUFunc_Nin2_Nout1,
-    154 )
-
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/_typing/_dtype_like.py:194
-    162 _DTypeLikeInt: TypeAlias = (
-    163     type[int]
-    164     | type[np.signedinteger[Any]]
-   (...)
-    177     | _IntCodes
-    178 )
-    179 _DTypeLikeFloat: TypeAlias = (
-    180     type[float]
-    181     | type[np.floating[Any]]
-   (...)
-    190     | _LongDoubleCodes
-    191 )
-    192 _DTypeLikeComplex: TypeAlias = (
-    193     type[complex]
---> 194     | type[np.complexfloating[Any]]
-    195     | np.dtype[np.complexfloating[Any]]
-    196     | _SupportsDType[np.dtype[np.complexfloating[Any]]]
-    197     | _Complex64Codes
-    198     | _Complex128Codes
-    199     | _CSingleCodes
-    200     | _CDoubleCodes
-    201     | _CLongDoubleCodes
-    202 )
-    203 _DTypeLikeDT64: TypeAlias = (
-    204     type[np.timedelta64]
-    205     | np.dtype[np.timedelta64]
-    206     | _SupportsDType[np.dtype[np.timedelta64]]
-    207     | _TD64Codes
-    208 )
-    209 _DTypeLikeTD64: TypeAlias = (
-    210     type[np.datetime64]
-    211     | np.dtype[np.datetime64]
-    212     | _SupportsDType[np.dtype[np.datetime64]]
-    213     | _DT64Codes
-    214 )
-
-TypeError: Too few arguments for numpy.complexfloating
+ModuleNotFoundError: No module named 'spams'

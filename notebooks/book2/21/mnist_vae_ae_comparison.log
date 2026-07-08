@@ -1,1 +1,89 @@
-Kernel died
+An error occurred while executing the following cell:
+------------------
+from typing import Sequence
+from itertools import islice
+import subprocess
+
+import jax
+import jax.numpy as jnp
+import numpy as np
+
+try:
+    import tensorflow as tf
+except ModuleNotFoundError:
+    # flax.training.checkpoints depends on tensorflow,
+    # which is only installed by default on Colab
+    %pip install -qq tensorflow-cpu
+    import tensorflow as tf
+
+tf.config.set_visible_devices([], "GPU")  # prevent TensorFlow from using the GPU
+
+try:
+    import flax
+except ModuleNotFoundError:
+    %pip install -qq flax
+    import flax
+from flax.training import checkpoints
+
+try:
+    import optax
+except ModuleNotFoundError:
+    %pip install -qq optax
+    import optax
+
+try:
+    import torchvision.transforms as T
+except ModuleNotFoundError:
+    %pip install -qq torchvision
+    import torchvision.transforms as T
+from torchvision.datasets import MNIST
+
+try:
+    import torch
+except ModuleNotFoundError:
+    %pip install -qq torch
+    import torch
+from torch.utils.data import DataLoader
+
+try:
+    import umap.umap_ as umap
+except ModuleNotFoundError:
+    %pip install -qq umap-learn
+    import umap.umap_ as umap
+
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+------------------
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+----- stdout -----
+ERROR: Could not install packages due to an OSError: [Errno 28] No space left on device
+
+
+----- stdout -----
+Note: you may need to restart the kernel to use updated packages.
+------------------
+
+---------------------------------------------------------------------------
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 33
+     32 try:
+---> 33     import torchvision.transforms as T
+     34 except ModuleNotFoundError:
+
+ModuleNotFoundError: No module named 'torchvision'
+
+During handling of the above exception, another exception occurred:
+
+ModuleNotFoundError                       Traceback (most recent call last)
+Cell In[1], line 36
+     34 except ModuleNotFoundError:
+     35     get_ipython().run_line_magic('pip', 'install -qq torchvision')
+---> 36     import torchvision.transforms as T
+     37 from torchvision.datasets import MNIST
+     39 try:
+
+ModuleNotFoundError: No module named 'torchvision'
