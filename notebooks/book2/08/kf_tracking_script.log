@@ -14,7 +14,7 @@ for k, v in dict_figures.items():
 
 
 ---------------------------------------------------------------------------
-ModuleNotFoundError                       Traceback (most recent call last)
+AttributeError                            Traceback (most recent call last)
 Cell In[3], line 1
 ----> 1 from dynamax.linear_gaussian_ssm.demos.kf_tracking import kf_tracking, plot_kf_tracking
       3 x, y, lgssm_posterior = kf_tracking()
@@ -25,29 +25,154 @@ File ~/miniconda3/envs/py310/lib/python3.10/site-packages/dynamax/linear_gaussia
       2 from dynamax.linear_gaussian_ssm.inference import ParamsLGSSMInitial
       3 from dynamax.linear_gaussian_ssm.inference import ParamsLGSSMDynamics
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/dynamax/linear_gaussian_ssm/inference.py:13
-     11 from jax.tree_util import tree_map
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/dynamax/linear_gaussian_ssm/inference.py:14
      12 from jaxtyping import Array, Float
----> 13 from dynamax.utils.utils import psd_solve, symmetrize
-     14 from dynamax.parameters import ParameterProperties
+     13 from dynamax.utils.utils import psd_solve, symmetrize
+---> 14 from dynamax.parameters import ParameterProperties
      15 from dynamax.types import PRNGKeyT, Scalar
+     16 from typing import NamedTuple, Optional, Union, Tuple
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/dynamax/utils/utils.py:14
-     12 from jax.tree_util import tree_map, tree_leaves, tree_flatten, tree_unflatten
-     13 from jaxtyping import Array, Int
----> 14 from scipy.optimize import linear_sum_assignment
-     15 from jax.scipy.linalg import cho_factor, cho_solve
-     17 def has_tpu():
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/dynamax/parameters.py:7
+      5 from jax import lax
+      6 from jax.tree_util import tree_reduce, tree_map, register_pytree_node_class
+----> 7 import tensorflow_probability.substrates.jax.bijectors as tfb
+      8 from typing import Optional, runtime_checkable
+      9 from typing_extensions import Protocol
 
-File ~/miniconda3/envs/py310/lib/python3.10/site-packages/scipy/optimize/__init__.py:400
-      1 """
-      2 =====================================================
-      3 Optimization and root finding (:mod:`scipy.optimize`)
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/__init__.py:42
+     39 from tensorflow_probability.python.version import __version__
+     40 # from tensorflow_probability.substrates.jax.google import autosts  # DisableOnExport  # pylint:disable=line-too-long
+     41 # from tensorflow_probability.substrates.jax.google import staging  # DisableOnExport  # pylint:disable=line-too-long
+---> 42 from tensorflow_probability.substrates.jax import bijectors
+     43 from tensorflow_probability.substrates.jax import distributions
+     44 from tensorflow_probability.substrates.jax import experimental
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/bijectors/__init__.py:19
+     15 """Bijective transformations."""
+     17 # pylint: disable=unused-import,wildcard-import,line-too-long,g-importing-member
+---> 19 from tensorflow_probability.substrates.jax.bijectors.absolute_value import AbsoluteValue
+     20 from tensorflow_probability.substrates.jax.bijectors.ascending import Ascending
+     21 # from tensorflow_probability.substrates.jax.bijectors.batch_normalization import BatchNormalization
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/substrates/jax/bijectors/absolute_value.py:17
+      1 # Copyright 2018 The TensorFlow Probability Authors.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
    (...)
-    397 :mod:`Additional information on the nonlinear solvers <scipy.optimize.nonlin>`
-    398 """
---> 400 from .optimize import *
-    401 from ._minimize import *
-    402 from ._root import *
+     13 # limitations under the License.
+     14 # ============================================================================
+     15 """AbsoluteValue bijector."""
+---> 17 from tensorflow_probability.python.internal.backend.jax.compat import v2 as tf
+     19 from tensorflow_probability.substrates.jax.bijectors import bijector
+     20 from tensorflow_probability.substrates.jax.internal import assert_util
 
-ModuleNotFoundError: No module named 'scipy.optimize.optimize'
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/__init__.py:18
+     15 """Experimental Numpy backend."""
+     17 from tensorflow_probability.python.internal.backend.jax import __internal__
+---> 18 from tensorflow_probability.python.internal.backend.jax import bitwise
+     19 from tensorflow_probability.python.internal.backend.jax import compat
+     20 from tensorflow_probability.python.internal.backend.jax import config
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/bitwise.py:19
+     15 """Numpy bitwise ops."""
+     17 import numpy as onp; import jax.numpy as np
+---> 19 from tensorflow_probability.python.internal.backend.jax import _utils as utils
+     21 __all__ = [
+     22     'bitwise_xor',
+     23     'left_shift',
+     24 ]
+     27 bitwise_xor = utils.copy_docstring(
+     28     'tf.bitwise.bitwise_xor',
+     29     lambda x, y, name=None: np.bitwise_xor(x, y))  # pylint: disable=unused-argument
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow_probability/python/internal/backend/jax/_utils.py:25
+     22 from tensorflow_probability.python.internal.backend.jax import nest
+     24 try:
+---> 25   from tensorflow.python.ops import array_ops  # pylint: disable=g-direct-tensorflow-import,g-import-not-at-top,unused-import
+     26   from tensorflow.python.ops import random_ops  # pylint: disable=g-direct-tensorflow-import,g-import-not-at-top,unused-import
+     27   import tensorflow.compat.v1 as tf1  # pylint: disable=g-import-not-at-top,unused-import
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/__init__.py:49
+     46 from tensorflow.python import tf2 as _tf2
+     47 _tf2.enable()
+---> 49 from tensorflow._api.v2 import __internal__
+     50 from tensorflow._api.v2 import __operators__
+     51 from tensorflow._api.v2 import audio
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/__internal__/__init__.py:8
+      3 """Public API for tf._api.v2.__internal__ namespace
+      4 """
+      6 import sys as _sys
+----> 8 from tensorflow._api.v2.__internal__ import autograph
+      9 from tensorflow._api.v2.__internal__ import decorator
+     10 from tensorflow._api.v2.__internal__ import dispatch
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/_api/v2/__internal__/autograph/__init__.py:8
+      3 """Public API for tf._api.v2.__internal__.autograph namespace
+      4 """
+      6 import sys as _sys
+----> 8 from tensorflow.python.autograph.core.ag_ctx import control_status_ctx # line: 34
+      9 from tensorflow.python.autograph.impl.api import tf_convert # line: 493
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/core/ag_ctx.py:21
+     18 import inspect
+     19 import threading
+---> 21 from tensorflow.python.autograph.utils import ag_logging
+     22 from tensorflow.python.util.tf_export import tf_export
+     25 stacks = threading.local()
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/utils/__init__.py:17
+      1 # Copyright 2016 The TensorFlow Authors. All Rights Reserved.
+      2 #
+      3 # Licensed under the Apache License, Version 2.0 (the "License");
+   (...)
+     13 # limitations under the License.
+     14 # ==============================================================================
+     15 """Utility module that contains APIs usable in the generated code."""
+---> 17 from tensorflow.python.autograph.utils.context_managers import control_dependency_on_returns
+     18 from tensorflow.python.autograph.utils.misc import alias_tensors
+     19 from tensorflow.python.autograph.utils.tensor_list import dynamic_list_append
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/autograph/utils/context_managers.py:19
+     15 """Various context managers."""
+     17 import contextlib
+---> 19 from tensorflow.python.framework import ops
+     20 from tensorflow.python.ops import tensor_array_ops
+     23 def control_dependency_on_returns(return_value):
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/ops.py:50
+     48 from tensorflow.python import tf2
+     49 from tensorflow.python.client import pywrap_tf_session
+---> 50 from tensorflow.python.eager import context
+     51 from tensorflow.python.eager import core
+     52 from tensorflow.python.eager import monitoring
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/eager/context.py:38
+     36 from tensorflow.python.client import pywrap_tf_session
+     37 from tensorflow.python.eager import cancellation
+---> 38 from tensorflow.python.eager import execute
+     39 from tensorflow.python.eager import executor
+     40 from tensorflow.python.eager import monitoring
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/eager/execute.py:21
+     19 from tensorflow.python import pywrap_tfe
+     20 from tensorflow.python.eager import core
+---> 21 from tensorflow.python.framework import dtypes
+     22 from tensorflow.python.framework import tensor_conversion_registry
+     23 from tensorflow.python.framework import tensor_shape
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/tensorflow/python/framework/dtypes.py:786
+    782   if pdt not in _NP_TO_TF:
+    783     _NP_TO_TF[pdt] = next(
+    784         _NP_TO_TF[dt] for dt in _NP_TO_TF if dt == pdt().dtype)  # pylint: disable=no-value-for-parameter
+--> 786 if hasattr(np.dtypes, "StringDType"):
+    787   _NP_TO_TF[np.dtypes.StringDType()] = string
+    789 TF_VALUE_DTYPES = set(_NP_TO_TF.values())
+
+File ~/miniconda3/envs/py310/lib/python3.10/site-packages/numpy/__init__.py:315, in __getattr__(attr)
+    312     from .testing import Tester
+    313     return Tester
+--> 315 raise AttributeError("module {!r} has no attribute "
+    316                      "{!r}".format(__name__, attr))
+
+AttributeError: module 'numpy' has no attribute 'dtypes'
